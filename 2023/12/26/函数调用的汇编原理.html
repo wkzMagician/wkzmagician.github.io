@@ -1,0 +1,306 @@
+<h1 id="一-函数调用基本概念">一. 函数调用基本概念</h1>
+
+<p>函数f调用函数g, 则称f为caller,g为callee</p>
+
+<p><img src="https://s2.loli.net/2023/11/16/VLhWTRnwHug2ekU.png" alt="Pasted image 20231115133428" />
+栈帧: 程序进行时系统自动分配的栈区域</p>
+<blockquote>
+  <p>%rsp 是一个指针指向栈顶部(用来确认栈的位置),并会随程序运行动态变化</p>
+</blockquote>
+
+<h1 id="二-函数调用需解决的5大问题">二. 函数调用需解决的5大问题</h1>
+
+<ol>
+  <li><a href="#q1">怎么调用callee函数</a></li>
+  <li><a href="#q2">怎么返回caller函数</a></li>
+  <li><a href="#q3">怎么传参以及怎么返回值</a></li>
+  <li><a href="#q4">寄存器共用的问题怎么解决</a></li>
+  <li><a href="#q5">局部变量存在哪里</a>
+<a id="q1"></a>
+    <h2 id="1-怎么调用callee函数">1. 怎么调用callee函数</h2>
+    <p>在汇编代码中,执行函数调用采用的是call指令
+和jump类似,它也有直接和间接之分</p>
+    <ul>
+      <li>call label (direct)</li>
+      <li>call *operand (indirect)
+执行call指令时,机器执行了以下操作:</li>
+    </ul>
+  </li>
+  <li>将返回的地址存在了栈中</li>
+  <li>跳到了callee函数的路口
+<em>可以这么理解:call = push + jmp</em>
+ push retaddr
+ jmp callee</li>
+</ol>
+
+<p>举个栗子:
+<img src="https://s2.loli.net/2023/11/16/uCsXzxO2lLZPq9J.png" alt="Pasted image 20231115142201" />
+执行call前后%rip和%rsp的变化:
+<img src="https://s2.loli.net/2023/11/16/I9dj5Kumw18EoYz.png" alt="Pasted image 20231115140626" /></p>
+
+<p><em>push指令含义:</em></p>
+<ol>
+  <li>%rsp-8(<mark>地址占8个字节</mark>);</li>
+  <li>M[%rsp] = 0x400568(return adress)
+<a id="q2"></a>
+    <h2 id="2-怎么返回caller函数">2. 怎么返回caller函数</h2>
+    <p><em>ret指令</em>  (return缩写?)
+机器执行的操作:</p>
+  </li>
+  <li>将返回地址从栈中弹出</li>
+  <li>Jump到该return address(回到caller中)
+<em>ret = pop + jmp</em>
+ pop retaddr
+ jmp retaddr</li>
+</ol>
+
+<p>还是上面的例子,%rip和%rsp的变化:
+<img src="https://s2.loli.net/2023/11/16/QPA8DXZicRNf6Vt.png" alt="Pasted image 20231115142239" />
+栈帧的结构:
+<img src="https://s2.loli.net/2023/11/16/5OYGJLrSgj98sQB.png" alt="Pasted image 20231115142614" />
+%rsp仅指向栈帧的最顶部!
+返回前,Callee Frame内的各个数据出栈(%rsp上移),直到readdr
+然后执行ret,pop readdr
+<a id="q3"></a></p>
+<h2 id="3-怎么传参以及怎么返回值">3. 怎么传参以及怎么返回值</h2>
+
+<p><strong>使用寄存器以及栈存储变量</strong></p>
+
+<p>系统使用了特定的寄存器用来传参
+其中整数寄存器有6个, 分别是 %rdi, %rsi, %rdx, %rcx, %r8, %r9
+(对应的字节数更少的表示同理,如%edi, %dl等)</p>
+
+<p><strong><em>特定的寄存器存返回值:</em></strong> <mark>%rax</mark></p>
+
+<p><em>? 如果参数个数多于6个呢</em>
+<img src="https://s2.loli.net/2023/11/16/DYHx1cLkGqBmyaF.png" alt="Pasted image 20231115143453" /></p>
+<ul>
+  <li>将多出的参数保存在caller的栈帧中</li>
+  <li>参数就保存在retaddr的上面</li>
+  <li>参数存放的顺序是从第N个到第7个（<em>顺序很重要！</em>）
+  即第N个参数先入栈，内存位置最大
+  第7个参数最后入栈，内存位置最小</li>
+  <li>所有的数据类型（大小）都被扩充为8的倍数
+<strong><em>这些参数如何被callee访问：</em></strong> %rsp + 偏移量</li>
+</ul>
+
+<p>调用前汇编代码呈现：</p>
+<blockquote>
+  <p>push argument N
+…
+push argument 7
+movq  argument 6 %r9
+…
+movq argument 1 %rdi
+call callee</p>
+</blockquote>
+
+<p>以下是一个调用实例:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">proc</span><span class="p">(</span><span class="kt">long</span><span class="err">  </span> <span class="n">a1</span><span class="p">,</span><span class="err"> </span> <span class="kt">long</span><span class="err"> </span> <span class="o">*</span><span class="n">a1p</span><span class="p">,</span>
+<span class="err"> </span> <span class="err">      </span> <span class="kt">int</span><span class="err">     </span> <span class="n">a2</span><span class="p">,</span><span class="err"> </span> <span class="kt">int</span><span class="err">    </span> <span class="o">*</span><span class="n">a2p</span><span class="p">,</span>
+<span class="err"> </span> <span class="err">      </span> <span class="kt">short</span><span class="err"> </span> <span class="n">a3</span><span class="p">,</span><span class="err"> </span> <span class="kt">short</span><span class="err"> </span> <span class="o">*</span><span class="n">a3p</span><span class="p">,</span>
+<span class="err"> </span> <span class="err">      </span> <span class="kt">char</span><span class="err">  </span> <span class="n">a4</span><span class="p">,</span><span class="err"> </span> <span class="kt">char</span><span class="err">  </span> <span class="o">*</span><span class="n">a4p</span><span class="p">)</span>
+<span class="err"> </span><span class="p">{</span>
+	<span class="err"> </span> <span class="o">*</span><span class="n">a1p</span> <span class="o">+=</span> <span class="n">a1</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="o">*</span><span class="n">a2p</span> <span class="o">+=</span> <span class="n">a2</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="o">*</span><span class="n">a3p</span> <span class="o">+=</span> <span class="n">a3</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="o">*</span><span class="n">a4p</span> <span class="o">+=</span> <span class="n">a4</span> <span class="p">;</span>
+<span class="err"> </span><span class="p">}</span>
+</code></pre></div></div>
+<p><img src="https://s2.loli.net/2023/11/16/2ehb5HV1oQJa8ST.png" alt="Pasted image 20231115153459" />
+<a id="q4"></a></p>
+<h2 id="4-寄存器共用的问题怎么解决">4. 寄存器共用的问题怎么解决</h2>
+<p>由于寄存器被所有进程共用，要求：</p>
+<ol>
+  <li>只有1个进程处在active状态
+ 意思是在该进程运行中通过中可以随意修改寄存器的值，而其它进程无法修改
+ 那其它进程中储存在寄存器中的值被破坏了怎么办？</li>
+  <li>将共用的寄存器内容彼此隔离
+ 即要保存寄存器中的值到栈中，具体分为：
+    <ul>
+      <li>caller-save register
+        <blockquote>
+          <p>即寄存器值由caller保存,存在Caller Frame中</p>
+        </blockquote>
+      </li>
+      <li>callee-save register
+        <blockquote>
+          <p>即寄存器值由callee保存,存在Callee Frame中</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>不管是哪种save,只要考虑被进程使用的寄存器,不使用的不用save</li>
+</ol>
+
+<ul>
+  <li>
+    <p>Caller-save registers</p>
+
+    <ul>
+      <li>%rax, %rdi, %rsi, %rdx, %rcx, %r8, %r9, %r10, %r11</li>
+      <li>Saved by caller</li>
+      <li>Callee can use these registers freely</li>
+      <li>The contents in these registers may be changed after return</li>
+      <li>Caller must restore them if it tries to use them after calling
+        <blockquote>
+          <p>Caller-save registers一般用于函数的传参，以及用于返回值（%rax)，即希望callee修改这些寄存器的情况 
+如果希望保留原寄存器中的值。则要进栈
+<img src="https://s2.loli.net/2023/11/16/oJA5T1X4L9Ctbpv.png" alt="Pasted image 20231116130913" /></p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+  <li>
+    <p>Callee-save registers</p>
+    <ul>
+      <li>–%rbx, %rbp, %r12-15</li>
+      <li>Saved by callee</li>
+      <li>Caller can use these registers freely</li>
+      <li>Callee must save them before using</li>
+      <li>Callee must restore them before return
+        <blockquote>
+          <p>callee-save registers一般用于确保caller中寄存器的值不会被修改,使得callee可以放心地使用寄存器进行操作</p>
+        </blockquote>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>下面举个栗子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err"> </span><span class="kt">long</span> <span class="nf">P</span><span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">y</span><span class="p">)</span>
+<span class="err"> </span><span class="p">{</span>
+<span class="err">  </span> <span class="kt">long</span> <span class="n">u</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="n">y</span><span class="p">);</span>
+<span class="err">  </span> <span class="kt">long</span> <span class="n">v</span> <span class="o">=</span> <span class="n">Q</span><span class="p">(</span><span class="n">x</span><span class="p">);</span>
+<span class="err">  </span> <span class="k">return</span> <span class="n">u</span> <span class="o">+</span> <span class="n">v</span><span class="p">;</span>
+<span class="err"> }</span>
+</code></pre></div></div>
+<p>P的汇编代码:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Line</th>
+      <th>Instruction</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>P:</td>
+      <td>Label definition for P</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>pushq %rbp</td>
+      <td>Save %rbp (callee-save register)</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>pushq %rbx</td>
+      <td>Save %rbx</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>subq $8, %rsp</td>
+      <td>Align stack frame</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>movq %rdi, %rbp</td>
+      <td>Save x (exists in callee-save register, safe)</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>movq %rsi, %rdi</td>
+      <td>Move y to the first argument</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>call Q</td>
+      <td>Call Q(y)</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>movq %rax, %rbx</td>
+      <td>Save the result</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>movq %rbp, %rdi</td>
+      <td>Move x to the first argument</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>call Q</td>
+      <td>Call Q(x)</td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>addq %rbx, %rax</td>
+      <td>Add saved Q(y) to Q(x)</td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>addq $8, %rsp</td>
+      <td>Deallocate the last part of the stack</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>popq %rbx</td>
+      <td>Restore %rbx</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>popq %rbp</td>
+      <td>Restore %rbp</td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>ret</td>
+      <td>Return</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><a id="q5"></a></p>
+<h2 id="5-局部变量存在哪里">5. 局部变量存在哪里</h2>
+
+<p>存在栈上(即答)
+不存在寄存器中的理由:</p>
+<ol>
+  <li>数量不够</li>
+  <li>变量是数组(连续存储) 以及 结构体(一组连续数据)</li>
+  <li>需要取地址(比如&amp;a)</li>
+</ol>
+
+<p>存放的位置: 就存在calle-save rigisters 的下面
+释放:add %rsp
+访问: %rsp + 偏移
+<img src="https://s2.loli.net/2023/11/16/BDLoSgMh9WPGYId.png" alt="Pasted image 20231116133037" />
+举一个变量存放的栗子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="nf">call_proc</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="err"> </span> <span class="kt">long</span> <span class="n">x1</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="kt">int</span> <span class="n">x2</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="err"> </span> <span class="kt">short</span> <span class="n">x3</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="kt">char</span> <span class="n">x4</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="err"> </span> <span class="n">proc</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x2</span><span class="p">,</span> <span class="n">x3</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x3</span><span class="p">,</span> <span class="n">x4</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">x4</span><span class="p">);</span>
+<span class="err"> </span> <span class="k">return</span> <span class="p">(</span><span class="n">x1</span><span class="o">+</span><span class="n">x2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="n">x3</span><span class="o">-</span><span class="n">x4</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p><img src="https://s2.loli.net/2023/11/16/JkqD1vGtLAumoHX.png" alt="Pasted image 20231116133351" /></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>leaq   17(%rsp), %rax      Create &amp;x4
+movq   %rax, 8(%rsp)       Store &amp;x4 as argument 8
+movl   $4, (%rsp)          Store 4 as argument 7
+leaq   18(%rsp), %r9       Pass &amp;x3 as argument 6
+movl   $3, %r8d            Pass 3 as argument 5
+leaq   20(%rsp), %rcx      Pass &amp;x2 as argument 4
+movl   $2, %edx            Pass 2 as argument 3
+leaq   24(%rsp), %rsi      Pass &amp;x1 as argument 2
+movl   $1, %edi            Pass 1 as argument 1
+</code></pre></div></div>
+
+<h1 id="总结">总结</h1>
+<p>本文介绍了函数调用是怎么在机器上实现的,并给出了相应的汇编代码.</p>
+
+<p>#汇编 #函数 #栈</p>

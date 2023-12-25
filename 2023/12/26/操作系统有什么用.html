@@ -1,0 +1,93 @@
+<h1 id="概述">概述</h1>
+
+<p>电脑硬件系统的三个部分：</p>
+<ul>
+  <li>处理器（CPU）</li>
+  <li>主内存</li>
+  <li>I/O 处理器</li>
+</ul>
+
+<p><strong>操作系统：</strong> 是管理电脑硬件的程序</p>
+<blockquote>
+  <p>为应用程序提供基础
+是用户与硬件间的桥梁</p>
+</blockquote>
+
+<p><img src="https://s2.loli.net/2023/12/05/vO9SgiPDkzF8jWZ.png" alt="image.png" /></p>
+
+<p>操作系统的主要作用:</p>
+<ul>
+  <li>保护硬件不被应用程序误用</li>
+  <li>应用程序通过简单且统一的方法操作硬件</li>
+</ul>
+
+<p>分工:
+<img src="https://s2.loli.net/2023/12/05/fXEzBhmtuWLaCI1.png" alt="image.png" />
+applications 不能直接访问I/O设施
+通过操作系统提供的services(比如syscall)</p>
+
+<h1 id="操作系统对计算机系统的抽象">操作系统对计算机系统的抽象</h1>
+
+<ul>
+  <li><a href="#process">进程</a></li>
+  <li><a href="#memory">虚拟内存</a></li>
+  <li><a href="#file">文件</a></li>
+</ul>
+
+<p><a id="process"></a></p>
+<h2 id="进程">进程</h2>
+<p>程序运行时，操作系统会让它以为自己是系统上唯一运行的程序</p>
+<ul>
+  <li>该程序似乎能完全使用所有的处理器、内存、I/O设施</li>
+  <li>程序似乎是不中断运行</li>
+  <li>memory中似乎只用该程序的代码以及数据</li>
+</ul>
+
+<p>一个进程分为两个部分：</p>
+<ul>
+  <li>user part</li>
+  <li>OS part, 又称kernel(内核),被所有进程共用</li>
+</ul>
+
+<p><img src="https://s2.loli.net/2023/12/05/f21WxpGAo4jh5wU.png" alt="image.png" /></p>
+
+<p>一个进程会在User Mode 与 Kernel Mode 间切换.</p>
+<ul>
+  <li>在kernel mode:
+    <blockquote>
+      <p>执行任何指令
+访问任意内存</p>
+    </blockquote>
+  </li>
+  <li>在user mode:
+    <blockquote>
+      <p>不能执行特权指令
+不能访问kernel的数据
+只能间接通过system call界面交互</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>两种模式的切换通过特定寄存器中存储的值来实现</p>
+
+<p><a id="memory"></a></p>
+<h2 id="虚拟内存">虚拟内存</h2>
+<p>每个进程似乎都占用了整个内存空间<br />
+虚拟内存的空间包括:</p>
+<ul>
+  <li>代码和数据(全局变量)</li>
+  <li>堆区</li>
+  <li>栈区</li>
+  <li>共用库</li>
+  <li>内核</li>
+</ul>
+
+<p>硬件支持了从虚拟地址到物理地址的翻译<br />
+每个进程的地址空间是相互私有且独立的</p>
+
+<p><a id="file"></a></p>
+<h2 id="文件">文件</h2>
+<p>I/O device被看作是文件
+以Unix为例,程序使用一系列system calls来读写文件.系统所有的输入输出都通过Unix I/O实现</p>
+
+<p>#操作系统</p>

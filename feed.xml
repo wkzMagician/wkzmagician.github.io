@@ -1,18 +1,1940 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2023-11-17T20:08:26+08:00</updated><id>/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Welcome to Jekyll!</title><link href="/jekyll/update/2023/11/17/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2023-11-17T15:53:21+08:00</published><updated>2023-11-17T15:53:21+08:00</updated><id>/jekyll/update/2023/11/17/welcome-to-jekyll</id><content type="html" xml:base="/jekyll/update/2023/11/17/welcome-to-jekyll.html"><![CDATA[<p>You’ll find this post in your <code class="language-plaintext highlighter-rouge">_posts</code> directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run <code class="language-plaintext highlighter-rouge">jekyll serve</code>, which launches a web server and auto-regenerates your site when a file is updated.</p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.3.2">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2023-12-26T00:10:33+08:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Your awesome title</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">进程控制</title><link href="http://localhost:4000/2023/12/26/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6.html" rel="alternate" type="text/html" title="进程控制" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6</id><content type="html" xml:base="http://localhost:4000/2023/12/26/%E8%BF%9B%E7%A8%8B%E6%8E%A7%E5%88%B6.html"><![CDATA[<h1 id="获得进程id">获得进程ID</h1>
 
-<p>Jekyll requires blog post files to be named according to the following format:</p>
+<p>简称PID(process id)
+每个进程都有唯一的<strong>正数</strong>PID</p>
 
-<p><code class="language-plaintext highlighter-rouge">YEAR-MONTH-DAY-title.MARKUP</code></p>
+<p>getpid函数: 返回调用进程的PID
+getppid: 返回父进程的PID</p>
 
-<p>Where <code class="language-plaintext highlighter-rouge">YEAR</code> is a four-digit number, <code class="language-plaintext highlighter-rouge">MONTH</code> and <code class="language-plaintext highlighter-rouge">DAY</code> are both two-digit numbers, and <code class="language-plaintext highlighter-rouge">MARKUP</code> is the file extension representing the format used in the file. After that, include the necessary front matter. Take a look at the source for this post to get an idea about how it works.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="c1"> </span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="n">pid_t</span> <span class="nf">getpid</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span> 
+<span class="n">pid_t</span> <span class="nf">getppid</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</code></pre></div></div>
 
-<p>Jekyll also offers powerful support for code snippets:</p>
+<p>getpid 和 getppid 函数返回一个类型为 pid_t 的整数值，在 Linux 系统上它在 types.h 中被定义为 int</p>
 
-<figure class="highlight"><pre><code class="language-ruby" data-lang="ruby"><span class="k">def</span> <span class="nf">print_hi</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span>
-  <span class="nb">puts</span> <span class="s2">"Hi, </span><span class="si">#{</span><span class="nb">name</span><span class="si">}</span><span class="s2">"</span>
-<span class="k">end</span>
-<span class="n">print_hi</span><span class="p">(</span><span class="s1">'Tom'</span><span class="p">)</span>
-<span class="c1">#=&gt; prints 'Hi, Tom' to STDOUT.</span></code></pre></figure>
+<h1 id="创建和终止进程">创建和终止进程</h1>
 
-<p>Check out the <a href="https://jekyllrb.com/docs/home">Jekyll docs</a> for more info on how to get the most out of Jekyll. File all bugs/feature requests at <a href="https://github.com/jekyll/jekyll">Jekyll’s GitHub repo</a>. If you have questions, you can ask them on <a href="https://talk.jekyllrb.com/">Jekyll Talk</a>.</p>]]></content><author><name></name></author><category term="jekyll" /><category term="update" /><summary type="html"><![CDATA[You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.]]></summary></entry><entry><title type="html">Helloworld</title><link href="/2023/11/17/HelloWorld.html" rel="alternate" type="text/html" title="Helloworld" /><published>2023-11-17T00:00:00+08:00</published><updated>2023-11-17T00:00:00+08:00</updated><id>/2023/11/17/HelloWorld</id><content type="html" xml:base="/2023/11/17/HelloWorld.html"><![CDATA[<p>Hello world!<br />
-I have just started my own blog, so it is just a test page!(laugh)</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Hello world! I have just started my own blog, so it is just a test page!(laugh)]]></summary></entry></feed>
+<h2 id="进程的三种状态">进程的三种状态</h2>
+
+<ul>
+  <li>Running
+    <ul>
+      <li>正在CPU上执行</li>
+      <li>等待被执行</li>
+      <li>最终被内核调度</li>
+    </ul>
+  </li>
+  <li>Stopped/Blocked
+    <ul>
+      <li>进程的执行被挂起</li>
+      <li>不会被调度</li>
+      <li>直到收到SIGCONT信号并重新开始运行</li>
+    </ul>
+  </li>
+  <li>Terminated
+    <ul>
+      <li>进程永久终止</li>
+      <li>原因
+        <ul>
+          <li>信号,默认行为是终止</li>
+          <li>从主程序返回</li>
+          <li>exit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="进程终止">进程终止</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="c1"> </span><span class="cp">
+</span><span class="kt">void</span> <span class="nf">exit</span><span class="p">(</span><span class="kt">int</span> <span class="n">status</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>exit 函数以 status 退出状态来终止进程
+（另一种设置退出状态的方法是从主程序中 返回一个整数值）</p>
+
+<h2 id="创建进程">创建进程</h2>
+
+<p><strong>Tip:</strong>fork是Unix操作系统独有的, 也就是linux和maxOS都有该函数,而Windows没有..由于《深入了解计算机系统》一书以linux系统为基础,所以想要测试代码的友友需要安装虚拟机(比如说VMWare或者使用Windows下子系统WSL). 当然, Windows下也可以用其它的方法实现类似的效果,只是比较麻烦.</p>
+
+<p>父进程通过调用<strong>fork</strong>函数创建一个新的运行的子进程.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="n">pid_t</span> <span class="nf">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="c1">// 返回：子进程返回0，父进程返回子进程的PID,如果出错，则为-1。</span>
+
+</code></pre></div></div>
+
+<p>新创建的子进程几乎但不完全与父进程相同。<br />
+<strong>共同点:</strong></p>
+<ul>
+  <li>
+    <p>子进程得到与父进程(用户级)<mark>虚拟地址空间相同</mark>(<strong>但是独立的</strong>)一份副本
+包括: ==代码和数据段, 堆, 共享库, 用户栈==</p>
+  </li>
+  <li>
+    <p>子进程还将获得与父进程==打开文件描述符==相同的副本</p>
+    <blockquote>
+      <p>子进程可以读写父进程中打开的任何文件</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><strong>不同点:</strong><br />
+子进程与父进程<strong>PID不同</strong></p>
+
+<h2 id="fork函数的特点">fork函数的特点</h2>
+
+<h3 id="调用一次返回两次"><strong>调用一次,返回两次</strong></h3>
+
+<ul>
+  <li>只被调用一次(在父进程中)</li>
+  <li>返回两次
+    <ul>
+      <li>在父进程中, 返回值是子进程的PID</li>
+      <li>在子进程中, 返回0</li>
+    </ul>
+  </li>
+</ul>
+
+<p>返回值的特性使得程序可以知道是在父进程还是子进程中执行.<br />
+下面是一个例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+	<span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">();</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="cm">/* Child */</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"child: x=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">++</span><span class="n">x</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* Parent */</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"parent: x=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">--</span><span class="n">x</span><span class="p">);</span>
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>这里的Fork是上一章提到的包装函数, 定义如下:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pid_t</span> <span class="nf">Fork</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+ 	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+ 	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+ 		<span class="n">unix_error</span><span class="p">(</span><span class="s">"Fork error"</span><span class="p">);</span>
+ 	<span class="k">return</span> <span class="n">pid</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">unix_error</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="cm">/* unix-style error */</span>
+<span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+ 	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>当在Unix系统上运行这个程序时，我们得到下面的结果:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>linux&gt; ./fork
+parent: x=0
+child : x=2
+</code></pre></div></div>
+
+<h3 id="并发执行"><strong>并发执行</strong></h3>
+
+<p>在我们的系统上运行这个程序时，父进程先完成它的 printf语句，然后是子进程。然而，在另一个系统上可能正好相反。
+父进程与子进程是==并发==执行的独立进程,内核能够以任意方式交替执行它们控制流中的指令.
+	因此不能假定父进程与子进程的执行顺序</p>
+
+<h3 id="父进程与子进程有相同但是独立的地址空间"><strong>父进程与子进程有相同但是==独立==的地址空间</strong></h3>
+
+<p>该地址空间指的是虚拟地址.
+也就是说,在这个例子中, 当fork返回时, 子进程和父进程中的x的值都是1. (<em>相同</em>)</p>
+
+<p>然而, 父进程和子进程对x所做的任何改变都是独立的，不会反映在另一个进程的内存中。(<em>独立</em>)
+在本例中, 体现为printf输出的内容不同.</p>
+
+<h3 id="共享文件"><strong>共享文件</strong></h3>
+<p>在这个例子中, stdout(标准输出)就是子进程与父进程共享的文件,所以子进程与父进程的内容才会都输出到(同一个)屏幕上.
+子进程会继承父进程所有的打开文件.</p>
+
+<h2 id="fork容易混淆的例子">fork容易混淆的例子</h2>
+
+<p>下面这个例子展示了如何用进程图理解fork的执行顺序:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+		<span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">pid</span><span class="p">){</span>
+		<span class="n">x</span> <span class="o">+=</span> <span class="n">y</span><span class="p">;</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"x in child: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="n">y</span><span class="o">++</span><span class="p">;</span>
+		<span class="n">x</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"x in parent: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>对进程图中所有顶点进行拓扑排序,即得到程序所有可能的输出结果.
+<img src="https://s2.loli.net/2023/12/09/Ro6tqmdI8EjQxFB.jpg" alt="微信图片_20231209142619.jpg" />
+(图中括号(x,y)表示输出前x与y的值)
+比方说,一个可能的输出是:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x in parent: 20
+x in parent: 40 
+x in child: 11 
+x in child: 22
+</code></pre></div></div>
+<p>所谓的拓扑排序,可以简单理解为,流程图中子分支上的所有事件一定在主分支上的事件之后发生.
+在这个例子中,对x的值进行讨论:
+(x=) 20 一定在40之前,也一定在22之前</p>
+
+<p>如果更复杂一些,把exit(0)删去,程序的进程图如下:
+(图中C表示输出”x in child”时x与y的值, P表示输出”x in parent”时x与y的值)</p>
+
+<p><img src="https://s2.loli.net/2023/12/09/6I8txeWNq5GpbgK.jpg" alt="微信图片_20231209142627.jpg" /></p>
+
+<h1 id="回收子进程">回收子进程</h1>
+
+<h2 id="回收机制">回收机制</h2>
+
+<p>当一个进程由于某种原因终止时，内核并不是立即把它从系统中清除。相反，进程被保持在一种已终止的状态中，直到被它的父进程回收（reaped)。</p>
+<blockquote>
+  <p>不立即清除的原因是,子进程可能需要对父进程报告与其终止的相关信息(<strong>退出状态</strong>),可以看作是它的”遗言”</p>
+</blockquote>
+
+<p>当父进程回收已终止的子进程时，内核将子进程的退出状态传递给父进程，然后抛弃子进程(不存在)</p>
+
+<p>一个终止了但还未被回收的进程称为<strong>僵死进程</strong>(zombie)</p>
+
+<p>如果子进程还未被回收,父进程已经被终止了, 内核会安排init进程回收它.
+init进程的PID为1，是在系统启动时由内核创建的，它不会终止，是所有进程的祖先。</p>
+
+<p>Attention: 长时间运行的程序,比如shell或者服务器, 必须手动地去回收僵死子进程, 否则这些僵死进程仍会消耗内存资源.</p>
+
+<p>那么如何手动回收子进程呢?</p>
+
+<h2 id="waitpid函数">waitpid函数</h2>
+
+<p>一个进程可以通过调用waitpid函数来等待它的子进程终止或者停止。</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span>
+<span class="n">pid_t</span> <span class="nf">waitpid</span><span class="p">(</span><span class="n">pid_t</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">statusp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="o">*</span><span class="p">);</span>
+<span class="c1">// 返回: 成功,则为子进程的PID;</span>
+<span class="c1">// WHOHANG, 则为0;</span>
+<span class="c1">// 其他错误,则为-1</span>
+</code></pre></div></div>
+
+<p>下面具体地解释它的3个参数:</p>
+
+<h3 id="1-判定等待集合的成员">1. 判定等待集合的成员</h3>
+
+<p>等待集合的成员是由参数pid来确定的：</p>
+
+<ul>
+  <li>如果pid&gt;0,那么等待集合就是一个单独的子进程，它的进程ID等于pid.</li>
+  <li>如果pid=-1, 那么等待集合就是由父进程所有的子进程组成的。</li>
+</ul>
+
+<h3 id="2-修改默认行为">2. 修改默认行为</h3>
+
+<p>可以通过将options 设置为常量 WNOHANG, WUNTRACED和 WCONTINUED 的各种组合来修改默认行为：</p>
+
+<ul>
+  <li>默认情况下(当options=0时), waitpid挂起调用进程的执行，直到它的等待集合(wait set)中的一个子进程终止。(就是会一直等着) 如果等待集合中的一个进程在刚调用的时刻就已经终止了，那么waitpid就立即返回。在这两种情况中，waitpid返回导致waitpid 返回的已终止子进程的PID.</li>
+  <li>WNOHANG: 如果等待集合中的任何子进程==都还没有终止==，那么就<strong>立即返回</strong> (返回值为0)。在等待子进程终止的同 时，如果还想做些有用的工作，这个选项会有用</li>
+  <li>WUNTRACED: 挂起调用进程的执行，直到等待集合中的一个进程terminated or stopped(停止)。</li>
+  <li>WCONTINUED: 挂起调用进程的执行，直到等待集合中一个正在运行的进程终止 或等待集合中一个被停止的进程收到SIGCONT信号重新开始执行。</li>
+</ul>
+
+<p>可以用或运算把这些选项组合起来。例如：</p>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>WNOHANG</td>
+          <td>WUNTRACED: ==立即返回==，如果等待集合中的子进程都没有被<strong>停止或终止</strong>，则返回0: 如果有一个停止或终止，则返回值为该子进程的PID.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="3-检查已回收子进程的退出状态">3. 检查已回收子进程的退出状态</h3>
+
+<p>如果 statusp参数非空，那么waitpid就会在 status 中放上关于导致返回的 子进程的状态信息(statusp-&gt;status)，wait.h 头文件中定义了==解释==status参数的宏:</p>
+
+<ul>
+  <li>WIFEXITED(status): 如果子进程通过调用 exit 或者 return 正常终止，就返回真。</li>
+  <li>WEXITSTATUS(status): 返回一个正常终止的子进程的退出状态。只有在 WIFEXITED()返回为真时，才会定义这个状态。</li>
+  <li>WIFSIGNALED(status): 如果子进程是因为一个未被捕获的信号终止的，那么就返回真。</li>
+  <li>WTERMSIG(status): 返回导致子进程终止的信号的编号。只有在 WIFSIGNALED() 返回为真时，才定义这个状态</li>
+  <li>WIFSTOPPED(status): 如果引起返回的子进程当前是停止 (<strong>stopped</strong>)的，那么就返回真。</li>
+  <li>WSTOPSIG(status): 返回引起子进程停止的信号的编号。只有在 WIFSTOPPED() 返回为真时，才定义这个状态。</li>
+  <li>WIFCONTINUED(status): 如果子进程收到 SIGCONT信号重新启动，则返回真。</li>
+</ul>
+
+<h3 id="错误条件">错误条件</h3>
+
+<ul>
+  <li>如果调用进程没有子进程，那么waitpid返回-1,并且设置 errno 为 ECHILD</li>
+  <li>如果waitpid函数被一个信号中断，那么它返回-1,并设置 errno 为 EINTR</li>
+</ul>
+
+<h3 id="wait-函数">wait 函数</h3>
+
+<p>wait 函数是 waitpid 函数的简单版本:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span>
+<span class="n">pid_t</span> <span class="nf">wait</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">statusp</span><span class="p">);</span>
+</code></pre></div></div>
+<p>调用 wait(&amp;status) 等价于调用 waitpid(-1, &amp;status, 0).
+即默认对所有子进程挂起等待.</p>
+
+<h3 id="使用waitpid-的示例">使用waitpid 的示例</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">unix_error</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="cm">/* unix-style error */</span>
+<span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+ 	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#define N 2
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+
+	<span class="cm">/* Parent creates N children */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="cm">/* child */</span>
+  	    	<span class="n">exit</span><span class="p">(</span><span class="mi">100</span><span class="o">+</span><span class="n">i</span><span class="p">);</span>
+
+	<span class="cm">/* Parent reaps N chds. in no particular order */</span>
+	<span class="k">while</span><span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">waitpid</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated normally with exit status=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated abnormally</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* The only normal term. is if there no more chds. */</span>
+	<span class="cm">/* 当回收了所有的子进程之后，再调用 waitpid 就返回-1，并且设置ECHILD */</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">ECHILD</span><span class="p">)</span> <span class="c1">// 检查waitpid正常终止</span>
+		<span class="n">unix_error</span><span class="p">(</span><span class="s">"waitpid error"</span><span class="p">);</span>
+
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>一个示例输出：</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unix&gt;./waitpid1
+child 22966 terminated normally with exit status=100
+child 22967 terminated normally with exit status=101
+</code></pre></div></div>
+<p>但是由于子进程是并发的,两个子进程回收的顺序是<strong>不确定</strong>的.
+对程序稍作修改, 消除了这种不确定性，按照父进程创建子进程的相同顺序来回收这些子进程.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">retpid</span><span class="p">;</span>
+
+	<span class="cm">/* Parent creates N children */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="cm">/* child */</span>
+  	    	<span class="n">exit</span><span class="p">(</span><span class="mi">100</span><span class="o">+</span><span class="n">i</span><span class="p">);</span>
+
+	<span class="cm">/* Parent reaps N chds. in order */</span>
+	<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">while</span><span class="p">((</span><span class="n">retpid</span> <span class="o">=</span> <span class="n">waitpid</span><span class="p">(</span><span class="n">pid</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated normally with exit status=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">retpid</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated abnormally</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">retpid</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* The only normal term. is if there no more chds. */</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">ECHILD</span><span class="p">)</span> 
+		<span class="n">unix_error</span><span class="p">(</span><span class="s">"waitpid error"</span><span class="p">);</span>
+
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="程序休眠">程序休眠</h1>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">sleep</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">secs</span><span class="p">);</span>
+<span class="c1">//Returns: seconds left to sleep</span>
+<span class="c1">//如果已经睡满, 返回0</span>
+<span class="c1">//如果休眠被信号中断而过早返回,返回还剩下的要休眠的秒数.</span>
+<span class="kt">int</span> <span class="nf">pause</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="c1">//Always returns -1</span>
+<span class="c1">//使该进程休眠直到收到信号</span>
+</code></pre></div></div>
+
+<h1 id="加载并运行程序">加载并运行程序</h1>
+
+<h2 id="execve函数">execve函数</h2>
+
+<p>execve函数在<strong>当前进程的上下文中</strong>加载并运行一个新程序。</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">execve</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">envp</span><span class="p">[]);</span>
+
+<span class="c1">//filename: 可执行文件名</span>
+<span class="c1">//argv: argument list (命令行参数)</span>
+<span class="c1">//envp: environment variable list (环境变量)</span>
+
+<span class="c1">//does not return if OK, returns -1 on error</span>
+<span class="c1">//正常情况下绝不返回</span>
+</code></pre></div></div>
+
+<h2 id="命令行参数与环境变量">命令行参数与环境变量</h2>
+
+<p>对于什么是命令行参数与环境变量, 用图演示:
+<img src="https://s2.loli.net/2023/12/10/bHPlu2aF3UtGfnN.png" alt="image.png" /></p>
+
+<ul>
+  <li>argv变量指向一个以 null结尾的指针数组，其中每个指针都指向一个参数字符串。按照惯例，<code class="language-plaintext highlighter-rouge">argv[0]</code>是可执行目标文件的名字。</li>
+  <li>环境变量的列表是由一个类似的数据结构表示的，envp变量指向一 个以null结尾的指针数组，其中每个指针指向一个环境变量字符串，每个串都是形如 “name=value” 的名字-值对.</li>
+</ul>
+
+<p>在execve加载了filename之后，它调用启动代码, 设置好栈，并将控制传递给新程序的主函数，该主函数有如下形式的原型 
+<code class="language-plaintext highlighter-rouge">int main(int argc, char **argv, char **envp);</code>
+或 <code class="language-plaintext highlighter-rouge">int main(int argc, char *argv[], char *envp[]);</code></p>
+
+<p>三个参数:</p>
+<ol>
+  <li>argc, 是argv[]中非空指针的数量</li>
+  <li>argc, 指向argv[]中第一个条目</li>
+  <li>envp, 指向envp[]中第一个条目</li>
+</ol>
+
+<p>当main开始执行时, 用户栈的组织结构如下所示:</p>
+
+<p><img src="https://s2.loli.net/2023/12/10/Xpz83RoM1FD9TPw.png" alt="image.png" /></p>
+<h2 id="execve使用例子">execve使用例子</h2>
+
+<p>比如shell里面键入命令<code class="language-plaintext highlighter-rouge">ls -lt /usr/include</code>, 就会运行一个新的程序 <strong>ls</strong><br />
+并把<code class="language-plaintext highlighter-rouge">ls -lt /usr/include</code>作为命令行参数传入, 会影响程序的执行方式.</p>
+
+<h2 id="相关函数">相关函数</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">char</span> <span class="o">*</span><span class="nf">getenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="c1">//Returns: ptr to name if exists, NULL if no match.</span>
+<span class="kt">int</span> <span class="nf">setenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">newvalue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">overwrite</span><span class="p">);</span>    
+<span class="c1">//若overwrite非零, 用newvalue代替oldvalue</span>
+<span class="c1">//Returns: 0 on success, -1 on error.</span>
+<span class="kt">void</span> <span class="nf">unsetenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="c1">//如果环境数组包含一个形如"name=oldvalue"的字符串，那么unsetenv会删除它</span>
+<span class="c1">//Returns: nothing.</span>
+</code></pre></div></div>
+
+<h2 id="程序与进程的区别">程序与进程的区别</h2>
+
+<p>程序是一堆代码和数据；程序可以作为目标文件存在于磁盘上，或者作为段存在于地址空间中。</p>
+
+<p>进程是执行中程序的一个具体的实例；程序总是运行在某个进程的上下文中。</p>
+
+<h2 id="fork与execve的区别">fork与execve的区别</h2>
+
+<p>fork在==新的子进程==中运行相同的程序, 新的子进程是父进程的一个复制品.
+execve在==当前进程的上下文中==加载并运行一个新的程序。它会覆盖当前进程的地址空间, 但没有创建一个新进程. 新的程序仍然有==相同的PID==, 并且继承调用 execve 函数时已打开的所有文件描述符.</p>
+
+<h1 id="总结">总结</h1>
+
+<p>介绍了进程控制的相关函数, 包括fork, waitpid, sleep, execve, 其中fork与wait是极其重要且难懂的.</p>
+
+<p>下一章将讲解信号机制以及实现.</p>
+
+<p>#linux #操作系统 #进程 #并发 #fork</p>]]></content><author><name></name></author><summary type="html"><![CDATA[获得进程ID]]></summary></entry><entry><title type="html">图论(道路与回路)</title><link href="http://localhost:4000/2023/12/26/%E5%9B%BE%E8%AE%BA(%E9%81%93%E8%B7%AF%E4%B8%8E%E5%9B%9E%E8%B7%AF).html" rel="alternate" type="text/html" title="图论(道路与回路)" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/%E5%9B%BE%E8%AE%BA(%E9%81%93%E8%B7%AF%E4%B8%8E%E5%9B%9E%E8%B7%AF)</id><content type="html" xml:base="http://localhost:4000/2023/12/26/%E5%9B%BE%E8%AE%BA(%E9%81%93%E8%B7%AF%E4%B8%8E%E5%9B%9E%E8%B7%AF).html"><![CDATA[<h1 id="道路与回路">道路与回路</h1>
+
+<h2 id="有向道路有向回路">有向道路/有向回路</h2>
+<ul>
+  <li>如果P中的边没有重复出现，则分别称为简单 (simple)有向道路和简单有向回路</li>
+  <li>进而, 如果P中结点也不重复出现, 又分别称它们是初级(primary)有向道路和初级有向回路, 简称为路和回路</li>
+  <li>显然,初级有向道路path(回路circuit)一定是简单有向道路(回路)</li>
+</ul>
+
+<blockquote>
+  <p>我的理解:这里指结点不重复出现,指的是1个结点不作为起点/终点两次及以上</p>
+</blockquote>
+
+<p><img src="https://s2.loli.net/2023/11/23/sfwzLZEOPkdQou1.png" alt="屏幕截图 2023-11-23 183548.png" /></p>
+
+<h2 id="无向图的道路及道路的长度">无向图的道路及道路的长度</h2>
+
+<p>无向图G=(V, E)中，若点边交替序列$P=(v_{i1}, e_{i1}, v_{i2}, e_{i2}, …, e_{iq-1}, v_{iq})$满足$v_{ik}, v_{ik+1}是e_{ik}$的两个端点, 则称P 是G中的一条链或道路. 如果$v_{iq}=v_{i1}$, 则称P是G中的一 个圈或回路，其长度为边数（q-1）</p>
+
+<p>如果P中没有重复出现的边, 称之为简单道路或简单回路, 
+若其中结点也不重复,又称之为初级道路或初级回路 ^155bcf</p>
+
+<h2 id="联通图">联通图</h2>
+
+<ul>
+  <li>G是无向图:  若G的任意两结点之间都存在道路, 就称G是连通图, 否则称为非连通图</li>
+  <li>如果G是有向图, 不考虑其边的方向, 即视为无向图; 若它是连通的, 则称G是连通图</li>
+  <li>若连通子图H不是G的任何连通子图的真子图, 则称 H是G的极大连通子图或称连通支</li>
+  <li>显然G的每个连通支都是它的导出子图</li>
+</ul>
+
+<p><img src="https://s2.loli.net/2023/11/23/KLeDjdkly8bG2X7.png" alt="屏幕截图 2023-11-23 190613.png" />
+[[图论(道路与回路)#^b901fa|联通图的性质]]</p>
+
+<h2 id="弦">弦</h2>
+
+<h3 id="定义">定义</h3>
+<p>设C是[[图论(基本概念)#^d54723|简单图]]G中含==结点数大于3==的一个[[#^155bcf|初级回路]]，如果结点vi和vj在C中不相邻，而边 (vi,vj)$\in$E(G)，则称(vi,vj)是C的一条弦。该回路也称为带弦回路（chordal circuit）。</p>
+
+<h3 id="定理">定理</h3>
+<p><strong>若对简单图G中每一个vk$\in$V(G)，都有d(vk)≥3， 则G中必含带弦的回路。</strong>
+证明: 在G中构造一条极长（不可外延）的初级道路 （不可内延）$P=(v_0, e_{i1}, v_1, e_{i2}, …, v_{l-1}, e_{il}, v_l)$。
+由于P是 极长的初级道路，所以v0和vl的邻接点都在该道路P上。
+由已知条件，d($v_k$)≥3，不妨设Γ($v_0$)={$v_1, v_{ij}, v_{ik}, …$}, 其 中1&lt;j&lt;k, 这时($v_0, v_1, …, v_{ik}, v_0$)是一条初级回路，而(v0, $v_{ij}$)就是该回路中的一条弦。
+<img src="https://s2.loli.net/2023/11/23/BPi9taQhq7RH15O.png" alt="屏幕截图 2023-11-23 192648.png" /></p>
+
+<h3 id="极长初级道路">极长初级道路</h3>
+
+<p>在无向简单图G=中, E≠∅, 设Γ1=v0,v1,…,vl为G中一条初级道路,若路径的两个端点v0和vl <strong>不与初级道路本身以外的任何结点</strong> 相邻, 这样的初级道路称为极长初级道路
+(有向图中, 初级道路起点的前驱, 终点的后继, 都在初级道路本身上)</p>
+
+<h3 id="扩大初级道路法">扩大初级道路法</h3>
+
+<p>任何一条初级道路, 如果不是极长初级道路, 则<strong>至少有一个端点与初级道路本身以外的结点相邻</strong>, 则将该结点及其相关联的边扩到新的初级道路中来, 得到更新的初级道路。继续上述过程, 直到变成极长初级道路为止.</p>
+
+<h2 id="二分图">二分图</h2>
+
+<h3 id="定义-1">定义</h3>
+<p>设G=(V,E)是无向图，如果V(G)可以划分为子 集X和Y，使得对所有的e=(u,v)$\in$E(G), 都有u 和v分属于X和Y，则称G是二分图。
+<img src="https://s2.loli.net/2023/11/23/NYgZH85oaSQ7E3d.png" alt="屏幕截图 2023-11-23 200206.png" /></p>
+
+<h3 id="定理-1">定理</h3>
+<ul>
+  <li>含有K3子图的图一定不是二分图（鸽巢原理）</li>
+  <li>Kn不是二分图（n&gt;=3）
+K3: 其中一条边一定落在X或Y中</li>
+</ul>
+
+<h2 id="图的性质">图的性质</h2>
+
+<ul>
+  <li>
+    <p>证明：如果二分图G中存在回路，则它们都是 由偶数条边组成的。
+  设C是二分图G的任一条回路，不妨设v0$\in$X 是C的始点，由于G是二分图，所以沿回路C必须经 过偶数条边才能达到某结点vi$\in$X，因而只有经过偶 数条边才能回到v0</p>
+  </li>
+  <li>
+    <p>证明：设G是简单图，当m&gt;(n-1)(n-2)/2时，G 是连通图。
+  <strong>证明：</strong> 设 $G$ 是非连通图，则它至少含有 2 个连通分支。设分别是 $G_1=(V_1, E_1)$, $G_2=(V_2, E_2)$，其中
+  $|V_1(G_1)|=n_1$, $|V_2(G_2)|=n_2$, $n_1 + n_2 = n$,
+  $|E_1(G_1)| + |E_2(G_2)| = m$。
+  由于 $G$ 是简单图，因此
+  $1 \leq n_1 \leq n-1$, $1 \leq n_2 \leq n-1$。</p>
+
+    <p>所以
+  \(\begin{align*}
+  &amp; n_1(n_1-1)/2 + n_2(n_2-1)/2 \\
+  &amp; \leq (n-1)(n_1-1)/2 + (n-1)(n_2-1)/2 \\
+  &amp; = (n-1)(n_1+n_2-2)/2 \\
+  &amp; = (n-1)(n-2)/2
+  \end{align*}\)
+  与已知条件 $m &gt; n(n-1)/2$ 矛盾，故 $G$ 是连通图。
+ ^b901fa</p>
+  </li>
+  <li>
+    <p>n个结点的连通图的边数一定≥n-1</p>
+  </li>
+</ul>
+
+<h2 id="两点间距离割点割边">两点间距离,割点,割边</h2>
+
+<ul>
+  <li>两点间距离：若u与v连通，则u与v之间==最短道路长度==为u与v的距离</li>
+  <li>割点：去掉该点（及关联边后），图的==连通分支数==上升</li>
+  <li>割边：去掉该边后，图的==连通分支数==上升</li>
+</ul>
+
+<h1 id="欧拉道路与回路">欧拉道路与回路</h1>
+
+<h2 id="定义-2">定义</h2>
+
+<p>无向连通图G=(V, E)中的一条经过所有边的<a href="道路">[图论(道路与回路)#^155bcf|简单回路]</a>称为G的欧拉回路(道路)
+包含欧拉回路的图为欧拉图。</p>
+
+<h2 id="欧拉定理">欧拉定理</h2>
+
+<p>定理2.3.1: 无向连通图G存在欧拉回路的==充要条件==是G中各结点的<strong>度都是偶数</strong></p>
+
+<p><strong>必要性</strong>：若G中有欧拉回路C，则C过每条边一次且 仅一次．对任一结点v来说，如果C经过ei进入v，则 一定通过另一条边ej从v离开.因此结点v的度是偶数.</p>
+
+<p><strong>充分性</strong>：由于G是有穷图，因此可以断定，从G的任一结点v0出发<strong>一定存在G的一条简单回路C.</strong> 这是因为各结点的度都是偶数，所以这条简单道路不可能停留在v0以外的某个点，(==有进有出==)而不能再向前延伸以致构成回路C
+如果E(G)=C, 则C就是欧拉回路，充分性得证。 
+否则在G中删去C的各边，得到G1=G-C。 G1可能是非连通图，但是每个结点的==度保持为偶数==。这时，G1中一定存在某个度非零的结点vi, 同时vi也是C 中的结点。否则C的结点与G1的结点之间无边相连， 与G是连通图矛盾。 
+同理，从vi出发，G1中vi所在连通分支内存在一条简单回路C1。(<strong>递归分析</strong>)
+显然，C∪C1仍然是G的一条简单回路，但它包括的边数比C多。 继续以上构造方法，最终有简单回路C’= C∪C1∪…∪Ck ，它包含了G的全部边，即C’是G 的一条欧拉回路</p>
+
+<p>==也可以使用数学归纳法==</p>
+
+<p>构造欧拉回路:
+方法同上证明: 先找一个小回路,再从小回路中能与外界联系的点出发继续找回路.</p>
+
+<p><img src="https://s2.loli.net/2023/11/23/8WnSNP6oKT2vyqa.png" alt="屏幕截图 2023-11-23 213746.png" /></p>
+
+<p>推论2.3.1: 若无向连通图G中只有2个度为奇的结点,则G存在欧拉==道路==. 
+证明：设vi和vj是两个度为奇数的结点. 作G’=G+(vi, vj), 则G’中各点的度都是偶数. 根据[[图论(道路与回路)#欧拉定理|欧拉定理]]G’有欧拉回路, 它含边(vi, vj), 删去该边, 得到一条从vi到vj的==简单道路==, 它恰好经过了G的所有边, 亦即是一条欧拉道路</p>
+
+<p>推论2.3.2: 若有向连通图G中各结点的正、负度相等, 则G 存在有向欧拉道路
+证明类似于定理1</p>
+
+<p>定理2.3.2: 设连通图G=(V,E)有k个度为奇数的结点， 那么E(G)可以划分成k/2条简单道路。</p>
+<blockquote>
+  <p>证明：由性质1.1.2，k是偶数。在这k个结点间增添 k/2条边，使每个结点都与其中一条边关联，得到 G’，那么G’中各结点的度都为偶数。 由定理1，G’包含一个欧拉回路C。而新添的 k/2条边在C上都不相邻。所以删去这些边后，我 们就得到由E(G)划分成的k/2条简单道路。</p>
+</blockquote>
+
+<h2 id="应用">应用</h2>
+
+<p><img src="https://s2.loli.net/2023/11/28/GFdwnAfTSZzlD7o.png" alt="屏幕截图 2023-11-23 220458.png" /></p>
+
+<p>解答：如果从状态$a_1a_2a_3a_4$($a_i$=0或1)逆时针方向旋转一个扇面，那么新的输出是$a_2a_3a_4a_5$，其 中有三位数字不变。
+因此可以用8个结点表示 从000到111这8个二进制数，这样从结点($a_{i+1}a_ia_{i+1}$)可以到达结点($a_ia_{i+1}0$)或($a_ia_{i+1}1$)，其输出分别是($a_{i-1}a_ia_{i+1}0$)和($a_{i-1}a_ia_{i+1}1$)，这样可以得到下图。
+<img src="https://s2.loli.net/2023/11/28/fKcXSD1wiIQ2PYC.png" alt="屏幕截图 2023-11-23 220515.png" /></p>
+
+<p>该图是有向连通图，共有16条边，且每结点的正、负度相等。有推论2.3.2，它存在有向欧拉回路。其中任一条都是原问题的解，比如(0000 1010 0110 1111)就是一个方案。 0000, 0001, 0010, 0101, 1010, 0100, 1001, 0011, 0110, 1101, 1011, 0111, 1111, 1110, 1100, 1000.</p>
+
+<h1 id="哈密顿道路与回路">哈密顿道路与回路</h1>
+
+<h2 id="定义哈密顿图">定义(哈密顿图)</h2>
+<ul>
+  <li>无向图的一条过全部结点的初级回路(道路)称为G 的哈密顿回路(道路),简记为H回路(道路)</li>
+  <li>哈密顿回路是初级回路，因此它与欧拉回路不同。当然在特殊情况下，G的哈密顿回路恰好也是其欧拉回路</li>
+  <li>判定H回路存在性问题一般是针对简单图的(删去重边与自环无影响)</li>
+</ul>
+
+<h2 id="回路-引理">回路-引理</h2>
+<p>引理*: 设P=(v1, v2, …, vl)是图G中一条极长的初级道路(即v1和vl的邻点都在P上)
+而且d(v1)+d(vl)≥l， 
+则G中一定存在经过结点v1, v2, …, vl的初级回路。
+<strong>Hint</strong>: $p \wedge q\to r \Rightarrow p \wedge \neg r\to \neg q$
+<img src="https://s2.loli.net/2023/11/23/myrAQ4WCpJHOUTM.png" alt="屏幕截图 2023-11-23 234628.png" /></p>
+
+<p>上面$d(v_l)\leq l-k-1$的推导过程: 对于与v1相连的每一个结点(vp), vl都不能与其前一个结点(vp-1)相邻,共有k个这样的结点,故l要减去k</p>
+
+<h2 id="哈密顿道路与回路-充分性定理1">哈密顿道路与回路-充分性定理1</h2>
+
+<p>定理2.4.1: 如果简单图G的任意两不相邻结点vi, vj之间恒有 d(vi)+d(vj)≥n-1 则G中存在哈密顿道路</p>
+
+<p>证明:
+先证G是连通图。若G非连通，则至少分为2个连通支H1, H2，其结点数分别为n1, n2。从中各任取 一个结点vi, vj，则 d(vi)≤n1-1， d(vj)≤n2-1。 故d(vi)+d(vj)&lt;n-1. 矛盾</p>
+
+<p>以下证G存在H道路。设P=(vi1, vi2, …, vil)是G中一 条极长的初级道路，即vi1和vil的邻点都在P上。此时，</p>
+<ol>
+  <li>若l=n, P即为一条H道路</li>
+  <li>若l&lt;n,则可以证明G中一定存在经过结点vi1, vi2, …, vil的初级回路 C 。(引理*)</li>
+</ol>
+
+<p>由于 $G$ 连通，所以存在 $C$ 之外的结点 $v_t$ 与 $C$ 中某点 $v_{iq}$ 相邻。删去 $(v_{iq-1}, v_{iq})$，则 $P’=(v_t, v_{iq}, \ldots, v_{ip-1}, v_{il}, \ldots, v_{ip}, v_{i1}, \ldots, v_{iq-1})$ 是 $G$ 中一条比 $P$ 更长的初级道路。以 $P’$ 的两个端点 $v_t$ 和 $v_{iq-1}$ 继续扩充，可得到一条新的极长的初级道路。重复上述过程，因为 $G$ 是有穷图，所以最终得到的初级道路一定包含了 $G$ 的全部结点，即是 $H$ 道路。</p>
+
+<p><img src="https://s2.loli.net/2023/11/24/kKCz6XrcUwBE4n5.png" alt="屏幕截图 2023-11-24 000431.png" /></p>
+
+<p>推论2.4.1（ORE） 
+若简单图G（n&gt;=3）的任意两个不相临结点vi和vj之间恒有 d(vi)+d(vj)≥n 则G中存在哈密顿回路
+证明：由定理2.4.1，G有H道路。设其两端点是v1和vn，若G不存在H回路，根据[[#回路-引理]]证明，一定有：若d(v1)=k, 则d(vn)≤n-k-1， 那么d(v1)+d(vn)≤n-1</p>
+
+<p>推论2.4.2（DIRAC） 
+若简单图Ｇ（n&gt;=3）中每个结点的度都大于等于n/2，则G有H 回路 
+证明：由推论2.4.1可得。</p>
+
+<h2 id="闭合图">闭合图</h2>
+
+<p><img src="https://s2.loli.net/2023/11/24/VB3XLhdqTHlFZyw.png" alt="屏幕截图 2023-11-24 001513.png" />
+引理2.4.1 简单图G的闭合图C(G)是唯一的。 
+证明：设C1(G)和C2(G)是G的两个闭合图，L1={e1, e2, …, er}, L2={a1, a2, …,as}分别是C1(G)和C2(G)中新加入边的集合，可以证明L1=L2, 即C1(G)=C2(G)。
+如若不然，不失一般性，设 $e_{i+1}=(u,v)\in L1$是构造C1(G)时第一条不属于L2的边，亦即 $e_{i+1}\notin L2$ 。
+令H=G∪{e1, e2, …, ei},这时H是C1(G)也是C2(G)的 子图。
+由于构造C1(G)时要加入$e_{i+1}$，显然H中满足d(u)+d(v)≥n， 但是(u,v)$\notin$C2(G)，与C2(G)是G的闭合图矛盾。</p>
+
+<p>引理2.4.2 设G是简单图, vi,vj是不相邻结点，且满足 d(vi)+d(vj)≥n. 则G存在H回路的充要条件是G+(vi, vj) 有H回路 
+证明：必要性显然。现证充分性。假定G不存在H回路，则G+(vi,vj)的H回路一定经过边(vi,vj)，删去(vi,vj)， 即G中存在一条以vi,vj为端点的H道路，这时由 [[图论(道路与回路)#回路-引理|引理*]] 知必有 d(vi)+d(vj)&lt;n (否则一定存在H回路), 而这与已知矛盾</p>
+
+<h2 id="哈密顿道路与回路-充分性定理2">哈密顿道路与回路-充分性定理2</h2>
+
+<p>定理2.4.2 简单图G存在哈密顿回路的 ==充要条件== 是其闭合图存在哈密顿回路 
+==闭合图的性质：任意两个不相邻结点，度之和&gt;=n==
+证明：设C(G)=G∪L1, L1={e1, e2, …, et}, 由引理2.4.1和引理2.4.2， G有H回路$\Leftrightarrow$G+e1有H回路$\Leftrightarrow$… $\Leftrightarrow$G∪L1有H回路.
+由于C(G)是唯一的，故定理得证。</p>
+
+<p>推论2.4.3 设G(n≥3)是简单图, 若C(G)是完全图Kn, G有H回路 说明:d(vi)+d(vj)=(n-1)+(n-1)=n+(n-2)</p>
+
+<h2 id="例子">例子</h2>
+<p>举例：设n(≥3)个人中，任两个人合在一起都认识其余n-2个人。证明这n个人可以排成一队，使相邻者都互相认识。 
+证明：每个人用一个结点表示，相互认识则用边连接相应的结点，于 是得到简单图G。若G中有H道路，则问题得证。 由已知条件，对任意两点vi, vj$\in$V(G)，都有d(vi)+d(vj)≥n-2。此时， 
+(1)若vi和vj相识，即(vi,vj)$\in$E(G), 则d(vi)+d(vj)≥n 
+(2) 若vi和vj不相识，必存在vk$\in$V(G)，满足(vi,vk), (vj,vk) $\in$E(G)。否则， 设(vi,vk)$\notin$E(G)，就出现vk, vj合在一起不认识vi，与已知矛盾。因此也有d(vi)+d(vj)≥n-1 综上由[[图论(道路与回路)#哈密顿道路与回路-充分性定理1|充分性定理1]]，G中存在H道路</p>
+
+<h2 id="哈密顿道路与回路-必要性定理">哈密顿道路与回路-必要性定理</h2>
+<p>必要性定理： 若G是H-图（此处特指H回路），则对于V的每个非空真子集S，均有W(G-S)≤|S|，其中W(G-S) 是G-S中连通分支数。 
+证明：设C是G的H-回路，则对于V的每个非空真子集S均有W(C-S)≤|S|.([[图论(道路与回路)#哈密顿道路与回路-充分性定理2|充分性定理2]])
+而C-S是G-S的生成子图，故W(G-S)≤W(C-S),因此W(G-S)≤|S|。</p>
+
+<p>#数据结构 #图论</p>]]></content><author><name></name></author><summary type="html"><![CDATA[道路与回路]]></summary></entry><entry><title type="html">Jekyll + github pages</title><link href="http://localhost:4000/2023/12/26/Jekyll-+-Github-Pages.html" rel="alternate" type="text/html" title="Jekyll + github pages" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/Jekyll%20+%20Github%20Pages</id><content type="html" xml:base="http://localhost:4000/2023/12/26/Jekyll-+-Github-Pages.html"><![CDATA[<p>原文链接： [<a href="https://zhuanlan.zhihu.com/p/87225594">Jekyll + Github Pages 搭建个人免费博客 - 知乎 (zhihu.com)</a>]</p>
+
+<p><strong>Jekyll</strong> 的核心是一个文本转换引擎。它的方便之处在于支持多种文本标记语言：Markdown，Textile，HTML，然后 Jekyll 就会帮你加入你选择主题的样式的布局中。最终生成你自己的静态博客网站。</p>
+
+<p>## <br />
+<strong>博客搭建步骤</strong></p>
+
+<p><strong>1.安装环境</strong><br />
+<strong>1.1 安装Ruby</strong><br />
+官网地址：<a href="https://link.zhihu.com/?target=https%3A//rubyinstaller.org/downloads/">https://rubyinstaller.org/downloads/</a><br />
+根据自己的需要下载不同版本，直接点击“下一步”就可轻松安装成功。</p>
+
+<p><strong>1.2 安装RubyGems</strong><br />
+官网地址：<a href="https://link.zhihu.com/?target=https%3A//rubygems.org/pages/download">https://rubygems.org/pages/download</a><br />
+据自己的需要下载不同版本。解压压缩文件到本地。在 CMD 命令窗口执行如下命令：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd D:\下载\rubygems-3.0.6\rubygems-3.0.6	#切换文件目录 
+ruby setup.rb        #安装
+rubygems ruby -v     #查看rubygems版本号
+</code></pre></div></div>
+
+<p><strong>1.3 安装Jekyll</strong><br />
+以上两个步骤操作完成后，在 CMD 窗口执行如下命令安装Jekyll：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install jekyll   #安装jekyll  
+jekyll -v    #查看jekyll版本号
+</code></pre></div></div>
+
+<p><strong>2.本地搭建博客<br />
+2.1 项目启动</strong></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new restlessManBlog   #新建博客 
+cd restlessManBlog           #切换目录 
+jekyll server                #启动项目
+</code></pre></div></div>
+
+<p>项目启动日志如下：</p>
+
+<p><img src="https://pic3.zhimg.com/80/v2-5d3fe0290ff5cdfa5dea3fe01a69cb6a_1440w.webp" alt="" /></p>
+
+<p>在浏览器访问：<a href="https://link.zhihu.com/?target=http%3A//localhost%3A4000/">http://localhost:4000/</a></p>
+
+<p><strong>2.2 添加 MarkDown 文档</strong><br />
+在项目根目录下的 _posts 目录创建 markdown 文档。这里注意 md 文档命名要添加 “yyyy-mm-dd”的前缀。<br />
+例如：2019-10-11-5分钟搭建博客.md</p>
+
+<p><strong>2.3 部署代码到 Github</strong><br />
+<strong>2.3.1 创建 Github 账号</strong><br />
+注：这里我使用的 Github 托管静态博客的，你也可以选择把代码托管到 <strong>码云</strong> 或者其他平台上。<br />
+没有 Github 账号的朋友可以注册一个账号，有账号的朋友可跳过。</p>
+
+<p><strong>2.3.2 创建代码仓库</strong><br />
+创建一个名称为 ‘账号名称.<a href="https://link.zhihu.com/?target=http%3A//github.io">http://github.io</a>’。例如：我的账号名是<strong>helloRestlessMan</strong>，仓库名就是 <a href="https://link.zhihu.com/?target=http%3A//helloRestlessMan.github.io">helloRestlessMan.github.io</a></p>
+
+<p><strong>2.3.3 部署代码到Github</strong><br />
+在我们创建的博客的目录找到 _site 目录，将 _site 目录下的所有文件都提交到Github上。</p>
+
+<p><img src="https://pic2.zhimg.com/80/v2-a4dc583cdc7c297a3e653e333474d79d_1440w.webp" alt="" /></p>
+
+<p>操作步骤：</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git clone https://github.com/helloRestlessMan/helloRestlessMan.github.io.git    
+#克隆远程代码到本地 
+拷贝_site 文件到 helloRestlessMan.github.io 
+cd helloRestlessMan.github.io 
+git add .   #git 命令添加所有文件 
+git commit -m "创建 Jekyll 个人博客"      #git 提交文件 
+git push    #git 推送代码到远程
+</code></pre></div></div>
+
+<p><strong>2.5 访问自己的博客网站</strong><br />
+效果如下图：</p>
+
+<p><img src="https://pic4.zhimg.com/80/v2-b9c10a847764e33f0aec50d419f903c3_1440w.webp" alt="" />
+#blog #博客</p>]]></content><author><name></name></author><summary type="html"><![CDATA[原文链接： [Jekyll + Github Pages 搭建个人免费博客 - 知乎 (zhihu.com)]]]></summary></entry><entry><title type="html">Markdown</title><link href="http://localhost:4000/2023/12/26/Markdown.html" rel="alternate" type="text/html" title="Markdown" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/Markdown</id><content type="html" xml:base="http://localhost:4000/2023/12/26/Markdown.html"><![CDATA[<h3 id="标题">标题</h3>
+
+<p>Markdown的标题有两种格式。</p>
+
+<p>1. <strong>使用#标记</strong>，这也是使用最多的格式 ＃的个数对应标题的级数,，Markdown最高支持６级标题。<strong>输入完#后要再输入一个空格！</strong></p>
+
+<ol>
+  <li>使用=和-分别标记一级标题和二级标题 =和-需要输入两个及以上，此法只能标记两级标题，还需换行输入，略微繁琐并不推荐。</li>
+</ol>
+
+<p><img src="https://pic3.zhimg.com/80/v2-0947b8964c6db38b9c927dd5b7f2b54a_1440w.webp" alt="" /></p>
+
+<p>标题使用实例</p>
+
+<h3 id="段落">段落</h3>
+
+<p>用Markdown编写中回车键是不会换行的，只会在夹断处产生一个空格的效果。</p>
+
+<p>成功换行需在段落结尾敲两个及以上空格后回车。</p>
+
+<p>（目前大部分编辑器做了调整，不输入空格直接回车也能成功换行）</p>
+
+<p><img src="https://pic3.zhimg.com/80/v2-4e44c566107a2a83e3c5deff20773fde_1440w.webp" alt="" /></p>
+
+<p>段落使用实例</p>
+
+<h3 id="字体">字体</h3>
+
+<p>字体可以使用<strong>星号</strong>或<strong>下划线</strong>实现，Markdown支持三种字体。</p>
+
+<blockquote>
+  <p><em>斜体文本</em><br />
+<strong>粗体文本</strong><br />
+<strong><em>粗斜体文本</em></strong></p>
+</blockquote>
+
+<p><img src="https://pic3.zhimg.com/80/v2-011ca29cbbf1ca3c39700c287eb4bdc6_1440w.webp" alt="" /></p>
+
+<p>字体使用实例</p>
+
+<h3 id="分隔线删除线下划线">分隔线、删除线、下划线</h3>
+
+<ul>
+  <li>分隔线可以在一行中用三个以上的<strong>星号</strong>或<strong>下划线</strong>来建立，行内不能有其他东西，但你可以在星号或是下划线中间插入空格。</li>
+  <li>删除线只需要在文字的两端加上<strong>两个波浪线~~</strong> 即可。</li>
+  <li>下划线可以通过 <em>**</em> 来实现，<em>**</em> 代表结束下划线。</li>
+</ul>
+
+<p><img src="https://pic1.zhimg.com/80/v2-6214198ca504dacaffba68fe3bd30084_1440w.webp" alt="" /></p>
+
+<p>线使用实例</p>
+
+<h3 id="脚注">脚注</h3>
+
+<p>脚注是文本末处对文本的补充说明，Markdown脚注的格式如下：</p>
+
+<blockquote>
+  <p>一定要一键三连[^三连]<br />
+[^三连]: 关注、点赞、收藏</p>
+</blockquote>
+
+<p><img src="https://pic4.zhimg.com/80/v2-401ea9fa2069b36d86165ebeb29207df_1440w.webp" alt="" /></p>
+
+<p>脚注使用实例</p>
+
+<h3 id="列表">列表</h3>
+
+<p>Markdown支持无序列表和有序列表。</p>
+
+<ul>
+  <li>无序列表使用<strong>星号、加号或是减号</strong>作为列表标记，这些标记后面要输入一个空格。</li>
+  <li>有序列表使用<strong>数字和点</strong>来表示，也需要在点后输入一个空格。</li>
+  <li>列表嵌套只需在子列表中的选项前面添加<strong>四个及以上的空格</strong>即可。</li>
+</ul>
+
+<p><img src="https://pic1.zhimg.com/80/v2-ad4bc61a7438046764cce86231d9c75c_1440w.webp" alt="" /></p>
+
+<p>列表使用实例</p>
+
+<h3 id="转义">转义</h3>
+
+<p>Markdown使用了很多特殊符号来表示特定的意义，如果需要显示特定符号则需要使用<strong>转义字符反斜杠</strong> \ ：</p>
+
+<p><img src="https://pic3.zhimg.com/80/v2-065a612003ae155fb70e1cacdef0a71a_1440w.webp" alt="" /></p>
+
+<p>在这里插入图片描述</p>
+
+<h3 id="区块">区块</h3>
+
+<ul>
+  <li>Markdown区块是在段落开头使用&gt;符号 ，然后紧跟一个空格。</li>
+  <li>区块是可以嵌套的，一个&gt;符号是最外层，两个&gt;符号是第一层嵌套，以此类推。</li>
+  <li>如果要在列表项目内放进区块，那么就需要<strong>在&gt;前添加四个空格的缩进</strong>。</li>
+</ul>
+
+<p><img src="https://pic1.zhimg.com/80/v2-8b1c46caef16ecd7bf328c30bfc08d74_1440w.webp" alt="" /></p>
+
+<p>区块使用实例</p>
+
+<h3 id="代码">代码</h3>
+
+<ul>
+  <li>如果是段落上的一个函数或片段的代码可以用<strong>反引号 `</strong> 把它包起来。</li>
+  <li>代码区块可以用<strong>三个反引号```</strong> 包裹一段代码，并指定一种语言（也可以不指定），指定语言后可以有高亮效果。</li>
+  <li>代码区块也可以使用<strong>4个空格或者一个制表符（Tab键）</strong>。</li>
+</ul>
+
+<p><img src="https://pic2.zhimg.com/80/v2-7d24bb154efc0d8d09e695b5820d76e9_1440w.webp" alt="" /></p>
+
+<p>代码使用实例</p>
+
+<h3 id="表格">表格</h3>
+
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>Markdown 制作表格**使用</td>
+          <td>来分隔不同的单元格，使用 - 来分隔表头和其他行**。</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>我们可以在 - 行设置表格的对齐方式：</li>
+</ul>
+
+<blockquote>
+  <p>—–: 设置内容和标题栏居右对齐。<br />
+:—–设置内容和标题栏居左对齐。<br />
+:—-: 设置内容和标题栏居中对齐。</p>
+</blockquote>
+
+<p><img src="https://pic3.zhimg.com/80/v2-4023c0a2083147ecab7e1adb5cd93c9a_1440w.webp" alt="" /></p>
+
+<p>表格使用实例</p>
+
+<h3 id="链接">链接</h3>
+
+<p>链接使用方法如下：</p>
+
+<blockquote>
+  <p><a href="链接地址">链接名称</a> 或者直接使用<链接地址>  
+如果一个链接地址被多次使用，我们也可以设置一个链接变量  
+[链接名称][百度]  
+[百度]: [http://www.baidu.com](https://link.zhihu.com/?target=http%3A//www.baidu.com)</链接地址></p>
+</blockquote>
+
+<p><img src="https://pic1.zhimg.com/80/v2-87e7fde9b0d0fd9b3b53b3a1bdf97108_1440w.webp" alt="" /></p>
+
+<p>链接使用实例</p>
+
+<h3 id="图片">图片</h3>
+
+<p>Markdown 图片语法格式如下：</p>
+
+<blockquote>
+  <p><img src="图片地址" alt="图片描述" /></p>
+</blockquote>
+
+<p>注：图片支持jpg、png、gif、svg等图片格式，其中svg文件仅可在微信公众平台中使用。</p>
+
+<p>仅支持 https 的图片，图片粘贴到网页编辑器后，会自动上传到服务器；</p>
+
+<p>如果是本地编辑器，需要有一个相对路径用来存储保存的图片。</p>
+
+<p><img src="https://pic4.zhimg.com/80/v2-d60f9fa6a4daa935914b42cba3fb6dbf_1440w.webp" alt="" /></p>
+
+<p>图片使用实例</p>
+
+<p>#markdown</p>]]></content><author><name></name></author><summary type="html"><![CDATA[标题]]></summary></entry><entry><title type="html">Qt gui 代码大全</title><link href="http://localhost:4000/2023/12/26/Qt-GUI-%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8.html" rel="alternate" type="text/html" title="Qt gui 代码大全" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/Qt%20GUI%20%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8</id><content type="html" xml:base="http://localhost:4000/2023/12/26/Qt-GUI-%E4%BB%A3%E7%A0%81%E5%A4%A7%E5%85%A8.html"><![CDATA[<h1 id="窗口设置">窗口设置</h1>
+
+<h2 id="qmainwindow类">QMainWindow类</h2>
+
+<ul>
+  <li>
+    <p>QMainWindow(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())</p>
+  </li>
+  <li>
+    <p>void setCentralWidget(QWidget *widget); //set the given widget to the main window’s central widget</p>
+  </li>
+  <li>
+    <p>void setFixedSize(int w, int h); //set the size of the widget</p>
+  </li>
+  <li>
+    <p>void setWindowIcon(QIcon(QString filepath));</p>
+  </li>
+</ul>
+
+<h1 id="按钮和菜单">按钮和菜单</h1>
+
+<h2 id="qmenubar类">QMenuBar类</h2>
+
+<ul>
+  <li>
+    <p>QMenuBar *QMainWindow::menuBar() const
+返回MainWindow的menu bar
+//creates and returns an empty menu bar if the menu bar does not exist.</p>
+  </li>
+  <li>QMenuBar::addMenu(QMenu *menu)</li>
+  <li>QMenuBar::addMenu(const QString&amp; title)</li>
+</ul>
+
+<h2 id="qmenu类">QMenu类</h2>
+<ul>
+  <li>addAction(QAction *action)</li>
+  <li>addSeparator()</li>
+</ul>
+
+<h2 id="qaction类">QAction类</h2>
+<p>可以看成是一个动作,连接到槽</p>
+
+<ul>
+  <li>
+    <p>QAction(const QString &amp;text, QObject *parent = nullptr)</p>
+  </li>
+  <li>设置快捷键
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">QAction</span><span class="o">::</span><span class="n">setShortcuts</span><span class="p">(</span><span class="k">const</span> <span class="n">QList</span><span class="o">&lt;</span><span class="n">QKeySequence</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">shortcuts</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">-&gt;setStatusTip(tr("Start a new game"));</code> 设置说明</li>
+  <li>-&gt;setEnabled(false) 设置按钮激活状态</li>
+  <li>connect(aboutAction, &amp;QAction::triggered, this, &amp;MainWindow::about);</li>
+</ul>
+
+<h1 id="文件交互">文件交互</h1>
+
+<h2 id="qfiledialog类">QFileDialog类</h2>
+<p>用于打开文件选择窗口</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QString</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">::</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">tr</span><span class="p">(</span><span class="s">"Open File"</span><span class="p">),</span>                                       <span class="s">"/home"</span><span class="p">,</span>  <span class="c1">//文件夹目录</span>
+<span class="n">tr</span><span class="p">(</span><span class="s">"Images (*.png *.xpm *.jpg)"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="qfileinfo类">QFileInfo类</h2>
+<p>用于获取文件的相关信息,比如后缀名等等</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QString</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">fileInfo</span><span class="p">.</span><span class="n">suffix</span><span class="p">().</span><span class="n">toLower</span><span class="p">();</span>  <span class="c1">// 获取小写的文件后缀名</span>
+</code></pre></div></div>
+
+<h2 id="qfile类">QFile类</h2>
+
+<ul>
+  <li>QFile(QString filename, QObject *parent*);</li>
+  <li>.setFileName(filePath);</li>
+</ul>
+
+<h2 id="qtextstream">QTextStream</h2>
+<p>文本流,用于读取数据
+QTextStream::QTextStream(FILE *fileHandle, QIODevice::OpenMode openMode = QIODevice::ReadWrite)</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QTextStream</span> <span class="nf">in</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>逐行读取
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">in</span><span class="p">.</span><span class="n">atEnd</span><span class="p">()){</span>
+  <span class="n">QString</span> <span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">readLine</span><span class="p">();</span> <span class="c1">// 读取一行</span>
+   <span class="p">...</span> <span class="c1">// 逐行处理</span>
+  <span class="p">}</span>
+  <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="qmessagebox类">QMessageBox类</h1>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">information</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span>
+    <span class="n">tr</span><span class="p">(</span><span class="s">"Game Over"</span><span class="p">),</span> <span class="n">tr</span><span class="p">(</span><span class="s">"Again?"</span><span class="p">),</span>
+    <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">No</span><span class="p">,</span>
+    <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="p">))</span> <span class="p">{</span>
+    
+    <span class="n">game</span><span class="o">-&gt;</span><span class="n">newGame</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<h1 id="绘图">绘图</h1>
+
+<h2 id="qpixmap类">QPixmap类</h2>
+<p>贴图,纹理</p>
+
+<ul>
+  <li>
+    <p>QPixmap::QPixmap(int width, int height)
+//注释:上面尚未fill with color</p>
+  </li>
+  <li>
+    <p>QPixmap::QPixmap(const QString &amp;fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor)</p>
+  </li>
+  <li>
+    <p>void QPixmap::fill(const QColor &amp;color = Qt::white)</p>
+  </li>
+</ul>
+
+<h2 id="qpainter类">QPainter类</h2>
+
+<ul>
+  <li>QPainter(QPaintDevice *device)
+例如
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//QPixmap bg(TILE_SIZE, TILE_SIZE);</span>
+<span class="n">QPainter</span> <span class="nf">p</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bg</span><span class="p">);</span>
+<span class="n">QPainter</span> <span class="nf">p</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>setBrush(const QBrush)</li>
+  <li>setPen(QPen)</li>
+  <li>drawRect(int x, int y, int width, int height);</li>
+  <li>drawLine</li>
+  <li>drawPath(const QPainterPath &amp;path) //current pen</li>
+  <li>void QPainter::drawPolygon(const QPolygonF &amp;points, Qt::FillRule fillRule = Qt::OddEvenFill)</li>
+</ul>
+
+<p>void QPainter::drawEllipse(const QRectF &amp;rectangle)</p>
+
+<ul>
+  <li>save 保存当前painter状态</li>
+  <li>
+    <p>restore 恢复</p>
+  </li>
+  <li>setRenderHint(QPainter::RenderHint hint, bool on = true)
+设置绘画风格
+比如
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">painter</span><span class="o">-&gt;</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QPainter</span><span class="o">::</span><span class="n">Antialiasing</span><span class="p">);</span>
+<span class="c1">//带有边缘</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>void QPainter::fillRect(const QRectF]&amp;rectangle, const QBrush&amp;brush)
+Fills the given rectangle with the brush specified.</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alternatively, you can specify a QColor instead of a QBrush; the QBrush constructor (taking a QColor argument) will automatically create a solid pattern brush.
+</code></pre></div></div>
+<p>相应有 fillPath等等</p>
+
+<h2 id="qbrush类">QBrush类</h2>
+
+<p>刷子,可以是纹理/颜色
+style设置绘制的方式</p>
+
+<h2 id="qpen类">QPen类</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">pen</span><span class="p">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">DashDotLine</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">green</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setCapStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">RoundCap</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setJoinStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">RoundJoin</span><span class="p">);</span>
+  <span class="n">painter</span><span class="p">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="qpainterpath类">QPainterPath类</h2>
+
+<ul>
+  <li>
+    <p>addRect等等</p>
+  </li>
+  <li>clear</li>
+  <li>boundingRect</li>
+  <li>
+    <p>capacity vs length</p>
+  </li>
+  <li>
+    <p>connectPath(&amp;path)</p>
+  </li>
+  <li>contains(QPoint/QRect/QPainterPath)</li>
+  <li>对应的intersect(相交),而contain是包含(区域)</li>
+</ul>
+
+<p>我的发现： contains边界问题，Point可而其它二不可</p>
+
+<ul>
+  <li>lineTo</li>
+  <li>
+    <p>cubicTo 画线</p>
+  </li>
+  <li>moveTo
+Moves the current position to (x, y) and starts a new subpath, implicitly closing the previous path.</li>
+</ul>
+
+<p>// 将QPoint添加到QPainterPath中 path.moveTo(point1); path.lineTo(point2); path.lineTo(point3); path.lineTo(point4); // 闭合路径</p>
+<ul>
+  <li>
+    <p>path.closeSubpath();</p>
+  </li>
+  <li>path.setFillRule(Qt::WindingFill);</li>
+  <li>1
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">foreach</span><span class="p">(</span><span class="k">const</span> <span class="n">QPoint</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="n">body</span><span class="p">){</span>
+  <span class="n">path</span><span class="p">.</span><span class="n">addRect</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="游戏场景">游戏场景</h1>
+
+<h2 id="qgraphicsitem类">QGraphicsItem类</h2>
+
+<ul>
+  <li>
+    <p>setPos(x, y);</p>
+  </li>
+  <li>
+    <p>setData(int key, const QVariant &amp;value);
+使用：serData(GD_Type, GO_Food);</p>
+  </li>
+  <li>
+    <p>QRectF QGraphicsItem::boundingRect() const;
+自定义，原虚函数
+返回Item的边界
+例子：return QRectF(-TILE_SIZE,  -TILE_SIZE, TILE_SIZE * 2, TILE_SIZE * 2 );</p>
+  </li>
+  <li>（pure virtual） void QGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+原虚函数，被QGraphicsView调用
+例子：
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">painter</span><span class="o">-&gt;</span><span class="n">save</span><span class="p">();</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QPainter</span><span class="o">::</span><span class="n">Antialiasing</span><span class="p">);</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">fillPath</span><span class="p">(</span><span class="n">shape</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">::</span><span class="n">red</span><span class="p">);</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">restore</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>(virtual) QPainterPath shape()const
+例子:
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QPainterPath</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">addEllipse</span><span class="p">(</span><span class="n">QPointF</span><span class="p">(</span><span class="n">TILE_SIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">TILE_SIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">FOOD_RADIUS</span><span class="p">,</span> <span class="n">FOOD_RADIUS</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>QPointF mapFromScene(const <a href="../qtcore/qpointf.html">QPointF</a> &amp;point) const
+将Scene坐标系中的坐标映射到本Item坐标系中的点坐标</p>
+  </li>
+  <li>void QGraphicsItem::advance(int phase)
+phase = 0 预更新
+phase = 1 更新
+用于更新Item相关逻辑
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">Snake</span><span class="o">::</span><span class="n">advance</span><span class="p">(</span><span class="kt">int</span> <span class="n">step</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">step</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">tickCounter</span><span class="o">++</span> <span class="o">%</span> <span class="n">speed</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">moveDirection</span> <span class="o">==</span> <span class="n">NoMove</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">growing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">QPointF</span> <span class="n">tailPoint</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+      <span class="n">tail</span> <span class="o">&lt;&lt;</span> <span class="n">tailPoint</span><span class="p">;</span>
+      <span class="n">growing</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">tail</span><span class="p">.</span><span class="n">removeFirst</span><span class="p">();</span>
+      <span class="n">tail</span> <span class="o">&lt;&lt;</span> <span class="n">head</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">moveDirection</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="n">MoveLeft</span><span class="p">:</span>
+          <span class="n">moveLeft</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveRight</span><span class="p">:</span>
+          <span class="n">moveRight</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveUp</span><span class="p">:</span>
+          <span class="n">moveUp</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveDown</span><span class="p">:</span>
+          <span class="n">moveDown</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">setPos</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+  <span class="n">handleCollisions</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>void QGraphicsItem::setPos(const QPointF &amp;pos)
+Sets the position of the item to pos, which is in parent coordinates.</p>
+  </li>
+  <li>碰撞检测
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QList</span><span class="o">&lt;</span><span class="n">QGraphicsItem</span><span class="o">*&gt;</span> <span class="n">QGraphicsItem</span><span class="o">::</span><span class="n">collidingItems</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">ItemSelectionMode</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">::</span><span class="n">IntersectsItemShape</span><span class="p">)</span> <span class="k">const</span>
+</code></pre></div>    </div>
+    <p>可用之前设置的data判断与哪个物体的碰撞</p>
+  </li>
+</ul>
+
+<h2 id="qgraphicsscene类">QGraphicsScene类</h2>
+<p>//用于图形存放</p>
+
+<ul>
+  <li>
+    <p>QGraphicsScene(QObject* parent = nullptr);
+构造函数可用：
+…scene(new QGraphicsScene(this));</p>
+  </li>
+  <li>
+    <p>setSceneRect(x, y, w, h);//设置scene的位置
+//使用实例：scene-&gt;setSceneRect(-100, -100, 200, 200);</p>
+  </li>
+  <li>
+    <p>void addItem(QGraphicsItem *item);
+void removeItem(QGraphicsItem *item);</p>
+  </li>
+  <li>
+    <p>void QObject::installEventFilter(QObject *filterObj);
+//设置事件过滤器, filterObj会拦截并处理this的实践
+例子: scene.installEventFilter(this);</p>
+  </li>
+  <li>(virtual)
+bool QObject::eventFilter(QObject *object, QEvent *event)
+实现拦截处理函数
+例子
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QEvent</span><span class="o">::</span><span class="n">KeyPress</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">handleKeyPressed</span><span class="p">((</span><span class="n">QKeyEvent</span> <span class="o">*</span><span class="p">)</span><span class="n">event</span><span class="p">);</span> <span class="c1">//自定义的按键处理函数</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span><span class="c1">//返回已处理</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">QObject</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
+  <span class="c1">//不处理</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>connect(&amp;timer, SIGNAL(timeout()), &amp;scene, SLOT(advance()));
+ 用于定时刷新界面</li>
+</ul>
+
+<h2 id="qgraphicsview类">QGraphicsView类</h2>
+
+<ul>
+  <li>
+    <p>QGraphicsView(scene, this);</p>
+  </li>
+  <li>
+    <p>void fitInView(QRect, Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio);
+缩放视图矩阵并滚动滚动条，以确保场景矩形（<code class="language-plaintext highlighter-rouge">rect</code>）适应视口内</p>
+  </li>
+  <li>
+    <p>setBackgroundBrush(QBrush(QPixmap)); //设置背景</p>
+  </li>
+</ul>]]></content><author><name></name></author><summary type="html"><![CDATA[窗口设置]]></summary></entry><entry><title type="html">Union的用法</title><link href="http://localhost:4000/2023/12/26/Union%E7%9A%84%E7%94%A8%E6%B3%95.html" rel="alternate" type="text/html" title="Union的用法" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/Union%E7%9A%84%E7%94%A8%E6%B3%95</id><content type="html" xml:base="http://localhost:4000/2023/12/26/Union%E7%9A%84%E7%94%A8%E6%B3%95.html"><![CDATA[<p>#c</p>]]></content><author><name></name></author><summary type="html"><![CDATA[#c]]></summary></entry><entry><title type="html">Windows使用</title><link href="http://localhost:4000/2023/12/26/Windows%E4%BD%BF%E7%94%A8.html" rel="alternate" type="text/html" title="Windows使用" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/Windows%E4%BD%BF%E7%94%A8</id><content type="html" xml:base="http://localhost:4000/2023/12/26/Windows%E4%BD%BF%E7%94%A8.html"><![CDATA[<h1 id="快捷键">快捷键</h1>
+
+<ul>
+  <li>按 Windows徽 标键  + S 获取本地和共享网站或 Web 中人员、电子邮件和文件的个性化搜索结果。</li>
+  <li>按 Windows 徽标键  + W 或轻扫屏幕的左边缘，以向右转到小组件板。</li>
+  <li>按 Windows 徽标键  + Shift + S 捕获全部或部分屏幕或任何图像，然后保存并共享。</li>
+  <li>按Windows徽标键  + V 可在剪贴板上保存最近复制或剪切的项，以便可以将其粘贴到其他应用或跨设备同步。</li>
+  <li>按 Windows 徽标键  + H 在电脑上任意位置使用语音识别将口头语言转换为文本。</li>
+  <li>按 Windows 徽标键  + 句点 (.) 搜索图像、符号或图标来表达情感或在没有文字的情况下进行有趣的交流。 你也会在这里找到颜文字和 GIF！ (●’◡’●)</li>
+  <li>按 Windows 徽标键  + D 快速最小化所有打开的应用，以便访问桌面。 再次按下它们以恢复所有内容。</li>
+  <li>按 Windows 徽标键  + L 可快速锁定屏幕，使其他人无法访问你的电脑。</li>
+  <li>按 Windows 徽标键  + Tab 在打开的窗口、应用或虚拟桌面之间显示和切换。</li>
+  <li>按 Windows 徽标键  + 向右键 或 向左键 以完美地将一个窗口对齐在一侧。 选择另一个窗口，一次处理两项操作，无需手动调整大小或定位。</li>
+  <li>按 Windows 徽标键  + A 可访问常用的设置，例如音量、亮度和 Wi-Fi。 在此处查找辅助功能 设置。</li>
+  <li>按 Windows 徽标键  + E 打开文件资源管理器并查找所需的文件和文件夹，包括 OneDrive 上的文件和文件夹。</li>
+</ul>
+
+<p>#工具 #操作系统</p>]]></content><author><name></name></author><summary type="html"><![CDATA[快捷键]]></summary></entry><entry><title type="html">Gdb常用命令总结</title><link href="http://localhost:4000/2023/12/26/gdb%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93.html" rel="alternate" type="text/html" title="Gdb常用命令总结" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/gdb%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93</id><content type="html" xml:base="http://localhost:4000/2023/12/26/gdb%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%E6%80%BB%E7%BB%93.html"><![CDATA[<h1 id="starting">Starting:</h1>
+
+<ul>
+  <li>gdb</li>
+  <li>gdb &lt;file&gt;</li>
+  <li>gdb -h 		(lists command line options)</li>
+</ul>
+
+<h1 id="exiting">Exiting:</h1>
+
+<ul>
+  <li>quit</li>
+  <li>Ctrl-d</li>
+  <li>Note: Ctrl-C does not exit from gdb, but halts the current gdb command</li>
+</ul>
+
+<h1 id="general-commands">General commands</h1>
+
+<ul>
+  <li>run		(start your program)</li>
+  <li>kill		(stop the program)</li>
+</ul>
+
+<h1 id="breakpoints">Breakpoints</h1>
+
+<ul>
+  <li>break FUNCTION	(set a breakpoint at the entry to the function)</li>
+  <li>
+    <p>break *ADDRESS	(set a breakpoint at the specified address)</p>
+  </li>
+  <li>disable &lt;NUM&gt;	(disable the breakpoint with that number)</li>
+  <li>
+    <p>enable &lt;NUM&gt;	(enable the breakpoint with that number)</p>
+  </li>
+  <li>
+    <p>clear FUNCTION	(clear any breakpoints at the entry to the function)</p>
+  </li>
+  <li>delete &lt;NUM&gt;	(deletes the breakpoint with that number)</li>
+  <li>delete		(deletes all breakpoints)</li>
+</ul>
+
+<h1 id="working-at-breakpoints">Working at breakpoints</h1>
+
+<ul>
+  <li>stepi		(execute one machine code instruction)</li>
+  <li>stepi &lt;NUM&gt;	(execute NUM instructions)</li>
+  <li>
+    <p>step		(execute one C statement)</p>
+  </li>
+  <li>nexti		(like stepi, but proceed through subroutine calls)</li>
+  <li>nexti &lt;NUM&gt;</li>
+  <li>
+    <p>next</p>
+  </li>
+  <li>
+    <p>until LOCATION	(continue running until LOCATION is reached)</p>
+  </li>
+  <li>continue	(resume execution)</li>
+  <li>
+    <p>continue &lt;NUM&gt;	(continue, ignoring this breakpoint NUM times)</p>
+  </li>
+  <li>
+    <p>finish		(run until the current function returns)</p>
+  </li>
+  <li>backtrace	(print the current address and stack backtrace)</li>
+  <li>where		(print the current address and stack backtrace)</li>
+</ul>
+
+<h1 id="examining-code">Examining code</h1>
+
+<ul>
+  <li>print/a $pc	(print the program counter)</li>
+  <li>print $sp	(print the stack pointer)</li>
+  <li>disas		(display the function around the current line)</li>
+  <li>disas ADDR 	(display the function around the address)</li>
+  <li>disas ADDR1 ADDR2 (display the function between the addresses)</li>
+</ul>
+
+<h1 id="examining-data">Examining data</h1>
+
+<ul>
+  <li>print $eax	(print the contents of %eax)</li>
+  <li>print/x $eax	(print the contents of %eax as hex)</li>
+  <li>print/a $eax	(print the contents of %eax as an address)</li>
+  <li>print/d $eax	(print the contents of %eax as decimal)</li>
+  <li>print/t $eax	(print the contents of %eax as binary)</li>
+  <li>
+    <p>print/c $eax	(print the contents of %eax as a character)</p>
+  </li>
+  <li>print 0x100	(print decimal repr. of hex value)</li>
+  <li>
+    <p>print/x 555	(print hex repr. of decimal value)</p>
+  </li>
+  <li>x ADDR		(print the contents of ADDR in memory)</li>
+  <li>x/NFU ADDR	(print the contents at ADDR in memory:
+  N = number of units to display
+  F = display format
+  U = b (bytes), h (2 bytes), w (4 bytes))</li>
+</ul>
+
+<h1 id="autodisplaying-information">Autodisplaying information</h1>
+
+<ul>
+  <li>display $eax	(print contents of %eax every time the
+  program stops)</li>
+  <li>display		(print the auto-displayed items)</li>
+  <li>delete display &lt;NUM&gt;	(stop displaying item NUM)</li>
+</ul>
+
+<h1 id="useful-information-commands">Useful information commands</h1>
+<ul>
+  <li>help info</li>
+  <li>info program	(current status of the program)</li>
+  <li>info functions	(functions in program)</li>
+  <li>info stack      (backtrace of the stack)</li>
+  <li>info frame	(information about the current stack frame)</li>
+  <li>info scope 	(variables local to the scope)</li>
+  <li>info variables	(global and static variables)</li>
+  <li>info registers  (registers and their contents)</li>
+  <li>info breakpoints (status of user-settable breakpoints)</li>
+  <li>info address SYMBOL	(use for looking up addresses of functions)</li>
+</ul>
+
+<h1 id="running-gdb-in-emacs">Running gdb in emacs</h1>
+<ul>
+  <li>M-x gdb</li>
+  <li>C-h m to see the features of GDB mode</li>
+</ul>
+
+<p>#工具 #命令行</p>]]></content><author><name></name></author><summary type="html"><![CDATA[Starting:]]></summary></entry><entry><title type="html">Ics习题</title><link href="http://localhost:4000/2023/12/26/ics%E4%B9%A0%E9%A2%98.html" rel="alternate" type="text/html" title="Ics习题" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/ics%E4%B9%A0%E9%A2%98</id><content type="html" xml:base="http://localhost:4000/2023/12/26/ics%E4%B9%A0%E9%A2%98.html"><![CDATA[<h1 id="1-位运算">1. 位运算</h1>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>[[lab1_sol.pdf</td>
+          <td>lab1位运算]]</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>[[EXE1_sol.pdf</td>
+          <td>EXE1位运算]]</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>[[EXE2_sol.pdf | EXE2位运算]]
+    <h1 id="2-汇编">2. 汇编</h1>
+    <h2 id="exe3-finishedpdf--exe3汇编">[[EXE3-finished.pdf | EXE3汇编]]</h2>
+  </li>
+</ul>
+
+<h2 id="下面详细地分析exe4">下面详细地分析EXE4:</h2>
+<p>![[EXE4.pdf]]</p>
+
+<h3 id="第1问">第1问</h3>
+
+<p>开始
+	.L5是一个跳表，其顺序要严格按照switch所写
+	首先要明白每一个标签对应的是哪个case
+	由最开始的jump可知，.L2应该是for的条件控制语句
+	跳到.L11，可知其应该为switch的分支，那势必含有跳表语句
+	现在就要逐个分析每个标签下具体内容的含义了
+.L4：
+	第一行就是
+	cmpl $0，-4(%rbp)
+	前面把%rsp的值存到了%rbp里，故rbp指向栈顶，则-4(%rbp)就是栈里存放的局部变量
+	和0比较，我们很容易与c语言中的 <em>if(i &gt; 0)</em> 对应，故.L4对应 case 0x1f
+	下一步，根据fall through可知.L6对应 case 0x20: case 0x21:
+	jump .L9可知L9是控制i++的语句，准备下一个循环
+.L7：
+	很明显的
+		sarl $2, %eax
+	对应着 i / 4
+	故为case 0x22, 0x25
+.L8:
+	sarq $8, %rax 可知是下一条
+.L3: default
+故.L5应填：
+	从0x1f开始建立跳表：
+	.L4 //0x1f
+	.L6 //0x20
+	.L6 //0x21
+	.L7 //0x22
+	.L3 //0x23
+	.L8 //0x24
+	.L7 //0x25
+.L11中一定含有如果大于6（或小于0）的情况，跳到.L3的语句
+<strong><em>注意，这不是标准答案！！！</em></strong>
+	.quad .L4
+	.quad .L6 
+	.quad .L6
+	.quad .L7
+	.quad .L3 
+	.quad .L8
+	.quad .L7</p>
+
+<p>.quad表示四个word，即8个byte ^37b0a1</p>
+
+<h3 id="第2问">第2问</h3>
+
+<p>接下来填好8个空</p>
+<ol>
+  <li>$0x1f
+ .L11是switch语句，用于创建跳表，故看到sub推测出是将变量减去case中最小的值（在本例中是0x1f），从而将0x1f映射到0。故填$0x1f($表示常量)</li>
+  <li>$6
+ 接下来的cmp也是跳表创建中的常规步骤了：如果待判断的变量的值超出case的范围，即比0还要小或比最大的case值还要大，那么就直接跳到default处。此例中应填0x25 - 0x1f，即$6</li>
+  <li>ja
+ 跳转的条件，填ja。（为什么不是jg的解释在这里：[[汇编#^fa195c | 汇编跳表越界判断使用ja的原因]]）</li>
+  <li>.L5(,%rdx,8)
+ 上面一行的mov %eax, %eax相当于将寄存器高32为置0，而下面一行很明显是间接跳转，即前往*%rax（%rax所存内容作为指令地址）。故本行就是根据跳表计算jump的地址。基址是跳表名.L5，第一项不填，后面的偏移量填i值+每个地址站的字节数。根据前面，变量i的值存在-4(%rbp)里，紧接着movl -4(%rbp), %eax 和 movslq %eax, %rdx 把i存在了%rdx中，而跳表定义时使用了.quad .L4，![[ics习题#^37b0a1]]
+ 故应填 .L5(,%rdx,8)</li>
+  <li>movb %dl, (%rax)
+ 上一行的add是+=的效果，但是结果还存在寄存器里，没有存入栈区
+ 存数组队首指针的是-24(%rbp)，由于是char数组，故加i表示第i项
+ <strong><em>Attention:栈中存放的仅仅只是数组的头指针，即数组头的地址，真实的数组存放在内存中！！</em></strong>
+ 算得到的地址存放在%rax中，而计算得到的值存在%edx中，而这个值是char类型的，故只要截取最后8位（使用movb）
+ 故答案为 movb %dl, (%rax)</li>
+  <li>$6
+ 将i与BUF_SIZE - 1（即7）比较。
+ 注意到下一条jg .L9表示如果大于就break
+ 那么&lt;=6就进入if
+ 故填$6</li>
+  <li>movw 0x201f, (%rax)
+ 数组位置存在%rax中，我们要把0x201f赋给该地址
+ 由于数组转换成short类型的，因此用movw</li>
+  <li>$7
+ for的条件判断语句 i &lt; BUF_SIZE（8）
+ 小于则跳回for循环开始
+ 注意到这里是jle （小于等于），故填 $7</li>
+</ol>
+
+<h3 id="第3问">第3问</h3>
+
+<p>这问与汇编无关，读c程序就可以搞懂了
+但还是埋了很多坑，这个与大端序小端序，位运算等息息相关</p>
+
+<ul>
+  <li>
+    <p>i = 0 
+执行buf[0] = (char)((*(long *)buf) » 8);
+这里将buf指针转成long型，就是获取了全部8个位置上的元素
+<strong><em>Attenetion!!! 然而后面的右移是对数字操作的，而不是内存中存储的字节！
+也就是说，(long *)buf是指向0x24 0xf0 0x22 0x1f 0x22 0x21 0x1f 0x21这8个位置的指针，
+然而 *(long *)buf)对其取内容，得到的是一个long型的数字，
+然而long型在内存中是由小端序存储的！！！！！
+也就是说，得到的数字是 0x211f21221f22f024，而不是 0x24f0221f22211f21！！！</em></strong>
+右移8位，得到0x001f21221f22f0，再转换为char，只取最后8位，即0xf0
+即buf[0] = 0xf0</p>
+  </li>
+  <li>
+    <p>i = 1
+执行 *(short *)(&amp;buf[i]) = 0x201f;
+(short *)(&amp;buf[i])指向0xf0，0x22（a[1]和a[2]）
+与上面同理，这里将0x201f存到 a[1]和a[2] 中，
+要转换为小端序，即a[1] = 0x1f，a[2] = 0x20</p>
+  </li>
+  <li>
+    <p>i = 2
+ 执行， buf[i] |= 0xf0;
+ 易得buf[2] = 0xf0</p>
+  </li>
+  <li>
+    <p>i = 3
+执行 buf[i] += buf[i-1];
+<strong><em>！！这里提醒，当对长度不及int的数据类型进行运算（+，-）和关系运算（&lt;）等时，
+x86 - 64 会自动隐式地将类型转换为int型！！</em></strong>
+也就是说，执行0x1f  0xf0得到0x10f，截断得到0x0f
+<strong><em>！！这里有个巨大的坑！case 0x1f后面是没有break的，因此直接执行下一个case，</em></strong>
+buf[i] |= 0xf0; 得到 a[3] = 0xff;</p>
+  </li>
+  <li>
+    <p>i = 4
+*((unsigned *)buf + i/4) = (unsigned)buf[i];
+先解释一下这个语句的意思。后面的unsigned是<em>unsigned int</em>的缩写
+也就是把buf[i]的char型转换为int型
+前面是把指向的buf指针由char型转换为int型（站4个字节），再移动到它的第i/4个元素，
+最后取其中的内容
+在这个例子中是*((unsigned *)buf + 1) = (unsigned)buf[4];
+buf[4] = 0x22，转换为unsigned int 是 0x00000022。
+buf变为int指针后+1则往后移动4个byte，指向 a[4] -&gt; a[7];
+并把这4位用0x00000022赋值
+<em>再次警惕小端序！</em>
+则 a[4] = 22 a[5] ~ a[7] = 0x00</p>
+  </li>
+  <li>
+    <p>i = 5
+default。同上，a[5] = 0x1f，a[6] = 0x20</p>
+  </li>
+  <li>
+    <p>i = 6
+同上，a[6] = 0xf0</p>
+  </li>
+  <li>
+    <p>i = 7
+default，不执行，不变</p>
+  </li>
+</ul>
+
+<p>最后的结果是：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>数组下标</th>
+      <th>0</th>
+      <th>1</th>
+      <th>2</th>
+      <th>3</th>
+      <th>4</th>
+      <th>5</th>
+      <th>6</th>
+      <th>7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>存储的值</td>
+      <td>0xf0</td>
+      <td>0x1f</td>
+      <td>0xf0</td>
+      <td>0xff</td>
+      <td>0x22</td>
+      <td>0x1f</td>
+      <td>0xf0</td>
+      <td>0x00</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <tbody>
+    <tr>
+      <td>[[EXE4-sildes.pdf</td>
+      <td>详细步骤]]</td>
+    </tr>
+    <tr>
+      <td>[[EXE4_sol.pdf</td>
+      <td>答案]]</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>学习</p>
+
+<p>#计算机系统 #习题</p>]]></content><author><name></name></author><summary type="html"><![CDATA[1. 位运算 [[lab1_sol.pdf lab1位运算]] [[EXE1_sol.pdf EXE1位运算]] [[EXE2_sol.pdf | EXE2位运算]] 2. 汇编 [[EXE3-finished.pdf | EXE3汇编]]]]></summary></entry><entry><title type="html">Printf用法总结</title><link href="http://localhost:4000/2023/12/26/printf%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93.html" rel="alternate" type="text/html" title="Printf用法总结" /><published>2023-12-26T00:00:00+08:00</published><updated>2023-12-26T00:00:00+08:00</updated><id>http://localhost:4000/2023/12/26/printf%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93</id><content type="html" xml:base="http://localhost:4000/2023/12/26/printf%E7%94%A8%E6%B3%95%E6%80%BB%E7%BB%93.html"><![CDATA[<h1 id="简单介绍">简单介绍</h1>
+
+<p>printf能够输出一段字符串，而变量以”% + …“占位符的形式嵌入于字符串中。
+以下是一个简单的例子：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"Your age is %d"</span><span class="p">,</span> <span class="n">age</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The output is: Your age is 10
+以下是更复杂的用法:</p>
+
+<h1 id="占位符的格式">占位符的格式</h1>
+
+<p>%[<em>parameter</em>][<em>flags</em>][<em>width</em>][.<em>precision</em>][<em>length</em>]<em>type</em></p>
+
+<h2 id="type-字段">Type 字段</h2>
+
+<p>我们最为熟悉的%d 代表着以十进制输出, %c 代表以字符输出. 更多的type 详见下表:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>%</td>
+      <td>打印字面上的 % 字符（此类型不接受任何标志、宽度、精度、长度字段）。</td>
+    </tr>
+    <tr>
+      <td>d, i</td>
+      <td>作为带符号整数的输出。对于输入， %d 和 %i 是同义词，但在与 <a href="https://en.wikipedia.org/wiki/Scanf()" title="Scanf()">scanf</a> 一起使用时有所不同（使用 %i 将会将以 0x 为前缀的数字解释为十六进制，以 0 为前缀的数字解释为八进制）。</td>
+    </tr>
+    <tr>
+      <td>u</td>
+      <td>打印十进制无符号整数。</td>
+    </tr>
+    <tr>
+      <td>f, F</td>
+      <td>以正常（<a href="https://en.wikipedia.org/wiki/Fixed-point_arithmetic" title="Fixed-point arithmetic">定点 (fixed-point)</a>）表示法表示的双精度数。 f 和 F 在输出无穷大或 NaN 时略有不同（对于 f，输出为 inf、infinity 和 nan；对于 F，输出为 INF、INFINITY 和 NAN）。</td>
+    </tr>
+    <tr>
+      <td>e, E</td>
+      <td>以标准形式（<em>d</em>.<em>ddd_e±_dd</em>）表示的双精度值。使用 E 会引入指数E (而不是e)。指数始终包含至少两位数字；如果值为零，则指数为 00。在 Windows 中，默认情况下，指数包含三位数字，例如 1.5e002，但这可以通过 Microsoft 特定的 <code class="language-plaintext highlighter-rouge">_set_output_format</code> 函数进行更改。</td>
+    </tr>
+    <tr>
+      <td>g, G</td>
+      <td>以正常或指数表示法中更适当的方式表示的双精度数。 g 使用小写字母， G 使用大写字母。此类型与定点表示法略有不同. 小数点右边没有作用的零不显示。此外，整数没有小数点。</td>
+    </tr>
+    <tr>
+      <td>x, X</td>
+      <td>作为十六进制数的无符号整数。 x 使用小写字母， X 使用大写字母。</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>作为八进制数的无符号整数。</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td><a href="https://en.wikipedia.org/wiki/Null-terminated_string" title="Null-terminated string">以 null 结尾的字符串</a>。</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>字符。</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>打印一个void* 型指针的地址。</td>
+    </tr>
+    <tr>
+      <td>a, A</td>
+      <td>以十六进制表示法表示的双精度数，以 0x 或 0X 开头。 a 使用小写字母， A 使用大写字母。<a href="https://en.wikipedia.org/wiki/Printf#cite_note-5">5</a><a href="https://en.wikipedia.org/wiki/Printf#cite_note-6">6</a>（C++11 的 iostreams 有一个与此相同的 hexfloat）。</td>
+    </tr>
+    <tr>
+      <td>n</td>
+      <td>什么都不打印，但将到目前为止写入的字符数写入整数指针参数中。<br />在 Java 中，此操作打印换行符。<a href="https://en.wikipedia.org/wiki/Printf#cite_note-7">7</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="length-字段">Length 字段</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hh</td>
+      <td>对于整数类型，使 printf 期望一个从 char 升级而来的 int 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>h</td>
+      <td>对于整数类型，使 printf 期望一个从 short 升级而来的 int 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>对于整数类型，使 printf 期望一个 long 大小的整数参数。对于浮点类型，此标志被忽略。在 varargs 调用中使用 float 参数时，它总是被提升为 double。[4]</td>
+    </tr>
+    <tr>
+      <td>ll</td>
+      <td>对于整数类型，使 printf 期望一个 long long 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>L</td>
+      <td>对于浮点类型，使 printf 期望一个 long double 参数。</td>
+    </tr>
+    <tr>
+      <td>z</td>
+      <td>对于整数类型，使 printf 期望一个 size_t 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>j</td>
+      <td>对于整数类型，使 printf 期望一个 intmax_t 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>t</td>
+      <td>对于整数类型，使 printf 期望一个 ptrdiff_t 大小的整数参数。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例子</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"0x%lx</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+<p>输出：<code class="language-plaintext highlighter-rouge">ffffffffffff0001</code></p>
+
+<h2 id="presicion-字段">Presicion 字段</h2>
+
+<ul>
+  <li>对于浮点数类型，它指定输出的是, 四舍五入的小数点右边的位数。</li>
+  <li>对于字符串类型，它限制了输出的字符数,超过的部分会被截断。</li>
+</ul>
+
+<p>精度可以这么设置:</p>
+<ul>
+  <li>直接在语句中写出</li>
+  <li>传参, 用  ==*==  号占位</li>
+</ul>
+
+<p>下面是一个例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 示例 1: 对于浮点数类型，precision 指定小数点右边的位数</span>
+    <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="mi">141592653589793</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Pi with precision 2: %.2f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span>
+    <span class="c1">// 输出: Pi with precision 2: 3.14</span>
+
+    <span class="c1">// 示例 2: 对于字符串类型，precision 指定输出字符的数量，超过则截断字符串</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Limited characters: %.8s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="c1">// 输出: Limited characters: Hello, Wo</span>
+
+    <span class="c1">// 示例 3: precision 字段为动态值，通过另一个参数指定</span>
+    <span class="kt">int</span> <span class="n">dynamicPrecision</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Dynamic precision: %.*s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">dynamicPrecision</span><span class="p">,</span> <span class="s">"abcdef"</span><span class="p">);</span>
+    <span class="c1">// 输出: Dynamic precision: abc</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="width-字段">Width 字段</h2>
+
+<p>width设置了输出的<strong>最小</strong>宽度,通常用于填充定长的输出
+如果数字超出宽度.不会被截断
+和precision类似, 有数字与传参两种形式:
+例子: <code class="language-plaintext highlighter-rouge">printf("%*d", 5, 10)</code> will result in  `   10`, 共5个字符</p>
+
+<h2 id="flag-字段">Flag 字段</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-</td>
+      <td>左对齐输出此占位符的内容。（默认是右对齐输出。）</td>
+    </tr>
+    <tr>
+      <td>+</td>
+      <td>对于正有符号数，添加正号（+），对于负有符号数，添加负号（-）。默认情况下，对于正数不添加任何东西。</td>
+    </tr>
+    <tr>
+      <td>空格</td>
+      <td>对于正有符号数，添加空格；对于负有符号数，添加负号（-）。如果存在 + 标志，则此标志被忽略。（默认情况下，对于正数不添加任何东西。）</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>当指定 ‘width’ 选项时，对于数字类型，在数字前面添加零。默认情况下，在数字前添加空格。</td>
+    </tr>
+    <tr>
+      <td>’</td>
+      <td>对于十进制的整数或指数，应用千位分隔符。</td>
+    </tr>
+    <tr>
+      <td>#</td>
+      <td>替代形式：<br />对于 g 和 G 类型，不移除尾随零。<br />对于 f、F、e、E、g、G 类型，输出始终包含小数点。<br />对于 o、x、X 类型，对非零数字前面分别添加 0、0x、0X。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>对于<code class="language-plaintext highlighter-rouge">-</code>符号的解释: 与前面所说的width结合更好理解,就是相当于在数字后面添加空格而不是前面
+例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"Hello"</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"World"</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"123"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>输出:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello   |
+World   |
+123     |
+</code></pre></div></div>
+
+<h2 id="parameter-字段">Parameter 字段</h2>
+
+<p>在 POSIX 标准中引入了一个扩展，即“Parameter field”（参数字段），该字段允许在格式说明符中指定参数的顺序。
+具体来说，<code class="language-plaintext highlighter-rouge">n$</code> 表示第 n 个参数，允许在格式说明符中以不同的顺序或使用不同的格式说明符多次输出参数。
+例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 使用参数字段 %2$ 表示第二个参数，%1$ 表示第一个参数</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%2$d %2$#x; %1$d %1$#x"</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+    <span class="c1">// 输出：17 0x11; 16 0x10</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Attention: 如果任何一个占位符指定了一个参数，那么所有其他的占位符也<strong>必须</strong>指定一个参数。</p>
+
+<p>==注意：== 在非 POSIX 的 Microsoft Windows 中，对此特性的支持被放置在一个名为 <code class="language-plaintext highlighter-rouge">_printf_p</code> 的单独函数中。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>本文详细介绍了printf的基础以及进阶用法，并给了相应的代码示例。
+以下是一个综合了上面所有字段的例子：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="kt">long</span> <span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="mi">1415926535</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">double</span> <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">1415926535</span><span class="p">;</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"The first argument is %1$-16.3Lf, The second argument is %2$-16.3Lf</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>输出: <code class="language-plaintext highlighter-rouge">The first argument is 3.142           , The second argument is -3.142</code></p>
+
+<p>#c</p>]]></content><author><name></name></author><summary type="html"><![CDATA[简单介绍]]></summary></entry></feed>

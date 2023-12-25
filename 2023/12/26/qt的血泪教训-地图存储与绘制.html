@@ -1,0 +1,63 @@
+
+<h1 id="前言">前言</h1>
+
+<p>本文并不是严格的教程,只是笔者考试一败涂地后的碎碎念</p>
+
+<h1 id="一-项目背景">一. 项目背景</h1>
+
+<p>从文件读入数据, 文件共有M + 1行, 数据格式如下:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>m n
+a(0,0) a(0,1) ... a(0,n-1)
+...
+a(m-1,0) a(m-1,1) ... a(m-1,n-1)
+</code></pre></div></div>
+<p>m为地图的行数, n为地图的列数, 
+a(x,y)表示第x行第y列的数值:</p>
+<ul>
+  <li>=0, 用绿色表示</li>
+  <li>=1, 用红色表示</li>
+</ul>
+
+<h1 id="二-代码实现">二. 代码实现</h1>
+
+<h2 id="1-指针数组创建">1. 指针数组创建</h2>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">MainWindow</span> <span class="o">:</span> <span class="k">public</span> <span class="n">QWidget</span>
+<span class="p">{</span>
+	<span class="p">...</span>
+	<span class="kt">int</span> <span class="o">**</span><span class="n">map</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">m</span><span class="p">,</span> <span class="n">n</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">load</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="o">*</span><span class="p">[</span><span class="n">m</span><span class="p">];</span> <span class="c1">// m行</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+		<span class="c1">//注意, 这里是对刚刚创建好的每一行进行操作, 所以循环到m</span>
+		<span class="n">map</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">n</span><span class="p">];</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="2-gui坐标和数组的对应问题">2. gui坐标和数组的对应问题</h2>
+
+<p>然后就是本文的核心了, 也是最容易弄错的地方. 由于存地图的时候先存行数后存列数, 所以每个坐标(x, y)表示的是x行y列, 然而在绘图的时候用的是xy坐标, 也就是说, 横坐标对应的是列数, 纵坐标对应的是行数, 和存储正好相反. 因此paint函数应该如下:</p>
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">MainWindow</span><span class="o">::</span><span class="n">paintEvent</span><span class="p">(</span><span class="n">QPaintEvent</span> <span class="o">*</span><span class="n">event</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="n">QPainter</span> <span class="n">painter</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+	<span class="k">const</span> <span class="kt">int</span> <span class="n">FILE_SIZE</span> <span class="o">=</span> <span class="mi">60</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">y</span><span class="p">){</span><span class="c1">//先行,先y</span>
+		<span class="k">for</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">n</span><span class="p">;</span> <span class="o">++</span><span class="n">x</span><span class="p">){</span><span class="c1">//后列,后x</span>
+			<span class="k">switch</span><span class="p">(</span><span class="n">map</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="n">y</span><span class="p">]){</span>
+			<span class="k">case</span> <span class="mi">0</span><span class="p">:</span>
+			<span class="n">painter</span><span class="p">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">Qt</span><span class="o">::</span><span class="n">green</span><span class="p">);</span>
+				<span class="k">break</span><span class="p">;</span>
+			<span class="k">case</span> <span class="mi">1</span><span class="p">:</span>
+			<span class="n">painter</span><span class="p">.</span><span class="n">fillRect</span><span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">y</span> <span class="o">*</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">Qt</span><span class="o">::</span><span class="n">red</span><span class="p">);</span>
+				<span class="k">break</span><span class="p">;</span>
+			<span class="p">}</span>	
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>否则绘制出来的图形会是轴对称的,长宽颠倒.</p>

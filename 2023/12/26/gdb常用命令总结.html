@@ -1,0 +1,130 @@
+<h1 id="starting">Starting:</h1>
+
+<ul>
+  <li>gdb</li>
+  <li>gdb &lt;file&gt;</li>
+  <li>gdb -h 		(lists command line options)</li>
+</ul>
+
+<h1 id="exiting">Exiting:</h1>
+
+<ul>
+  <li>quit</li>
+  <li>Ctrl-d</li>
+  <li>Note: Ctrl-C does not exit from gdb, but halts the current gdb command</li>
+</ul>
+
+<h1 id="general-commands">General commands</h1>
+
+<ul>
+  <li>run		(start your program)</li>
+  <li>kill		(stop the program)</li>
+</ul>
+
+<h1 id="breakpoints">Breakpoints</h1>
+
+<ul>
+  <li>break FUNCTION	(set a breakpoint at the entry to the function)</li>
+  <li>
+    <p>break *ADDRESS	(set a breakpoint at the specified address)</p>
+  </li>
+  <li>disable &lt;NUM&gt;	(disable the breakpoint with that number)</li>
+  <li>
+    <p>enable &lt;NUM&gt;	(enable the breakpoint with that number)</p>
+  </li>
+  <li>
+    <p>clear FUNCTION	(clear any breakpoints at the entry to the function)</p>
+  </li>
+  <li>delete &lt;NUM&gt;	(deletes the breakpoint with that number)</li>
+  <li>delete		(deletes all breakpoints)</li>
+</ul>
+
+<h1 id="working-at-breakpoints">Working at breakpoints</h1>
+
+<ul>
+  <li>stepi		(execute one machine code instruction)</li>
+  <li>stepi &lt;NUM&gt;	(execute NUM instructions)</li>
+  <li>
+    <p>step		(execute one C statement)</p>
+  </li>
+  <li>nexti		(like stepi, but proceed through subroutine calls)</li>
+  <li>nexti &lt;NUM&gt;</li>
+  <li>
+    <p>next</p>
+  </li>
+  <li>
+    <p>until LOCATION	(continue running until LOCATION is reached)</p>
+  </li>
+  <li>continue	(resume execution)</li>
+  <li>
+    <p>continue &lt;NUM&gt;	(continue, ignoring this breakpoint NUM times)</p>
+  </li>
+  <li>
+    <p>finish		(run until the current function returns)</p>
+  </li>
+  <li>backtrace	(print the current address and stack backtrace)</li>
+  <li>where		(print the current address and stack backtrace)</li>
+</ul>
+
+<h1 id="examining-code">Examining code</h1>
+
+<ul>
+  <li>print/a $pc	(print the program counter)</li>
+  <li>print $sp	(print the stack pointer)</li>
+  <li>disas		(display the function around the current line)</li>
+  <li>disas ADDR 	(display the function around the address)</li>
+  <li>disas ADDR1 ADDR2 (display the function between the addresses)</li>
+</ul>
+
+<h1 id="examining-data">Examining data</h1>
+
+<ul>
+  <li>print $eax	(print the contents of %eax)</li>
+  <li>print/x $eax	(print the contents of %eax as hex)</li>
+  <li>print/a $eax	(print the contents of %eax as an address)</li>
+  <li>print/d $eax	(print the contents of %eax as decimal)</li>
+  <li>print/t $eax	(print the contents of %eax as binary)</li>
+  <li>
+    <p>print/c $eax	(print the contents of %eax as a character)</p>
+  </li>
+  <li>print 0x100	(print decimal repr. of hex value)</li>
+  <li>
+    <p>print/x 555	(print hex repr. of decimal value)</p>
+  </li>
+  <li>x ADDR		(print the contents of ADDR in memory)</li>
+  <li>x/NFU ADDR	(print the contents at ADDR in memory:
+  N = number of units to display
+  F = display format
+  U = b (bytes), h (2 bytes), w (4 bytes))</li>
+</ul>
+
+<h1 id="autodisplaying-information">Autodisplaying information</h1>
+
+<ul>
+  <li>display $eax	(print contents of %eax every time the
+  program stops)</li>
+  <li>display		(print the auto-displayed items)</li>
+  <li>delete display &lt;NUM&gt;	(stop displaying item NUM)</li>
+</ul>
+
+<h1 id="useful-information-commands">Useful information commands</h1>
+<ul>
+  <li>help info</li>
+  <li>info program	(current status of the program)</li>
+  <li>info functions	(functions in program)</li>
+  <li>info stack      (backtrace of the stack)</li>
+  <li>info frame	(information about the current stack frame)</li>
+  <li>info scope 	(variables local to the scope)</li>
+  <li>info variables	(global and static variables)</li>
+  <li>info registers  (registers and their contents)</li>
+  <li>info breakpoints (status of user-settable breakpoints)</li>
+  <li>info address SYMBOL	(use for looking up addresses of functions)</li>
+</ul>
+
+<h1 id="running-gdb-in-emacs">Running gdb in emacs</h1>
+<ul>
+  <li>M-x gdb</li>
+  <li>C-h m to see the features of GDB mode</li>
+</ul>
+
+<p>#工具 #命令行</p>

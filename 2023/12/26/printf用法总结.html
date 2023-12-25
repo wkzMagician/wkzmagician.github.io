@@ -1,0 +1,265 @@
+<h1 id="简单介绍">简单介绍</h1>
+
+<p>printf能够输出一段字符串，而变量以”% + …“占位符的形式嵌入于字符串中。
+以下是一个简单的例子：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">age</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"Your age is %d"</span><span class="p">,</span> <span class="n">age</span><span class="p">);</span>
+</code></pre></div></div>
+<p>The output is: Your age is 10
+以下是更复杂的用法:</p>
+
+<h1 id="占位符的格式">占位符的格式</h1>
+
+<p>%[<em>parameter</em>][<em>flags</em>][<em>width</em>][.<em>precision</em>][<em>length</em>]<em>type</em></p>
+
+<h2 id="type-字段">Type 字段</h2>
+
+<p>我们最为熟悉的%d 代表着以十进制输出, %c 代表以字符输出. 更多的type 详见下表:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>%</td>
+      <td>打印字面上的 % 字符（此类型不接受任何标志、宽度、精度、长度字段）。</td>
+    </tr>
+    <tr>
+      <td>d, i</td>
+      <td>作为带符号整数的输出。对于输入， %d 和 %i 是同义词，但在与 <a href="https://en.wikipedia.org/wiki/Scanf()" title="Scanf()">scanf</a> 一起使用时有所不同（使用 %i 将会将以 0x 为前缀的数字解释为十六进制，以 0 为前缀的数字解释为八进制）。</td>
+    </tr>
+    <tr>
+      <td>u</td>
+      <td>打印十进制无符号整数。</td>
+    </tr>
+    <tr>
+      <td>f, F</td>
+      <td>以正常（<a href="https://en.wikipedia.org/wiki/Fixed-point_arithmetic" title="Fixed-point arithmetic">定点 (fixed-point)</a>）表示法表示的双精度数。 f 和 F 在输出无穷大或 NaN 时略有不同（对于 f，输出为 inf、infinity 和 nan；对于 F，输出为 INF、INFINITY 和 NAN）。</td>
+    </tr>
+    <tr>
+      <td>e, E</td>
+      <td>以标准形式（<em>d</em>.<em>ddd_e±_dd</em>）表示的双精度值。使用 E 会引入指数E (而不是e)。指数始终包含至少两位数字；如果值为零，则指数为 00。在 Windows 中，默认情况下，指数包含三位数字，例如 1.5e002，但这可以通过 Microsoft 特定的 <code class="language-plaintext highlighter-rouge">_set_output_format</code> 函数进行更改。</td>
+    </tr>
+    <tr>
+      <td>g, G</td>
+      <td>以正常或指数表示法中更适当的方式表示的双精度数。 g 使用小写字母， G 使用大写字母。此类型与定点表示法略有不同. 小数点右边没有作用的零不显示。此外，整数没有小数点。</td>
+    </tr>
+    <tr>
+      <td>x, X</td>
+      <td>作为十六进制数的无符号整数。 x 使用小写字母， X 使用大写字母。</td>
+    </tr>
+    <tr>
+      <td>o</td>
+      <td>作为八进制数的无符号整数。</td>
+    </tr>
+    <tr>
+      <td>s</td>
+      <td><a href="https://en.wikipedia.org/wiki/Null-terminated_string" title="Null-terminated string">以 null 结尾的字符串</a>。</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>字符。</td>
+    </tr>
+    <tr>
+      <td>p</td>
+      <td>打印一个void* 型指针的地址。</td>
+    </tr>
+    <tr>
+      <td>a, A</td>
+      <td>以十六进制表示法表示的双精度数，以 0x 或 0X 开头。 a 使用小写字母， A 使用大写字母。<a href="https://en.wikipedia.org/wiki/Printf#cite_note-5">5</a><a href="https://en.wikipedia.org/wiki/Printf#cite_note-6">6</a>（C++11 的 iostreams 有一个与此相同的 hexfloat）。</td>
+    </tr>
+    <tr>
+      <td>n</td>
+      <td>什么都不打印，但将到目前为止写入的字符数写入整数指针参数中。<br />在 Java 中，此操作打印换行符。<a href="https://en.wikipedia.org/wiki/Printf#cite_note-7">7</a></td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="length-字段">Length 字段</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>hh</td>
+      <td>对于整数类型，使 printf 期望一个从 char 升级而来的 int 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>h</td>
+      <td>对于整数类型，使 printf 期望一个从 short 升级而来的 int 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>l</td>
+      <td>对于整数类型，使 printf 期望一个 long 大小的整数参数。对于浮点类型，此标志被忽略。在 varargs 调用中使用 float 参数时，它总是被提升为 double。[4]</td>
+    </tr>
+    <tr>
+      <td>ll</td>
+      <td>对于整数类型，使 printf 期望一个 long long 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>L</td>
+      <td>对于浮点类型，使 printf 期望一个 long double 参数。</td>
+    </tr>
+    <tr>
+      <td>z</td>
+      <td>对于整数类型，使 printf 期望一个 size_t 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>j</td>
+      <td>对于整数类型，使 printf 期望一个 intmax_t 大小的整数参数。</td>
+    </tr>
+    <tr>
+      <td>t</td>
+      <td>对于整数类型，使 printf 期望一个 ptrdiff_t 大小的整数参数。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>例子</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+<span class="n">printf</span><span class="p">(</span><span class="s">"0x%lx</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="n">x</span><span class="p">);</span>
+</code></pre></div></div>
+<p>输出：<code class="language-plaintext highlighter-rouge">ffffffffffff0001</code></p>
+
+<h2 id="presicion-字段">Presicion 字段</h2>
+
+<ul>
+  <li>对于浮点数类型，它指定输出的是, 四舍五入的小数点右边的位数。</li>
+  <li>对于字符串类型，它限制了输出的字符数,超过的部分会被截断。</li>
+</ul>
+
+<p>精度可以这么设置:</p>
+<ul>
+  <li>直接在语句中写出</li>
+  <li>传参, 用  ==*==  号占位</li>
+</ul>
+
+<p>下面是一个例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 示例 1: 对于浮点数类型，precision 指定小数点右边的位数</span>
+    <span class="kt">double</span> <span class="n">pi</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="mi">141592653589793</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Pi with precision 2: %.2f</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pi</span><span class="p">);</span>
+    <span class="c1">// 输出: Pi with precision 2: 3.14</span>
+
+    <span class="c1">// 示例 2: 对于字符串类型，precision 指定输出字符的数量，超过则截断字符串</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">message</span> <span class="o">=</span> <span class="s">"Hello, World!"</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Limited characters: %.8s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">message</span><span class="p">);</span>
+    <span class="c1">// 输出: Limited characters: Hello, Wo</span>
+
+    <span class="c1">// 示例 3: precision 字段为动态值，通过另一个参数指定</span>
+    <span class="kt">int</span> <span class="n">dynamicPrecision</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Dynamic precision: %.*s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">dynamicPrecision</span><span class="p">,</span> <span class="s">"abcdef"</span><span class="p">);</span>
+    <span class="c1">// 输出: Dynamic precision: abc</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h2 id="width-字段">Width 字段</h2>
+
+<p>width设置了输出的<strong>最小</strong>宽度,通常用于填充定长的输出
+如果数字超出宽度.不会被截断
+和precision类似, 有数字与传参两种形式:
+例子: <code class="language-plaintext highlighter-rouge">printf("%*d", 5, 10)</code> will result in  `   10`, 共5个字符</p>
+
+<h2 id="flag-字段">Flag 字段</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>字符</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-</td>
+      <td>左对齐输出此占位符的内容。（默认是右对齐输出。）</td>
+    </tr>
+    <tr>
+      <td>+</td>
+      <td>对于正有符号数，添加正号（+），对于负有符号数，添加负号（-）。默认情况下，对于正数不添加任何东西。</td>
+    </tr>
+    <tr>
+      <td>空格</td>
+      <td>对于正有符号数，添加空格；对于负有符号数，添加负号（-）。如果存在 + 标志，则此标志被忽略。（默认情况下，对于正数不添加任何东西。）</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>当指定 ‘width’ 选项时，对于数字类型，在数字前面添加零。默认情况下，在数字前添加空格。</td>
+    </tr>
+    <tr>
+      <td>’</td>
+      <td>对于十进制的整数或指数，应用千位分隔符。</td>
+    </tr>
+    <tr>
+      <td>#</td>
+      <td>替代形式：<br />对于 g 和 G 类型，不移除尾随零。<br />对于 f、F、e、E、g、G 类型，输出始终包含小数点。<br />对于 o、x、X 类型，对非零数字前面分别添加 0、0x、0X。</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>对于<code class="language-plaintext highlighter-rouge">-</code>符号的解释: 与前面所说的width结合更好理解,就是相当于在数字后面添加空格而不是前面
+例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"Hello"</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"World"</span><span class="p">);</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%-8s|</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="s">"123"</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+<p>输出:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello   |
+World   |
+123     |
+</code></pre></div></div>
+
+<h2 id="parameter-字段">Parameter 字段</h2>
+
+<p>在 POSIX 标准中引入了一个扩展，即“Parameter field”（参数字段），该字段允许在格式说明符中指定参数的顺序。
+具体来说，<code class="language-plaintext highlighter-rouge">n$</code> 表示第 n 个参数，允许在格式说明符中以不同的顺序或使用不同的格式说明符多次输出参数。
+例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="c1">// 使用参数字段 %2$ 表示第二个参数，%1$ 表示第一个参数</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%2$d %2$#x; %1$d %1$#x"</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">17</span><span class="p">);</span>
+    <span class="c1">// 输出：17 0x11; 16 0x10</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>Attention: 如果任何一个占位符指定了一个参数，那么所有其他的占位符也<strong>必须</strong>指定一个参数。</p>
+
+<p>==注意：== 在非 POSIX 的 Microsoft Windows 中，对此特性的支持被放置在一个名为 <code class="language-plaintext highlighter-rouge">_printf_p</code> 的单独函数中。</p>
+
+<h1 id="总结">总结</h1>
+
+<p>本文详细介绍了printf的基础以及进阶用法，并给了相应的代码示例。
+以下是一个综合了上面所有字段的例子：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+        <span class="kt">long</span> <span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">3</span><span class="p">.</span><span class="mi">1415926535</span><span class="p">;</span>
+        <span class="kt">long</span> <span class="kt">double</span> <span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mi">3</span><span class="p">.</span><span class="mi">1415926535</span><span class="p">;</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"The first argument is %1$-16.3Lf, The second argument is %2$-16.3Lf</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>输出: <code class="language-plaintext highlighter-rouge">The first argument is 3.142           , The second argument is -3.142</code></p>
+
+<p>#c</p>

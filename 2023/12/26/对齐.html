@@ -1,0 +1,33 @@
+<p><img src="https://s2.loli.net/2023/11/16/XN7CyKi4qQWpBVj.png" alt="Pasted image 20231114140331" /></p>
+
+<p>struct对其要求:</p>
+<ul>
+  <li>may need to insert gaps in the field allocation
+  由于结构体中变量各自的对齐要求,所以内存的分配中间会留空</li>
+  <li>may need to add padding to the end of the structure
+  strcut的总长度,要求是其含有最大数据类型长度的整数倍
+  因此末尾会留下填充的空白</li>
+</ul>
+
+<p>Gap:
+<img src="https://s2.loli.net/2023/11/16/UHJYPo4NQ5lEXyK.png" alt="Pasted image 20231114140625" /></p>
+
+<p>Padding:
+<img src="https://s2.loli.net/2023/11/16/uX4GoAtesm8Hyh3.png" alt="Pasted image 20231114140641" /></p>
+
+<p><em>如果成员是struct呢?</em></p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">InnerStruct</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">c</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">l</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">struct</span> <span class="n">OuterStruct</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">a</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">InnerStruct</span> <span class="n">inner</span><span class="p">;</span>  <span class="c1">//InnerStruct作为OuterStruct的成员</span>
+    <span class="kt">short</span> <span class="n">s</span><span class="p">;</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+<p>这种情况下,OuterStruct的对其要求是8对齐,因为InnerStruct是8对齐(因为InnerStruct中最大类型是long)
+#汇编</p>

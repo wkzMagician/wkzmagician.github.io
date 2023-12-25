@@ -1,0 +1,267 @@
+
+<p>引发异常的过程一定涉及到控制流的改变(用户态$\leftrightarrow$内核态)<br />
+前面提到的jump指令和call/return指令都能改变控制流,但都只能在同一个mode中</p>
+
+<p>新指令: syscall &amp; sysret</p>
+
+<h1 id="system-calls">System Calls</h1>
+
+<p><img src="https://s2.loli.net/2023/12/05/xF6XU1LiBhanjsZ.png" alt="image.png" /></p>
+
+<p>举个栗子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp"># hello world
+</span><span class="kt">int</span> <span class="nf">mian</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">write</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"hello, world</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">13</span><span class="p">);</span> 
+    <span class="c1">// 1:文件描述符, 1这里指标准输出stdout-&gt;屏幕</span>
+    <span class="c1">// 13:写入的字节数</span>
+    <span class="n">_exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img src="https://s2.loli.net/2023/12/05/K7bfpIZds6elJWr.png" alt="image.png" />
+看看汇编的结果：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>.section .data
+2 	string:
+3 		.ascii "hello, world\n"
+4 	string_end:
+5 		.equ len, string_end - string
+6 	.section .text
+7 	.globl main
+main:
+	# First, call write(1, "hello, world\n", 13)
+9 	movq 	$1, %rax 	  # write is system call 1
+10 	movq 	$1, %rdi 	  # Arg1:stdout has descriptor 1
+11 	movq 	$string, %rsi # Arg2:Hello world string
+12 	movq 	$len, %rdx    # Arg3:string length
+13 	syscall     	      # Make the system call
+	# Next, call exit(0)
+14	movq 	$60, %rax 	  # _exit is system call 60
+15 	movq 	$0, %rdi      # Arg1:exit status is 0
+16 	syscall 		      # Make the system call
+
+</code></pre></div></div>
+
+<p><strong>系统调用的参数:</strong> 最多6个参数在两个modes间传递:<br />
+%rdi, %rsi, %rdx, %r10, %r8, %r9<br />
+caller-saved registers必须在user mode中保存好
+<strong>%rcx和%r11</strong> 被销毁了</p>
+<blockquote>
+  <p>分别保存%rsp以及%rflags
+%rflags除了conditional code, 还包括:
+	IF(是否会被中断)
+	TF(Trap Flag)(用于单步执行)</p>
+</blockquote>
+
+<p>返回值保存在%rax中
+<img src="https://s2.loli.net/2023/12/05/H7wdgSzsZyYJXBL.png" alt="image.png" /></p>
+
+<h1 id="event--exception">Event &amp; Exception</h1>
+<p>(事件以及异常)</p>
+
+<p>处理器状态：
+处理器中的一系列bits和signals，例如kernel bit</p>
+
+<p>当processor’s state发生变化时:</p>
+<ul>
+  <li>调用syscall/sysret</li>
+  <li>从磁盘/网络适配器接收数据</li>
+  <li>引发错误的指令,比如除0</li>
+</ul>
+
+<p><strong>异常:</strong> 对事件产生反应,以改变控制流的硬件机制</p>
+
+<h2 id="exception-table">Exception Table</h2>
+<ol>
+  <li>Each type of event has a unique exception number k</li>
+  <li>Exception table entry k points to a function (exception handler)</li>
+  <li>Handler k is called each time exception k occurs.</li>
+</ol>
+
+<p><img src="https://s2.loli.net/2023/12/05/BCjrIw9DVTkSceg.png" alt="image.png" />
+<img src="https://s2.loli.net/2023/12/05/aeGlTPsIE7qSwKm.png" alt="image.png" /></p>
+
+<h1 id="exception-handler">Exception Handler</h1>
+<p>内核mode中的代码</p>
+
+<p>将需要恢复被中断进程的必要信息储存在kernel栈上</p>
+<ul>
+  <li>Return address ($I_{curr}/I_{next}$)</li>
+  <li>RFLAGS, RSP</li>
+</ul>
+
+<p>exception handler处理结束后:</p>
+<ul>
+  <li>returns control to the current instruction Icurr</li>
+  <li>returns control to the next instruction Inext</li>
+  <li>aborts the interrupted program</li>
+</ul>
+
+<h1 id="exceptions的种类">Exceptions的种类</h1>
+<h2 id="synchronous-exceptions-同步调用">Synchronous exceptions (同步调用)</h2>
+<p>执行一个指令的结果</p>
+
+<ul>
+  <li>Traps
+    <blockquote>
+      <p>Intentional<br />
+return to $I_{next}$<br />
+e.g. syscall, breakpoint traps</p>
+    </blockquote>
+  </li>
+  <li>Faults
+    <blockquote>
+      <p>Unintentioanl<br />
+可能可以恢复<br />
+重新执行Icurr或者中断<br />
+e.g. page faults(recoverable), protection faults(unrecoverable)</p>
+    </blockquote>
+  </li>
+  <li>Aborts
+    <blockquote>
+      <p>Unintentional<br />
+Unrecoverable<br />
+中断当前程序<br />
+e.g. parity error(奇偶校验), machine check</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p>Tips:
+Fault: software error 
+Abort: hardware error (fatal)</p>
+
+<p>Fault Example #1<br />
+访问内存时,有可能该部分的内存还没有准备好.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="n">a</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>报缺页错误(page fault), 切换到OS, 处理完错误(Create page and load into memory), 返回Icurr再执行一次</p>
+
+<p>Fault Example #2<br />
+访问非法内存</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">1000</span><span class="p">];</span>
+<span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">a</span><span class="p">[</span><span class="mi">5000</span><span class="p">]</span> <span class="o">=</span> <span class="mi">13</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>报缺页错误(page fault), 切换到OS,操作系统发现了访问非法地址, 向user process发送SIGSEG信号, <br />
+user process exits with <strong>“segmentation fault”</strong></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Exception Number</th>
+      <th>Description</th>
+      <th>Exception class</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>Divide error</td>
+      <td>Fault</td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>General protection fault</td>
+      <td>Fault</td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>Page fault</td>
+      <td>Fault</td>
+    </tr>
+    <tr>
+      <td>18</td>
+      <td>Machine check</td>
+      <td>Abort</td>
+    </tr>
+    <tr>
+      <td>32-255</td>
+      <td>OS defined exception</td>
+      <td>Interrupt or trap</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="asynchronous-exceptioninterrupts">Asynchronous exception(interrupts)</h2>
+
+<p><strong>由外部事件导致的.</strong></p>
+<ul>
+  <li>设置处理器的中断引脚(interrupt pin)</li>
+  <li>Handler返回”next” instruction</li>
+</ul>
+
+<p>Examples:</p>
+<ul>
+  <li>I/O interrupts
+    <ul>
+      <li>hitting ctl-c at the keyboard</li>
+      <li>接受网络包</li>
+      <li>磁盘读写</li>
+    </ul>
+  </li>
+  <li>Hard reset interrupt
+hitting the reset button</li>
+  <li>Soft reset interrupt
+hitting ctl-alt-delete on a PC</li>
+</ul>
+
+<p>以I/O interrupt为例, I/O devices 向system bus上放置一个数字用来识别造成interrupt的设备<br />
+导致CPU停止执行当前程序,并跳转到OS中的interrupt handler</p>
+
+<p>I/O 与 processor 之间的关系：
+<img src="https://s2.loli.net/2023/12/05/VumvBEOtsq7bTLW.png" alt="image.png" />
+异步中断的流程图：
+<img src="https://s2.loli.net/2023/12/05/qGxzgrPUvik8NLj.png" alt="image.png" /></p>
+
+<p>各种Exceptions分类整理：
+<img src="https://s2.loli.net/2023/12/05/ywpdCkzVeNfqnvb.png" alt="image.png" /></p>
+
+<p>举日常编程中出现异常的例子:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Scenario</th>
+      <th>Exception Type</th>
+      <th>Synchronous/Asynchronous</th>
+      <th>Exception Handler Return</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>A. Access content at address 0x0</td>
+      <td>Fault</td>
+      <td>Synchronous</td>
+      <td>Never return</td>
+    </tr>
+    <tr>
+      <td>B. Memory corruption</td>
+      <td>Aborts</td>
+      <td>Synchronous</td>
+      <td>Never return</td>
+    </tr>
+    <tr>
+      <td>C. “kill -9 &lt;pid&gt;” in shell</td>
+      <td>Traps</td>
+      <td>Synchronous</td>
+      <td>Return to next instruction</td>
+    </tr>
+    <tr>
+      <td>D. Click your mouse</td>
+      <td>Interrupt</td>
+      <td>Asynchronous</td>
+      <td>Return to next instruction</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>具体CPU如何访问I/O Device, 详见[[操作系统如何访问外部设备]]</p>
+
+<p>#操作系统 #异常</p>

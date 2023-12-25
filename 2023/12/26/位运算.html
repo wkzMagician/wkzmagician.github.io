@@ -1,0 +1,760 @@
+<h1 id="一优先级">一、优先级</h1>
+
+<p>原表格网址：<a href="https://blog.csdn.net/yuliying/article/details/72898132">C语言运算符优先级（超详细）-CSDN博客</a></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>优先级</th>
+      <th>运算符</th>
+      <th>名称或含义</th>
+      <th>使用形式</th>
+      <th>结合方向</th>
+      <th>说明</th>
+      <th> </th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>[]</td>
+      <td>数组下标</td>
+      <td>数组名[常量表达式]</td>
+      <td>左到右</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>()</td>
+      <td>圆括号</td>
+      <td>(表达式) / 函数名(形参表)</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>.</td>
+      <td>成员选择（对象）</td>
+      <td>对象.成员名</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>-&gt;</td>
+      <td>成员选择（指针）</td>
+      <td>对象指针-&gt;成员名</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>-</td>
+      <td>负号运算符</td>
+      <td>-表达式</td>
+      <td>右到左</td>
+      <td>单目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>~</td>
+      <td>按位取反运算符</td>
+      <td>~表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>++</td>
+      <td>自增运算符</td>
+      <td>++变量名 / 变量名++</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>–</td>
+      <td>自减运算符</td>
+      <td>–变量名 / 变量名–</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>*</td>
+      <td>取值运算符</td>
+      <td>*指针变量</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>&amp;</td>
+      <td>取地址运算符</td>
+      <td>&amp;变量名</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>!</td>
+      <td>逻辑非运算符</td>
+      <td>!表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>(类型)</td>
+      <td>强制类型转换</td>
+      <td>(数据类型)表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>sizeof</td>
+      <td>长度运算符</td>
+      <td>sizeof(表达式)</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>/</td>
+      <td>除</td>
+      <td>表达式 / 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>*</td>
+      <td>乘</td>
+      <td>表达式 * 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>%</td>
+      <td>余数（取模）</td>
+      <td>整型表达式 % 整型表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>+</td>
+      <td>加</td>
+      <td>表达式 + 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>-</td>
+      <td>减</td>
+      <td>表达式 - 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>«</td>
+      <td>左移</td>
+      <td>变量 « 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>»</td>
+      <td>右移</td>
+      <td>变量 » 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>&gt;</td>
+      <td>大于</td>
+      <td>表达式 &gt; 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>&gt;=</td>
+      <td>大于等于</td>
+      <td>表达式 &gt;= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>&lt;</td>
+      <td>小于</td>
+      <td>表达式 &lt; 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>&lt;=</td>
+      <td>小于等于</td>
+      <td>表达式 &lt;= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>==</td>
+      <td>等于</td>
+      <td>表达式 == 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>!=</td>
+      <td>不等于</td>
+      <td>表达式 != 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>&amp;</td>
+      <td>按位与</td>
+      <td>表达式 &amp; 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>^</td>
+      <td>按位异或</td>
+      <td>表达式 ^ 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>|</td>
+      <td>按位或</td>
+      <td>表达式</td>
+      <td>表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>11</td>
+      <td>&amp;&amp;</td>
+      <td>逻辑与</td>
+      <td>表达式 &amp;&amp; 表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>12</td>
+      <td>||</td>
+      <td>逻辑或</td>
+      <td>表达式</td>
+      <td> </td>
+      <td>表达式</td>
+      <td>左到右</td>
+      <td>双目运算符</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>13</td>
+      <td>?:</td>
+      <td>条件运算符</td>
+      <td>表达式1 ? 表达式2 : 表达式3</td>
+      <td>右到左</td>
+      <td>三目运算符</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>14</td>
+      <td>=</td>
+      <td>赋值运算符</td>
+      <td>变量 = 表达式</td>
+      <td>右到左</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>/=</td>
+      <td>除后赋值</td>
+      <td>变量 /= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>*=</td>
+      <td>乘后赋值</td>
+      <td>变量 *= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>%=</td>
+      <td>取模后赋值</td>
+      <td>变量 %= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>+=</td>
+      <td>加后赋值</td>
+      <td>变量 += 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>-=</td>
+      <td>减后赋值</td>
+      <td>变量 -= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>«=</td>
+      <td>左移后赋值</td>
+      <td>变量 «= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>»=</td>
+      <td>右移后赋值</td>
+      <td>变量 »= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>&amp;=</td>
+      <td>按位与后赋值</td>
+      <td>变量 &amp;= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>^=</td>
+      <td>按位异或后赋值</td>
+      <td>变量 ^= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td>=</td>
+      <td>按位或后赋值</td>
+      <td>变量</td>
+      <td>= 表达式</td>
+      <td>–</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>15</td>
+      <td>,</td>
+      <td>逗号运算符</td>
+      <td>表达式, 表达式, …</td>
+      <td>左到右</td>
+      <td>–</td>
+      <td> </td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>说明：</strong>
+<strong>同一优先级的运算符，运算次序由结合方向所决定。
+简单记就是：！ &gt; 算术运算符 &gt; 关系运算符 &gt; 逻辑运算符 &gt; 赋值运算符</strong>
+[[指针#^2de311|更简洁的表格]]</p>
+
+<h1 id="二attention">二、Attention</h1>
+
+<h2 id="1-cool-stuff-with-xor">1. Cool Stuff with Xor</h2>
+
+<p>用异或(^)实现一个交换两个变量的函数：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span><span class="err"> </span> <span class="n">inplace_swap</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+<span class="err">  </span> <span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="n">x</span> <span class="o">^</span> <span class="o">*</span><span class="n">y</span><span class="p">;</span><span class="err">   </span> <span class="cm">/* #1 */</span>
+<span class="err">  </span> <span class="o">*</span><span class="n">y</span> <span class="o">=</span> <span class="o">*</span><span class="n">x</span> <span class="o">^</span> <span class="o">*</span><span class="n">y</span><span class="p">;</span><span class="err">   </span> <span class="cm">/* #2 */</span>
+<span class="err">  </span> <span class="o">*</span><span class="n">x</span> <span class="o">=</span> <span class="o">*</span><span class="n">x</span> <span class="o">^</span> <span class="o">*</span><span class="n">y</span><span class="p">;</span><span class="err">   </span> <span class="cm">/* #3 */</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>用表格表示出*x 和 *y的值：
+<img src="https://s2.loli.net/2023/11/16/JMhTmpnR3z5UEwP.png" alt="Pasted image 20231107135348" /></p>
+
+<p><strong><em>Warning:</em></strong>
+对于以下这个程序：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">reverse_array</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">cnt</span><span class="p">)</span> <span class="p">{</span>
+	<span class="kt">int</span> <span class="n">first</span><span class="p">,</span> <span class="n">last</span><span class="p">;</span>
+  <span class="err"> </span> <span class="k">for</span> <span class="p">(</span><span class="n">first</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">last</span> <span class="o">=</span> <span class="n">cnt</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">first</span> <span class="o">&lt;=</span> <span class="n">last</span><span class="p">;</span> <span class="n">first</span><span class="o">++</span><span class="p">,</span> <span class="n">last</span><span class="o">--</span><span class="p">)</span>
+	 <span class="err">   </span><span class="n">inplace_swap</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="n">first</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">a</span><span class="p">[</span><span class="n">last</span><span class="p">]);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>如果first = last，则*x与*y的值相同，即x与y指向同一个地址
+这样第一步中*x与*y都会被赋值为0（A^A = 0）
+即最后a[mid]一定会被置0，这不符合交换的要求</p>
+
+<h2 id="2-mask-operations">2. Mask Operations</h2>
+
+<p>mask例子：0xFF
+对x进行遮罩处理：</p>
+
+<ol>
+  <li>The least significant byte of x, with all other bits set to 0
+    <ul>
+      <li>x &amp; 0xFF</li>
+    </ul>
+  </li>
+  <li>All but the least significant byte of complemented, with the least significant byte left unchanged
+    <ul>
+      <li>x ^ ~0xFF</li>
+    </ul>
+  </li>
+  <li>The least significant byte set to all 1s, and all other bytes of x left unchanged.
+    <ul>
+      <li>
+        <table>
+          <tbody>
+            <tr>
+              <td>x</td>
+              <td>0xFF</td>
+            </tr>
+          </tbody>
+        </table>
+      </li>
+    </ul>
+  </li>
+</ol>
+
+<ul>
+  <li>x &amp;1 = x</li>
+  <li>x &amp; 0 = 0</li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>x</td>
+          <td>1 = 1</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>x</td>
+          <td>0 = x</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+  <li>x ^ 0 = x</li>
+  <li>x ^ 1 = ~x</li>
+</ul>
+
+<h2 id="3-位运算的一些作用">3. 位运算的一些作用</h2>
+
+<ul>
+  <li>
+    <p>a &amp;&amp; 5/a</p>
+
+    <p>–If a is zero, the evaluation of 5/a is stopped
+  –avoid division by zero</p>
+  </li>
+  <li>
+    <p>p &amp;&amp; *p</p>
+
+    <p>–Never cause the dereferencing of a null pointer</p>
+  </li>
+  <li>
+    <p>Using only bit-level and logical operations</p>
+
+    <p>–Implement x == y
+  –it returns 1 when x and y are equal, and 0 otherwise
+  –!(x^y)</p>
+  </li>
+</ul>
+
+<h2 id="4防止越界的移位运算">4.防止越界的移位运算</h2>
+
+<p>*What happens ?**</p>
+<ul>
+  <li>int lval = 0xFEDCBA98 « 32;</li>
+  <li>int aval = 0xFEDCBA98 » 36;</li>
+  <li>unsigned uval = 0xFEDCBA98u » 40;</li>
+</ul>
+
+<p>在C和C++编程中，将整数左移或右移的位数超过该整数的大小（在这种情况下，对于一个int是32位）会导致未定义的行为，并且结果可能因编译器和平台而异。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">int lval = 0xFEDCBA98 &lt;&lt; 32;</code></li>
+</ol>
+
+<p>这里，你正在将一个int左移32位。这种行为是未定义的，因为对于一个32位的整数，左移32位或更多位是不明确定义的。</p>
+
+<p>一些编译器可能会将此视为如果你已经将位移为0位，实际上将<code class="language-plaintext highlighter-rouge">lval</code>留为<code class="language-plaintext highlighter-rouge">0xFEDCBA98</code>。</p>
+
+<p>其他编译器可能会进行环绕，这在这种情况下实际上与将位移为0位相同。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">int aval = 0xFEDCBA98 &gt;&gt; 36;</code></li>
+</ol>
+
+<p>与第一个案例类似，将int右移36位是未定义的行为。</p>
+
+<p>一些编译器可能会将此视为如果你已经将位移为4位（36模32），结果为<code class="language-plaintext highlighter-rouge">0xFFEDCBA9</code>。</p>
+
+<p>其他编译器可能会产生不同的结果，甚至只给出垃圾值。</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">unsigned uval = 0xFEDCBA98u &gt;&gt; 40;</code></li>
+</ol>
+
+<p>在这里，你正在将无符号整数（unsigned）右移40位。</p>
+
+<p>对于无符号整数，行为是明确定义的，结果实际上是将值向右移动<code class="language-plaintext highlighter-rouge">40 % 32 = 8</code>位。</p>
+
+<p>因此，<code class="language-plaintext highlighter-rouge">uval</code>将是<code class="language-plaintext highlighter-rouge">0x00FEDCBA</code>。</p>
+
+<h1 id="三ics习题1-位运算--题目">三、[[ics习题#1. 位运算 | 题目]]</h1>
+
+<p>#位运算</p>

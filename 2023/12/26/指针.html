@@ -1,0 +1,151 @@
+<p>指针和数组的区别与联系：
+数组名可以看作是指针常量</p>
+
+<p>指针数组
+函数指针 <code class="language-plaintext highlighter-rouge">void (*f)(int *)</code>
+<strong><em>Attention:</em></strong> <code class="language-plaintext highlighter-rouge">void   *f(int *)</code> declares f is a function
+Because the order of operators
+<code class="language-plaintext highlighter-rouge">(void *)    f(int *)</code></p>
+
+<p>当遇见一个无比复杂的定义时,只要看括号最里面是什么即可,更准确地说,是看<strong>*最先运算</strong>的是什么操作
+这就又涉及到操作符的运算顺序了:[[位运算#一、优先级]]
+以及操作符的作用对象:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Operators</th>
+      <th>Associativity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">() [] -&gt; . ++ --</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">! ~ ++ -- + - * &amp; (type) sizeof</code></td>
+      <td>Right to Left</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">* / %</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">+ -</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt;&lt; &gt;&gt;</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&lt; &lt;= &gt; &gt;=</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">== !=</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&amp;</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">^</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">|</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">&amp;&amp;</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">||</code></td>
+      <td>Left to Right</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">?:</code></td>
+      <td>Right to Left</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">= += -= *= /= %= &amp;= ^= != &lt;&lt;= &gt;&gt;=</code></td>
+      <td>Right to Left</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">,</code></td>
+      <td>Left to Right</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>^2de311</p>
+
+<p>举个例子:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>定义</th>
+      <th>解释</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char **argv;</code></td>
+      <td>定义一个指向指针的指针，可以用来接收命令行参数。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">int (*daytab)[13];</code></td>
+      <td>定义一个指向包含13个整数的数组的指针，daytab指向该数组。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">int (*comp)();</code></td>
+      <td>定义一个指向返回整数函数的指针，comp指向该函数。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char (*(*x())[])();</code></td>
+      <td>定义一个指向返回指向字符数组的指针的函数的指针，x指向该函数。此语句是函数指针的定义，它是一个指向返回字符数组的函数的指针。</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char (*(*x[3])())[5];</code></td>
+      <td>定义一个数组，数组的每个元素是指向函数的指针，该函数返回一个包含5个字符的数组。x是该数组的名称。此语句是函数指针数组的定义。</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>C Language Statement</th>
+      <th>Explanation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char **argv;</code></td>
+      <td>Pointer to a pointer to char, typically used for command line arguments.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">int (*daytab)[13];</code></td>
+      <td>Pointer to an array of integers with 13 elements, often used for representing a calendar.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">int (*comp)();</code></td>
+      <td>Pointer to a function that takes no arguments and returns an integer.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char (*(*x())[])();</code></td>
+      <td>Function <code class="language-plaintext highlighter-rouge">x</code> returning a pointer to an array[] of pointers to functions returning char.</td>
+    </tr>
+    <tr>
+      <td><code class="language-plaintext highlighter-rouge">char (*(*x[3])())[5];</code></td>
+      <td>Array[3] of pointer to function returning pointer to array[5] of char</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>#指针 #c</p>

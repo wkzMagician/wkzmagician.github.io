@@ -1,0 +1,470 @@
+<h1 id="获得进程id">获得进程ID</h1>
+
+<p>简称PID(process id)
+每个进程都有唯一的<strong>正数</strong>PID</p>
+
+<p>getpid函数: 返回调用进程的PID
+getppid: 返回父进程的PID</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="c1"> </span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="n">pid_t</span> <span class="nf">getpid</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span> 
+<span class="n">pid_t</span> <span class="nf">getppid</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>getpid 和 getppid 函数返回一个类型为 pid_t 的整数值，在 Linux 系统上它在 types.h 中被定义为 int</p>
+
+<h1 id="创建和终止进程">创建和终止进程</h1>
+
+<h2 id="进程的三种状态">进程的三种状态</h2>
+
+<ul>
+  <li>Running
+    <ul>
+      <li>正在CPU上执行</li>
+      <li>等待被执行</li>
+      <li>最终被内核调度</li>
+    </ul>
+  </li>
+  <li>Stopped/Blocked
+    <ul>
+      <li>进程的执行被挂起</li>
+      <li>不会被调度</li>
+      <li>直到收到SIGCONT信号并重新开始运行</li>
+    </ul>
+  </li>
+  <li>Terminated
+    <ul>
+      <li>进程永久终止</li>
+      <li>原因
+        <ul>
+          <li>信号,默认行为是终止</li>
+          <li>从主程序返回</li>
+          <li>exit</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="进程终止">进程终止</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="c1"> </span><span class="cp">
+</span><span class="kt">void</span> <span class="nf">exit</span><span class="p">(</span><span class="kt">int</span> <span class="n">status</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>exit 函数以 status 退出状态来终止进程
+（另一种设置退出状态的方法是从主程序中 返回一个整数值）</p>
+
+<h2 id="创建进程">创建进程</h2>
+
+<p><strong>Tip:</strong>fork是Unix操作系统独有的, 也就是linux和maxOS都有该函数,而Windows没有..由于《深入了解计算机系统》一书以linux系统为基础,所以想要测试代码的友友需要安装虚拟机(比如说VMWare或者使用Windows下子系统WSL). 当然, Windows下也可以用其它的方法实现类似的效果,只是比较麻烦.</p>
+
+<p>父进程通过调用<strong>fork</strong>函数创建一个新的运行的子进程.</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+</span><span class="n">pid_t</span> <span class="nf">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="c1">// 返回：子进程返回0，父进程返回子进程的PID,如果出错，则为-1。</span>
+
+</code></pre></div></div>
+
+<p>新创建的子进程几乎但不完全与父进程相同。<br />
+<strong>共同点:</strong></p>
+<ul>
+  <li>
+    <p>子进程得到与父进程(用户级)<mark>虚拟地址空间相同</mark>(<strong>但是独立的</strong>)一份副本
+包括: ==代码和数据段, 堆, 共享库, 用户栈==</p>
+  </li>
+  <li>
+    <p>子进程还将获得与父进程==打开文件描述符==相同的副本</p>
+    <blockquote>
+      <p>子进程可以读写父进程中打开的任何文件</p>
+    </blockquote>
+  </li>
+</ul>
+
+<p><strong>不同点:</strong><br />
+子进程与父进程<strong>PID不同</strong></p>
+
+<h2 id="fork函数的特点">fork函数的特点</h2>
+
+<h3 id="调用一次返回两次"><strong>调用一次,返回两次</strong></h3>
+
+<ul>
+  <li>只被调用一次(在父进程中)</li>
+  <li>返回两次
+    <ul>
+      <li>在父进程中, 返回值是子进程的PID</li>
+      <li>在子进程中, 返回0</li>
+    </ul>
+  </li>
+</ul>
+
+<p>返回值的特性使得程序可以知道是在父进程还是子进程中执行.<br />
+下面是一个例子:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+	<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+	<span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">();</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">pid</span> <span class="o">==</span> <span class="mi">0</span><span class="p">){</span> <span class="cm">/* Child */</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"child: x=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">++</span><span class="n">x</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* Parent */</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"parent: x=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="o">--</span><span class="n">x</span><span class="p">);</span>
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>这里的Fork是上一章提到的包装函数, 定义如下:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pid_t</span> <span class="nf">Fork</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+<span class="p">{</span>
+ 	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+ 	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">())</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+ 		<span class="n">unix_error</span><span class="p">(</span><span class="s">"Fork error"</span><span class="p">);</span>
+ 	<span class="k">return</span> <span class="n">pid</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">void</span> <span class="nf">unix_error</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="cm">/* unix-style error */</span>
+<span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+ 	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>当在Unix系统上运行这个程序时，我们得到下面的结果:</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>linux&gt; ./fork
+parent: x=0
+child : x=2
+</code></pre></div></div>
+
+<h3 id="并发执行"><strong>并发执行</strong></h3>
+
+<p>在我们的系统上运行这个程序时，父进程先完成它的 printf语句，然后是子进程。然而，在另一个系统上可能正好相反。
+父进程与子进程是==并发==执行的独立进程,内核能够以任意方式交替执行它们控制流中的指令.
+	因此不能假定父进程与子进程的执行顺序</p>
+
+<h3 id="父进程与子进程有相同但是独立的地址空间"><strong>父进程与子进程有相同但是==独立==的地址空间</strong></h3>
+
+<p>该地址空间指的是虚拟地址.
+也就是说,在这个例子中, 当fork返回时, 子进程和父进程中的x的值都是1. (<em>相同</em>)</p>
+
+<p>然而, 父进程和子进程对x所做的任何改变都是独立的，不会反映在另一个进程的内存中。(<em>独立</em>)
+在本例中, 体现为printf输出的内容不同.</p>
+
+<h3 id="共享文件"><strong>共享文件</strong></h3>
+<p>在这个例子中, stdout(标准输出)就是子进程与父进程共享的文件,所以子进程与父进程的内容才会都输出到(同一个)屏幕上.
+子进程会继承父进程所有的打开文件.</p>
+
+<h2 id="fork容易混淆的例子">fork容易混淆的例子</h2>
+
+<p>下面这个例子展示了如何用进程图理解fork的执行顺序:</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;sys/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">(){</span>
+	<span class="kt">int</span> <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">){</span>
+		<span class="n">pid_t</span> <span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">();</span>
+		<span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="n">pid</span><span class="p">){</span>
+		<span class="n">x</span> <span class="o">+=</span> <span class="n">y</span><span class="p">;</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"x in child: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+		<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+		<span class="p">}</span>
+		<span class="n">y</span><span class="o">++</span><span class="p">;</span>
+		<span class="n">x</span> <span class="o">&lt;&lt;=</span> <span class="mi">1</span><span class="p">;</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"x in parent: %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">x</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+<p>对进程图中所有顶点进行拓扑排序,即得到程序所有可能的输出结果.
+<img src="https://s2.loli.net/2023/12/09/Ro6tqmdI8EjQxFB.jpg" alt="微信图片_20231209142619.jpg" />
+(图中括号(x,y)表示输出前x与y的值)
+比方说,一个可能的输出是:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x in parent: 20
+x in parent: 40 
+x in child: 11 
+x in child: 22
+</code></pre></div></div>
+<p>所谓的拓扑排序,可以简单理解为,流程图中子分支上的所有事件一定在主分支上的事件之后发生.
+在这个例子中,对x的值进行讨论:
+(x=) 20 一定在40之前,也一定在22之前</p>
+
+<p>如果更复杂一些,把exit(0)删去,程序的进程图如下:
+(图中C表示输出”x in child”时x与y的值, P表示输出”x in parent”时x与y的值)</p>
+
+<p><img src="https://s2.loli.net/2023/12/09/6I8txeWNq5GpbgK.jpg" alt="微信图片_20231209142627.jpg" /></p>
+
+<h1 id="回收子进程">回收子进程</h1>
+
+<h2 id="回收机制">回收机制</h2>
+
+<p>当一个进程由于某种原因终止时，内核并不是立即把它从系统中清除。相反，进程被保持在一种已终止的状态中，直到被它的父进程回收（reaped)。</p>
+<blockquote>
+  <p>不立即清除的原因是,子进程可能需要对父进程报告与其终止的相关信息(<strong>退出状态</strong>),可以看作是它的”遗言”</p>
+</blockquote>
+
+<p>当父进程回收已终止的子进程时，内核将子进程的退出状态传递给父进程，然后抛弃子进程(不存在)</p>
+
+<p>一个终止了但还未被回收的进程称为<strong>僵死进程</strong>(zombie)</p>
+
+<p>如果子进程还未被回收,父进程已经被终止了, 内核会安排init进程回收它.
+init进程的PID为1，是在系统启动时由内核创建的，它不会终止，是所有进程的祖先。</p>
+
+<p>Attention: 长时间运行的程序,比如shell或者服务器, 必须手动地去回收僵死子进程, 否则这些僵死进程仍会消耗内存资源.</p>
+
+<p>那么如何手动回收子进程呢?</p>
+
+<h2 id="waitpid函数">waitpid函数</h2>
+
+<p>一个进程可以通过调用waitpid函数来等待它的子进程终止或者停止。</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span>
+<span class="n">pid_t</span> <span class="nf">waitpid</span><span class="p">(</span><span class="n">pid_t</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">statusp</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="o">*</span><span class="p">);</span>
+<span class="c1">// 返回: 成功,则为子进程的PID;</span>
+<span class="c1">// WHOHANG, 则为0;</span>
+<span class="c1">// 其他错误,则为-1</span>
+</code></pre></div></div>
+
+<p>下面具体地解释它的3个参数:</p>
+
+<h3 id="1-判定等待集合的成员">1. 判定等待集合的成员</h3>
+
+<p>等待集合的成员是由参数pid来确定的：</p>
+
+<ul>
+  <li>如果pid&gt;0,那么等待集合就是一个单独的子进程，它的进程ID等于pid.</li>
+  <li>如果pid=-1, 那么等待集合就是由父进程所有的子进程组成的。</li>
+</ul>
+
+<h3 id="2-修改默认行为">2. 修改默认行为</h3>
+
+<p>可以通过将options 设置为常量 WNOHANG, WUNTRACED和 WCONTINUED 的各种组合来修改默认行为：</p>
+
+<ul>
+  <li>默认情况下(当options=0时), waitpid挂起调用进程的执行，直到它的等待集合(wait set)中的一个子进程终止。(就是会一直等着) 如果等待集合中的一个进程在刚调用的时刻就已经终止了，那么waitpid就立即返回。在这两种情况中，waitpid返回导致waitpid 返回的已终止子进程的PID.</li>
+  <li>WNOHANG: 如果等待集合中的任何子进程==都还没有终止==，那么就<strong>立即返回</strong> (返回值为0)。在等待子进程终止的同 时，如果还想做些有用的工作，这个选项会有用</li>
+  <li>WUNTRACED: 挂起调用进程的执行，直到等待集合中的一个进程terminated or stopped(停止)。</li>
+  <li>WCONTINUED: 挂起调用进程的执行，直到等待集合中一个正在运行的进程终止 或等待集合中一个被停止的进程收到SIGCONT信号重新开始执行。</li>
+</ul>
+
+<p>可以用或运算把这些选项组合起来。例如：</p>
+<ul>
+  <li>
+    <table>
+      <tbody>
+        <tr>
+          <td>WNOHANG</td>
+          <td>WUNTRACED: ==立即返回==，如果等待集合中的子进程都没有被<strong>停止或终止</strong>，则返回0: 如果有一个停止或终止，则返回值为该子进程的PID.</td>
+        </tr>
+      </tbody>
+    </table>
+  </li>
+</ul>
+
+<h3 id="3-检查已回收子进程的退出状态">3. 检查已回收子进程的退出状态</h3>
+
+<p>如果 statusp参数非空，那么waitpid就会在 status 中放上关于导致返回的 子进程的状态信息(statusp-&gt;status)，wait.h 头文件中定义了==解释==status参数的宏:</p>
+
+<ul>
+  <li>WIFEXITED(status): 如果子进程通过调用 exit 或者 return 正常终止，就返回真。</li>
+  <li>WEXITSTATUS(status): 返回一个正常终止的子进程的退出状态。只有在 WIFEXITED()返回为真时，才会定义这个状态。</li>
+  <li>WIFSIGNALED(status): 如果子进程是因为一个未被捕获的信号终止的，那么就返回真。</li>
+  <li>WTERMSIG(status): 返回导致子进程终止的信号的编号。只有在 WIFSIGNALED() 返回为真时，才定义这个状态</li>
+  <li>WIFSTOPPED(status): 如果引起返回的子进程当前是停止 (<strong>stopped</strong>)的，那么就返回真。</li>
+  <li>WSTOPSIG(status): 返回引起子进程停止的信号的编号。只有在 WIFSTOPPED() 返回为真时，才定义这个状态。</li>
+  <li>WIFCONTINUED(status): 如果子进程收到 SIGCONT信号重新启动，则返回真。</li>
+</ul>
+
+<h3 id="错误条件">错误条件</h3>
+
+<ul>
+  <li>如果调用进程没有子进程，那么waitpid返回-1,并且设置 errno 为 ECHILD</li>
+  <li>如果waitpid函数被一个信号中断，那么它返回-1,并设置 errno 为 EINTR</li>
+</ul>
+
+<h3 id="wait-函数">wait 函数</h3>
+
+<p>wait 函数是 waitpid 函数的简单版本:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span>
+<span class="n">pid_t</span> <span class="nf">wait</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">statusp</span><span class="p">);</span>
+</code></pre></div></div>
+<p>调用 wait(&amp;status) 等价于调用 waitpid(-1, &amp;status, 0).
+即默认对所有子进程挂起等待.</p>
+
+<h3 id="使用waitpid-的示例">使用waitpid 的示例</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;syd/types.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+#include</span> <span class="cpf">&lt;stdlib.h&gt;</span><span class="cp">
+</span>
+<span class="kt">void</span> <span class="nf">unix_error</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">msg</span><span class="p">)</span> <span class="cm">/* unix-style error */</span>
+<span class="p">{</span>
+    <span class="n">fprintf</span><span class="p">(</span><span class="n">stderr</span><span class="p">,</span> <span class="s">"%s: %s</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">strerror</span><span class="p">(</span><span class="n">errno</span><span class="p">));</span>
+ 	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="cp">#define N 2
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">;</span>
+
+	<span class="cm">/* Parent creates N children */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="cm">/* child */</span>
+  	    	<span class="n">exit</span><span class="p">(</span><span class="mi">100</span><span class="o">+</span><span class="n">i</span><span class="p">);</span>
+
+	<span class="cm">/* Parent reaps N chds. in no particular order */</span>
+	<span class="k">while</span><span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">waitpid</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated normally with exit status=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated abnormally</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">pid</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* The only normal term. is if there no more chds. */</span>
+	<span class="cm">/* 当回收了所有的子进程之后，再调用 waitpid 就返回-1，并且设置ECHILD */</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">ECHILD</span><span class="p">)</span> <span class="c1">// 检查waitpid正常终止</span>
+		<span class="n">unix_error</span><span class="p">(</span><span class="s">"waitpid error"</span><span class="p">);</span>
+
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>一个示例输出：</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>unix&gt;./waitpid1
+child 22966 terminated normally with exit status=100
+child 22967 terminated normally with exit status=101
+</code></pre></div></div>
+<p>但是由于子进程是并发的,两个子进程回收的顺序是<strong>不确定</strong>的.
+对程序稍作修改, 消除了这种不确定性，按照父进程创建子进程的相同顺序来回收这些子进程.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+	<span class="kt">int</span> <span class="n">status</span><span class="p">,</span> <span class="n">i</span><span class="p">;</span>
+	<span class="n">pid_t</span> <span class="n">pid</span><span class="p">[</span><span class="n">N</span><span class="p">],</span> <span class="n">retpid</span><span class="p">;</span>
+
+	<span class="cm">/* Parent creates N children */</span>
+    <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">N</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    	<span class="k">if</span> <span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">Fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="cm">/* child */</span>
+  	    	<span class="n">exit</span><span class="p">(</span><span class="mi">100</span><span class="o">+</span><span class="n">i</span><span class="p">);</span>
+
+	<span class="cm">/* Parent reaps N chds. in order */</span>
+	<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="k">while</span><span class="p">((</span><span class="n">retpid</span> <span class="o">=</span> <span class="n">waitpid</span><span class="p">(</span><span class="n">pid</span><span class="p">[</span><span class="n">i</span><span class="o">++</span><span class="p">],</span> <span class="o">&amp;</span><span class="n">status</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span>
+		<span class="k">if</span><span class="p">(</span><span class="n">WIFEXITED</span><span class="p">(</span><span class="n">status</span><span class="p">))</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated normally with exit status=%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">retpid</span><span class="p">,</span> <span class="n">WEXITSTATUS</span><span class="p">(</span><span class="n">status</span><span class="p">));</span>
+		<span class="k">else</span>
+			<span class="n">printf</span><span class="p">((</span><span class="s">"child %d terminated abnormally</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">retpid</span><span class="p">);</span>
+	<span class="p">}</span>
+
+	<span class="cm">/* The only normal term. is if there no more chds. */</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">errno</span> <span class="o">!=</span> <span class="n">ECHILD</span><span class="p">)</span> 
+		<span class="n">unix_error</span><span class="p">(</span><span class="s">"waitpid error"</span><span class="p">);</span>
+
+	<span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h1 id="程序休眠">程序休眠</h1>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="nf">sleep</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">secs</span><span class="p">);</span>
+<span class="c1">//Returns: seconds left to sleep</span>
+<span class="c1">//如果已经睡满, 返回0</span>
+<span class="c1">//如果休眠被信号中断而过早返回,返回还剩下的要休眠的秒数.</span>
+<span class="kt">int</span> <span class="nf">pause</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+<span class="c1">//Always returns -1</span>
+<span class="c1">//使该进程休眠直到收到信号</span>
+</code></pre></div></div>
+
+<h1 id="加载并运行程序">加载并运行程序</h1>
+
+<h2 id="execve函数">execve函数</h2>
+
+<p>execve函数在<strong>当前进程的上下文中</strong>加载并运行一个新程序。</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">int</span> <span class="nf">execve</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[],</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">envp</span><span class="p">[]);</span>
+
+<span class="c1">//filename: 可执行文件名</span>
+<span class="c1">//argv: argument list (命令行参数)</span>
+<span class="c1">//envp: environment variable list (环境变量)</span>
+
+<span class="c1">//does not return if OK, returns -1 on error</span>
+<span class="c1">//正常情况下绝不返回</span>
+</code></pre></div></div>
+
+<h2 id="命令行参数与环境变量">命令行参数与环境变量</h2>
+
+<p>对于什么是命令行参数与环境变量, 用图演示:
+<img src="https://s2.loli.net/2023/12/10/bHPlu2aF3UtGfnN.png" alt="image.png" /></p>
+
+<ul>
+  <li>argv变量指向一个以 null结尾的指针数组，其中每个指针都指向一个参数字符串。按照惯例，<code class="language-plaintext highlighter-rouge">argv[0]</code>是可执行目标文件的名字。</li>
+  <li>环境变量的列表是由一个类似的数据结构表示的，envp变量指向一 个以null结尾的指针数组，其中每个指针指向一个环境变量字符串，每个串都是形如 “name=value” 的名字-值对.</li>
+</ul>
+
+<p>在execve加载了filename之后，它调用启动代码, 设置好栈，并将控制传递给新程序的主函数，该主函数有如下形式的原型 
+<code class="language-plaintext highlighter-rouge">int main(int argc, char **argv, char **envp);</code>
+或 <code class="language-plaintext highlighter-rouge">int main(int argc, char *argv[], char *envp[]);</code></p>
+
+<p>三个参数:</p>
+<ol>
+  <li>argc, 是argv[]中非空指针的数量</li>
+  <li>argc, 指向argv[]中第一个条目</li>
+  <li>envp, 指向envp[]中第一个条目</li>
+</ol>
+
+<p>当main开始执行时, 用户栈的组织结构如下所示:</p>
+
+<p><img src="https://s2.loli.net/2023/12/10/Xpz83RoM1FD9TPw.png" alt="image.png" /></p>
+<h2 id="execve使用例子">execve使用例子</h2>
+
+<p>比如shell里面键入命令<code class="language-plaintext highlighter-rouge">ls -lt /usr/include</code>, 就会运行一个新的程序 <strong>ls</strong><br />
+并把<code class="language-plaintext highlighter-rouge">ls -lt /usr/include</code>作为命令行参数传入, 会影响程序的执行方式.</p>
+
+<h2 id="相关函数">相关函数</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span><span class="kt">char</span> <span class="o">*</span><span class="nf">getenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="c1">//Returns: ptr to name if exists, NULL if no match.</span>
+<span class="kt">int</span> <span class="nf">setenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">newvalue</span><span class="p">,</span> <span class="kt">int</span> <span class="n">overwrite</span><span class="p">);</span>    
+<span class="c1">//若overwrite非零, 用newvalue代替oldvalue</span>
+<span class="c1">//Returns: 0 on success, -1 on error.</span>
+<span class="kt">void</span> <span class="nf">unsetenv</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">name</span><span class="p">);</span>
+<span class="c1">//如果环境数组包含一个形如"name=oldvalue"的字符串，那么unsetenv会删除它</span>
+<span class="c1">//Returns: nothing.</span>
+</code></pre></div></div>
+
+<h2 id="程序与进程的区别">程序与进程的区别</h2>
+
+<p>程序是一堆代码和数据；程序可以作为目标文件存在于磁盘上，或者作为段存在于地址空间中。</p>
+
+<p>进程是执行中程序的一个具体的实例；程序总是运行在某个进程的上下文中。</p>
+
+<h2 id="fork与execve的区别">fork与execve的区别</h2>
+
+<p>fork在==新的子进程==中运行相同的程序, 新的子进程是父进程的一个复制品.
+execve在==当前进程的上下文中==加载并运行一个新的程序。它会覆盖当前进程的地址空间, 但没有创建一个新进程. 新的程序仍然有==相同的PID==, 并且继承调用 execve 函数时已打开的所有文件描述符.</p>
+
+<h1 id="总结">总结</h1>
+
+<p>介绍了进程控制的相关函数, 包括fork, waitpid, sleep, execve, 其中fork与wait是极其重要且难懂的.</p>
+
+<p>下一章将讲解信号机制以及实现.</p>
+
+<p>#linux #操作系统 #进程 #并发 #fork</p>

@@ -1,0 +1,369 @@
+<h1 id="窗口设置">窗口设置</h1>
+
+<h2 id="qmainwindow类">QMainWindow类</h2>
+
+<ul>
+  <li>
+    <p>QMainWindow(QWidget *parent = nullptr, Qt::WindowFlags flags = Qt::WindowFlags())</p>
+  </li>
+  <li>
+    <p>void setCentralWidget(QWidget *widget); //set the given widget to the main window’s central widget</p>
+  </li>
+  <li>
+    <p>void setFixedSize(int w, int h); //set the size of the widget</p>
+  </li>
+  <li>
+    <p>void setWindowIcon(QIcon(QString filepath));</p>
+  </li>
+</ul>
+
+<h1 id="按钮和菜单">按钮和菜单</h1>
+
+<h2 id="qmenubar类">QMenuBar类</h2>
+
+<ul>
+  <li>
+    <p>QMenuBar *QMainWindow::menuBar() const
+返回MainWindow的menu bar
+//creates and returns an empty menu bar if the menu bar does not exist.</p>
+  </li>
+  <li>QMenuBar::addMenu(QMenu *menu)</li>
+  <li>QMenuBar::addMenu(const QString&amp; title)</li>
+</ul>
+
+<h2 id="qmenu类">QMenu类</h2>
+<ul>
+  <li>addAction(QAction *action)</li>
+  <li>addSeparator()</li>
+</ul>
+
+<h2 id="qaction类">QAction类</h2>
+<p>可以看成是一个动作,连接到槽</p>
+
+<ul>
+  <li>
+    <p>QAction(const QString &amp;text, QObject *parent = nullptr)</p>
+  </li>
+  <li>设置快捷键
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">QAction</span><span class="o">::</span><span class="n">setShortcuts</span><span class="p">(</span><span class="k">const</span> <span class="n">QList</span><span class="o">&lt;</span><span class="n">QKeySequence</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">shortcuts</span><span class="p">)</span>
+</code></pre></div>    </div>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">-&gt;setStatusTip(tr("Start a new game"));</code> 设置说明</li>
+  <li>-&gt;setEnabled(false) 设置按钮激活状态</li>
+  <li>connect(aboutAction, &amp;QAction::triggered, this, &amp;MainWindow::about);</li>
+</ul>
+
+<h1 id="文件交互">文件交互</h1>
+
+<h2 id="qfiledialog类">QFileDialog类</h2>
+<p>用于打开文件选择窗口</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QString</span> <span class="n">fileName</span> <span class="o">=</span> <span class="n">QFileDialog</span><span class="o">::</span><span class="n">getOpenFileName</span><span class="p">(</span><span class="n">this</span><span class="p">,</span> <span class="n">tr</span><span class="p">(</span><span class="s">"Open File"</span><span class="p">),</span>                                       <span class="s">"/home"</span><span class="p">,</span>  <span class="c1">//文件夹目录</span>
+<span class="n">tr</span><span class="p">(</span><span class="s">"Images (*.png *.xpm *.jpg)"</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="qfileinfo类">QFileInfo类</h2>
+<p>用于获取文件的相关信息,比如后缀名等等</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QString</span> <span class="n">extension</span> <span class="o">=</span> <span class="n">fileInfo</span><span class="p">.</span><span class="n">suffix</span><span class="p">().</span><span class="n">toLower</span><span class="p">();</span>  <span class="c1">// 获取小写的文件后缀名</span>
+</code></pre></div></div>
+
+<h2 id="qfile类">QFile类</h2>
+
+<ul>
+  <li>QFile(QString filename, QObject *parent*);</li>
+  <li>.setFileName(filePath);</li>
+</ul>
+
+<h2 id="qtextstream">QTextStream</h2>
+<p>文本流,用于读取数据
+QTextStream::QTextStream(FILE *fileHandle, QIODevice::OpenMode openMode = QIODevice::ReadWrite)</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QTextStream</span> <span class="nf">in</span><span class="p">(</span><span class="o">&amp;</span><span class="n">file</span><span class="p">);</span>
+</code></pre></div></div>
+
+<ul>
+  <li>逐行读取
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while</span><span class="p">(</span><span class="o">!</span><span class="n">in</span><span class="p">.</span><span class="n">atEnd</span><span class="p">()){</span>
+  <span class="n">QString</span> <span class="n">line</span> <span class="o">=</span> <span class="n">in</span><span class="p">.</span><span class="n">readLine</span><span class="p">();</span> <span class="c1">// 读取一行</span>
+   <span class="p">...</span> <span class="c1">// 逐行处理</span>
+  <span class="p">}</span>
+  <span class="n">file</span><span class="p">.</span><span class="n">close</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="qmessagebox类">QMessageBox类</h1>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span> <span class="o">==</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">information</span><span class="p">(</span><span class="nb">NULL</span><span class="p">,</span>
+    <span class="n">tr</span><span class="p">(</span><span class="s">"Game Over"</span><span class="p">),</span> <span class="n">tr</span><span class="p">(</span><span class="s">"Again?"</span><span class="p">),</span>
+    <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span> <span class="o">|</span> <span class="n">QMessageBox</span><span class="o">::</span><span class="n">No</span><span class="p">,</span>
+    <span class="n">QMessageBox</span><span class="o">::</span><span class="n">Yes</span><span class="p">))</span> <span class="p">{</span>
+    
+    <span class="n">game</span><span class="o">-&gt;</span><span class="n">newGame</span><span class="p">();</span>
+    <span class="p">}</span>
+    <span class="k">else</span><span class="p">{</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="err">}</span>
+</code></pre></div></div>
+
+<h1 id="绘图">绘图</h1>
+
+<h2 id="qpixmap类">QPixmap类</h2>
+<p>贴图,纹理</p>
+
+<ul>
+  <li>
+    <p>QPixmap::QPixmap(int width, int height)
+//注释:上面尚未fill with color</p>
+  </li>
+  <li>
+    <p>QPixmap::QPixmap(const QString &amp;fileName, const char *format = nullptr, Qt::ImageConversionFlags flags = Qt::AutoColor)</p>
+  </li>
+  <li>
+    <p>void QPixmap::fill(const QColor &amp;color = Qt::white)</p>
+  </li>
+</ul>
+
+<h2 id="qpainter类">QPainter类</h2>
+
+<ul>
+  <li>QPainter(QPaintDevice *device)
+例如
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">//QPixmap bg(TILE_SIZE, TILE_SIZE);</span>
+<span class="n">QPainter</span> <span class="nf">p</span><span class="p">(</span><span class="o">&amp;</span><span class="n">bg</span><span class="p">);</span>
+<span class="n">QPainter</span> <span class="nf">p</span><span class="p">(</span><span class="n">this</span><span class="p">);</span>
+</code></pre></div>    </div>
+  </li>
+  <li>setBrush(const QBrush)</li>
+  <li>setPen(QPen)</li>
+  <li>drawRect(int x, int y, int width, int height);</li>
+  <li>drawLine</li>
+  <li>drawPath(const QPainterPath &amp;path) //current pen</li>
+  <li>void QPainter::drawPolygon(const QPolygonF &amp;points, Qt::FillRule fillRule = Qt::OddEvenFill)</li>
+</ul>
+
+<p>void QPainter::drawEllipse(const QRectF &amp;rectangle)</p>
+
+<ul>
+  <li>save 保存当前painter状态</li>
+  <li>
+    <p>restore 恢复</p>
+  </li>
+  <li>setRenderHint(QPainter::RenderHint hint, bool on = true)
+设置绘画风格
+比如
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">painter</span><span class="o">-&gt;</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QPainter</span><span class="o">::</span><span class="n">Antialiasing</span><span class="p">);</span>
+<span class="c1">//带有边缘</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<p>void QPainter::fillRect(const QRectF]&amp;rectangle, const QBrush&amp;brush)
+Fills the given rectangle with the brush specified.</p>
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Alternatively, you can specify a QColor instead of a QBrush; the QBrush constructor (taking a QColor argument) will automatically create a solid pattern brush.
+</code></pre></div></div>
+<p>相应有 fillPath等等</p>
+
+<h2 id="qbrush类">QBrush类</h2>
+
+<p>刷子,可以是纹理/颜色
+style设置绘制的方式</p>
+
+<h2 id="qpen类">QPen类</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="n">pen</span><span class="p">.</span><span class="n">setStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">DashDotLine</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setWidth</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setBrush</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">green</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setCapStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">RoundCap</span><span class="p">);</span>
+  <span class="n">pen</span><span class="p">.</span><span class="n">setJoinStyle</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">RoundJoin</span><span class="p">);</span>
+  <span class="n">painter</span><span class="p">.</span><span class="n">setPen</span><span class="p">(</span><span class="n">pen</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="qpainterpath类">QPainterPath类</h2>
+
+<ul>
+  <li>
+    <p>addRect等等</p>
+  </li>
+  <li>clear</li>
+  <li>boundingRect</li>
+  <li>
+    <p>capacity vs length</p>
+  </li>
+  <li>
+    <p>connectPath(&amp;path)</p>
+  </li>
+  <li>contains(QPoint/QRect/QPainterPath)</li>
+  <li>对应的intersect(相交),而contain是包含(区域)</li>
+</ul>
+
+<p>我的发现： contains边界问题，Point可而其它二不可</p>
+
+<ul>
+  <li>lineTo</li>
+  <li>
+    <p>cubicTo 画线</p>
+  </li>
+  <li>moveTo
+Moves the current position to (x, y) and starts a new subpath, implicitly closing the previous path.</li>
+</ul>
+
+<p>// 将QPoint添加到QPainterPath中 path.moveTo(point1); path.lineTo(point2); path.lineTo(point3); path.lineTo(point4); // 闭合路径</p>
+<ul>
+  <li>
+    <p>path.closeSubpath();</p>
+  </li>
+  <li>path.setFillRule(Qt::WindingFill);</li>
+  <li>1
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">foreach</span><span class="p">(</span><span class="k">const</span> <span class="n">QPoint</span><span class="o">&amp;</span> <span class="n">p</span><span class="p">,</span> <span class="n">body</span><span class="p">){</span>
+  <span class="n">path</span><span class="p">.</span><span class="n">addRect</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">x</span><span class="p">(),</span> <span class="n">p</span><span class="p">.</span><span class="n">y</span><span class="p">(),</span> <span class="n">FILE_SIZE</span><span class="p">,</span> <span class="n">FILE_SIZE</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ul>
+
+<h1 id="游戏场景">游戏场景</h1>
+
+<h2 id="qgraphicsitem类">QGraphicsItem类</h2>
+
+<ul>
+  <li>
+    <p>setPos(x, y);</p>
+  </li>
+  <li>
+    <p>setData(int key, const QVariant &amp;value);
+使用：serData(GD_Type, GO_Food);</p>
+  </li>
+  <li>
+    <p>QRectF QGraphicsItem::boundingRect() const;
+自定义，原虚函数
+返回Item的边界
+例子：return QRectF(-TILE_SIZE,  -TILE_SIZE, TILE_SIZE * 2, TILE_SIZE * 2 );</p>
+  </li>
+  <li>（pure virtual） void QGraphicsItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+原虚函数，被QGraphicsView调用
+例子：
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">painter</span><span class="o">-&gt;</span><span class="n">save</span><span class="p">();</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">setRenderHint</span><span class="p">(</span><span class="n">QPainter</span><span class="o">::</span><span class="n">Antialiasing</span><span class="p">);</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">fillPath</span><span class="p">(</span><span class="n">shape</span><span class="p">(),</span> <span class="n">Qt</span><span class="o">::</span><span class="n">red</span><span class="p">);</span>
+<span class="n">painter</span><span class="o">-&gt;</span><span class="n">restore</span><span class="p">();</span>
+</code></pre></div>    </div>
+  </li>
+  <li>(virtual) QPainterPath shape()const
+例子:
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QPainterPath</span> <span class="n">p</span><span class="p">;</span>
+<span class="n">p</span><span class="p">.</span><span class="n">addEllipse</span><span class="p">(</span><span class="n">QPointF</span><span class="p">(</span><span class="n">TILE_SIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span> <span class="n">TILE_SIZE</span> <span class="o">/</span> <span class="mi">2</span><span class="p">),</span> <span class="n">FOOD_RADIUS</span><span class="p">,</span> <span class="n">FOOD_RADIUS</span><span class="p">);</span>
+  <span class="k">return</span> <span class="n">p</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>QPointF mapFromScene(const <a href="../qtcore/qpointf.html">QPointF</a> &amp;point) const
+将Scene坐标系中的坐标映射到本Item坐标系中的点坐标</p>
+  </li>
+  <li>void QGraphicsItem::advance(int phase)
+phase = 0 预更新
+phase = 1 更新
+用于更新Item相关逻辑
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">Snake</span><span class="o">::</span><span class="n">advance</span><span class="p">(</span><span class="kt">int</span> <span class="n">step</span><span class="p">)</span>
+<span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">step</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">tickCounter</span><span class="o">++</span> <span class="o">%</span> <span class="n">speed</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">moveDirection</span> <span class="o">==</span> <span class="n">NoMove</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">if</span> <span class="p">(</span><span class="n">growing</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+      <span class="n">QPointF</span> <span class="n">tailPoint</span> <span class="o">=</span> <span class="n">head</span><span class="p">;</span>
+      <span class="n">tail</span> <span class="o">&lt;&lt;</span> <span class="n">tailPoint</span><span class="p">;</span>
+      <span class="n">growing</span> <span class="o">-=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+      <span class="n">tail</span><span class="p">.</span><span class="n">removeFirst</span><span class="p">();</span>
+      <span class="n">tail</span> <span class="o">&lt;&lt;</span> <span class="n">head</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">switch</span> <span class="p">(</span><span class="n">moveDirection</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">case</span> <span class="n">MoveLeft</span><span class="p">:</span>
+          <span class="n">moveLeft</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveRight</span><span class="p">:</span>
+          <span class="n">moveRight</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveUp</span><span class="p">:</span>
+          <span class="n">moveUp</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+      <span class="k">case</span> <span class="n">MoveDown</span><span class="p">:</span>
+          <span class="n">moveDown</span><span class="p">();</span>
+          <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="n">setPos</span><span class="p">(</span><span class="n">head</span><span class="p">);</span>
+  <span class="n">handleCollisions</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>void QGraphicsItem::setPos(const QPointF &amp;pos)
+Sets the position of the item to pos, which is in parent coordinates.</p>
+  </li>
+  <li>碰撞检测
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">QList</span><span class="o">&lt;</span><span class="n">QGraphicsItem</span><span class="o">*&gt;</span> <span class="n">QGraphicsItem</span><span class="o">::</span><span class="n">collidingItems</span><span class="p">(</span><span class="n">Qt</span><span class="o">::</span><span class="n">ItemSelectionMode</span> <span class="n">mode</span> <span class="o">=</span> <span class="n">Qt</span><span class="o">::</span><span class="n">IntersectsItemShape</span><span class="p">)</span> <span class="k">const</span>
+</code></pre></div>    </div>
+    <p>可用之前设置的data判断与哪个物体的碰撞</p>
+  </li>
+</ul>
+
+<h2 id="qgraphicsscene类">QGraphicsScene类</h2>
+<p>//用于图形存放</p>
+
+<ul>
+  <li>
+    <p>QGraphicsScene(QObject* parent = nullptr);
+构造函数可用：
+…scene(new QGraphicsScene(this));</p>
+  </li>
+  <li>
+    <p>setSceneRect(x, y, w, h);//设置scene的位置
+//使用实例：scene-&gt;setSceneRect(-100, -100, 200, 200);</p>
+  </li>
+  <li>
+    <p>void addItem(QGraphicsItem *item);
+void removeItem(QGraphicsItem *item);</p>
+  </li>
+  <li>
+    <p>void QObject::installEventFilter(QObject *filterObj);
+//设置事件过滤器, filterObj会拦截并处理this的实践
+例子: scene.installEventFilter(this);</p>
+  </li>
+  <li>(virtual)
+bool QObject::eventFilter(QObject *object, QEvent *event)
+实现拦截处理函数
+例子
+    <div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="p">(</span><span class="n">event</span><span class="o">-&gt;</span><span class="n">type</span><span class="p">()</span> <span class="o">==</span> <span class="n">QEvent</span><span class="o">::</span><span class="n">KeyPress</span><span class="p">)</span> <span class="p">{</span>
+  <span class="n">handleKeyPressed</span><span class="p">((</span><span class="n">QKeyEvent</span> <span class="o">*</span><span class="p">)</span><span class="n">event</span><span class="p">);</span> <span class="c1">//自定义的按键处理函数</span>
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span><span class="c1">//返回已处理</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="n">QObject</span><span class="o">::</span><span class="n">eventFilter</span><span class="p">(</span><span class="n">object</span><span class="p">,</span> <span class="n">event</span><span class="p">);</span>
+  <span class="c1">//不处理</span>
+  <span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+  <li>connect(&amp;timer, SIGNAL(timeout()), &amp;scene, SLOT(advance()));
+ 用于定时刷新界面</li>
+</ul>
+
+<h2 id="qgraphicsview类">QGraphicsView类</h2>
+
+<ul>
+  <li>
+    <p>QGraphicsView(scene, this);</p>
+  </li>
+  <li>
+    <p>void fitInView(QRect, Qt::AspectRatioMode aspectRatioMode = Qt::IgnoreAspectRatio);
+缩放视图矩阵并滚动滚动条，以确保场景矩形（<code class="language-plaintext highlighter-rouge">rect</code>）适应视口内</p>
+  </li>
+  <li>
+    <p>setBackgroundBrush(QBrush(QPixmap)); //设置背景</p>
+  </li>
+</ul>
+

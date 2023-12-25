@@ -1,0 +1,395 @@
+
+<h1 id="1-顺序执行">1. 顺序执行</h1>
+
+<h2 id="move指令">move指令</h2>
+<p><img src="https://s2.loli.net/2023/11/16/BqIUO3Qsv9pTdez.png" alt="Pasted image 20231103114722" />
+<img src="https://s2.loli.net/2023/11/16/B4yzxu7tjK3FsIq.png" alt="Pasted image 20231103114956" />
+<img src="https://s2.loli.net/2023/11/16/k5WPbJ13EDgIzcd.png" alt="Pasted image 20231103115036" />
+<img src="https://s2.loli.net/2023/11/16/Th1HDpPMX8ONcke.png" alt="Pasted image 20231103115042" /></p>
+
+<p>move相关习题</p>
+<h2 id="运算指令">运算指令</h2>
+
+<p><img src="https://s2.loli.net/2023/11/16/RhIelPjqTCpGYkr.png" alt="Pasted image 20231103115134" />
+<img src="https://s2.loli.net/2023/11/16/kGCcQfg5MqyJoOm.png" alt="Pasted image 20231103115140" /></p>
+
+<p><em>一些比较特殊的运算指令：</em></p>
+
+<p><img src="https://s2.loli.net/2023/11/16/jLJhQZvFI9X21Ps.png" alt="Pasted image 20231103115205" /></p>
+
+<h1 id="2-跳转指令">2. 跳转指令</h1>
+
+<h2 id="conditional-codeseflags">Conditional Codes(EFLAGS)</h2>
+
+<p><em>是什么:</em></p>
+<ul>
+  <li>A set of single-bit</li>
+  <li>Maintained in a condition code register</li>
+  <li>Describe attributes of the most recently arithmetic or logical operation</li>
+</ul>
+
+<p><em>详细介绍:</em></p>
+
+<ul>
+  <li>CF: Carry Flag
+    <ul>
+      <li>The most recent operation generated a carry out of the most significant bit</li>
+      <li>Used to detect overflow for unsigned operations</li>
+      <li>记录最高位进位</li>
+    </ul>
+  </li>
+  <li>OF: Overflow Flag
+    <ul>
+      <li>The most recent operation caused a two’s complement overflow — either negative or positive</li>
+      <li>记录补码的溢出</li>
+    </ul>
+  </li>
+  <li>ZF: Zero Flag
+    <ul>
+      <li>The most recent operation yielded zero</li>
+      <li>运算结果为零时记录</li>
+    </ul>
+  </li>
+  <li>SF: Sign Flag
+    <ul>
+      <li>The most recent operation yielded a negative value</li>
+      <li>运算为负时记录</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="set指令">set指令</h2>
+
+<p>根据EFALGS值来给寄存器赋值
+<img src="https://s2.loli.net/2023/11/16/wsd6pLN4QKB3oSx.png" alt="Pasted image 20231103122159" /></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">comp</span><span class="p">(</span><span class="kt">long</span> <span class="n">a</span><span class="p">,</span> <span class="kt">long</span> <span class="n">b</span><span class="p">)</span>
+
+<span class="cp">#Initially a is in %rdi, b is in %rsi
+</span>
+<span class="mi">1</span> <span class="n">cmpq</span>   <span class="o">%</span><span class="n">rsi</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span><span class="err"> </span> <span class="err">#</span><span class="n">compare</span> <span class="n">a</span><span class="o">:</span><span class="n">b</span>
+
+<span class="mi">2</span> <span class="n">setl</span>  <span class="err"> </span><span class="o">%</span><span class="n">al</span><span class="err"> </span> <span class="err">#</span><span class="n">set</span> <span class="n">low</span> <span class="n">order</span> <span class="n">by</span> <span class="n">to</span> <span class="mi">0</span> <span class="n">or</span> <span class="mi">1</span>
+
+<span class="mi">3</span> <span class="n">movzbl</span> <span class="o">%</span><span class="n">al</span><span class="p">,</span> <span class="o">%</span><span class="n">eax</span><span class="err">    </span>
+
+<span class="err"> </span> <span class="err">#</span><span class="n">set</span> <span class="n">remaining</span> <span class="n">bytes</span> <span class="n">of</span> <span class="o">%</span><span class="n">eax</span> <span class="n">to</span> <span class="mi">0</span>
+
+<span class="mi">4</span> <span class="n">ret</span>
+</code></pre></div></div>
+
+<h2 id="jump指令">jump指令</h2>
+
+<p><img src="https://s2.loli.net/2023/11/16/EwWRyH47toDO3fv.png" alt="Pasted image 20231103123018" />
+<img src="https://s2.loli.net/2023/11/16/7jxaGfJ3MoHBVQC.png" alt="Pasted image 20231103123024" /></p>
+
+<p><strong><em>提醒: jg 和 ja 的区别</em></strong>
+也就是’greater’和’above’的区别
+Above: ~CF&amp;~ZF
+Greater: ~(SF^OF)&amp;~ZF
+两个数比较大小时，如使用cmp指令：</p>
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">cmp</span> <span class="o">%</span><span class="n">rax</span> <span class="o">%</span><span class="n">rdx</span> <span class="c1">//用rax减去rdx中的值，用结果设置EFLAGS</span>
+</code></pre></div></div>
+<p>通过观察可发现，Above只考虑Counter Flag，即最高位位1 - 0时，CF为0
+然而在补码中对应的时负数减去整数，结果不可能是大于
+故JG 将标志解释为比较有符号，而 JA 将标志解释为比较无符号
+<em>greater是有符号数比较，above是无符号数比较</em></p>
+
+<table>
+  <thead>
+    <tr>
+      <th>指令</th>
+      <th>同义词</th>
+      <th>效果</th>
+      <th>设置条件</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ja</td>
+      <td>jnbe</td>
+      <td>~CF&amp;~ZF</td>
+      <td>Above</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jae</td>
+      <td>jnb</td>
+      <td>~CF</td>
+      <td>Above or equal</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jb</td>
+      <td>jnae</td>
+      <td>CF</td>
+      <td>Below</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jbe</td>
+      <td>jna</td>
+      <td>CF</td>
+      <td>ZF</td>
+      <td>Below or equal</td>
+    </tr>
+    <tr>
+      <td>je</td>
+      <td>jz</td>
+      <td>ZF</td>
+      <td>Equal/zero</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jne</td>
+      <td>jnz</td>
+      <td>~ZF</td>
+      <td>Not equal/not zero</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>js</td>
+      <td> </td>
+      <td>SF</td>
+      <td>Negative</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jns</td>
+      <td> </td>
+      <td>~SF</td>
+      <td>Nonnegative</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jl</td>
+      <td>jnge</td>
+      <td>SF^OF</td>
+      <td>Less</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jle</td>
+      <td>jng</td>
+      <td>(SF^OF)</td>
+      <td>ZF</td>
+      <td>Less or Equal</td>
+    </tr>
+    <tr>
+      <td>jg</td>
+      <td>jnle</td>
+      <td>~(SF^OF)&amp;~ZF</td>
+      <td>Greater</td>
+      <td> </td>
+    </tr>
+    <tr>
+      <td>jge</td>
+      <td>jnl</td>
+      <td>~(SF^OF)</td>
+      <td>Greater or Equal</td>
+      <td> </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1 id="3-将c语言中的分支控制语句翻译为汇编">3. 将C语言中的分支控制语句翻译为汇编</h1>
+
+<h2 id="1-if-else">1. if-else</h2>
+
+<p>方法1：将if-else结构改写为goto
+<img src="https://s2.loli.net/2023/11/17/FlKGqfxs7bRrpUI.png" alt="Pasted image 20231106141923" /></p>
+
+<p>方法2：使用<em>Contidional Move</em>
+<img src="https://s2.loli.net/2023/11/17/akFwVpbYHZryghW.png" alt="Pasted image 20231106142211" />
+<img src="https://s2.loli.net/2023/11/17/cQHBDnoTpOU2Gr5.png" alt="Pasted image 20231106142220" />
+<img src="https://s2.loli.net/2023/11/17/Yqn92VvlbfKsdBt.png" alt="Pasted image 20231106142230" /></p>
+
+<p>Tips:</p>
+<ul>
+  <li>Source and destination values can be 16, 32, or 64 bits long</li>
+  <li>Source can be either a register or a memory location</li>
+  <li>Destination must be a register</li>
+</ul>
+
+<p>Warning:
+<strong>Conditional Move instructions suppose that “there is no side effect”</strong></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">cread</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">xp</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="err">   </span> <span class="k">return</span> <span class="p">(</span><span class="n">xp</span> <span class="o">?</span> <span class="o">*</span><span class="n">xp</span> <span class="o">:</span> <span class="mi">0</span><span class="p">);</span>
+
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>上面的程序审查一个整型指针，如果为空则范围0，非空则返回指针所指的对象
+用汇编实现，如果使用cmov的话，势必要先取xp指向的值
+而这就违背了程序的本意，即防止访问空指针</p>
+
+<h2 id="2-do-while">2. do-while</h2>
+
+<p><img src="https://s2.loli.net/2023/11/17/9QbyHem3StzTcAF.png" alt="Pasted image 20231106142947" /></p>
+
+<p><img src="https://s2.loli.net/2023/11/17/Bu7YelN9yRbwsQ4.png" alt="Pasted image 20231106143207" /></p>
+
+<h2 id="3-while">3. while</h2>
+<p><img src="https://s2.loli.net/2023/11/17/Cgd7bITZfltBJmi.png" alt="Pasted image 20231106143314" /></p>
+
+<p>或者：</p>
+
+<p><img src="https://s2.loli.net/2023/11/17/yPa2Qzw5cksOZJr.png" alt="Pasted image 20231106143556" /></p>
+
+<h2 id="4-for">4. for</h2>
+
+<p><img src="https://s2.loli.net/2023/11/17/CejSLYEGul14oHd.png" alt="Pasted image 20231106143702" /></p>
+
+<p>Attention:
+当for中含有<strong>continue</strong>语句时，必须对翻译后的while语句进行修正
+参考以下的这个例子：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/*Example of for loop containing a continue statement*/</span> 
+<span class="cm">/*Sum even numbers between 0 and 9*/</span> 
+<span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> 
+<span class="kt">long</span> <span class="n">i</span><span class="p">;</span> 
+<span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">){</span> 
+	<span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span> 
+	<span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span> 
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>如果<strong><em>naively</em></strong>地直接运用for-&gt;while地翻译规则，得到地while语句如下：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">long</span> <span class="n">i</span><span class="p">;</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span> 
+	<span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span> 
+	<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>那么程序将陷入无限循环，因为i++永远不会被运行到
+可以修改为：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">long</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="kt">long</span> <span class="n">i</span><span class="p">;</span>
+<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="p">(</span><span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">){</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">i</span> <span class="o">&amp;</span> <span class="mi">1</span><span class="p">)</span> <span class="k">goto</span> <span class="n">update</span><span class="p">;</span> 
+	<span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span> 
+<span class="nl">update:</span>
+	<span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="5-switch">5. switch</h2>
+
+<p>switch结构有以下特点：</p>
+
+<ul>
+  <li>判断的对象只能是整数（包括字符）</li>
+  <li>判断会有多个结果</li>
+  <li>提升代码可读性（没有一堆if-else）</li>
+</ul>
+
+<p>为了将switch翻译为汇编，需要使用跳表：</p>
+
+<p><img src="https://s2.loli.net/2023/11/17/NU6mdrwCDEq5TJa.png" alt="Pasted image 20231107091415" /></p>
+
+<p><img src="https://s2.loli.net/2023/11/17/aUxzbwoVGqjJ93Q.png" alt="Pasted image 20231107091513" /></p>
+
+<p>其中Jump Table存放在内存中的<em>Read Only</em>区域</p>
+
+<p>以下是一个具体的例子：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">switch_eg</span> <span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">n</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span>
+<span class="err"> </span><span class="p">{</span>
+	<span class="err"> </span> <span class="kt">long</span> <span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="k">switch</span> <span class="p">(</span> <span class="n">n</span> <span class="p">)</span> <span class="p">{</span>
+	<span class="err"> </span> <span class="k">case</span> <span class="mi">100</span><span class="p">:</span>
+		<span class="err"> </span> <span class="n">val</span> <span class="o">*=</span> <span class="mi">13</span> <span class="p">;</span>
+		<span class="err"> </span> <span class="k">break</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="k">case</span> <span class="mi">102</span><span class="p">:</span>
+		<span class="err"> </span> <span class="n">result</span> <span class="o">+=</span> <span class="mi">10</span> <span class="p">;</span>
+		<span class="err"> </span> <span class="cm">/* fall through */</span>
+	  <span class="k">case</span> <span class="mi">103</span><span class="p">:</span>
+		<span class="err"> </span> <span class="n">val</span> <span class="o">+=</span> <span class="mi">11</span> <span class="p">;</span>
+		<span class="err"> </span> <span class="k">break</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="k">case</span> <span class="mi">104</span><span class="p">:</span> <span class="k">case</span> <span class="mi">106</span><span class="p">:</span>
+		<span class="err"> </span> <span class="n">val</span> <span class="o">*=</span> <span class="n">val</span> <span class="p">;</span>
+		<span class="err"> </span> <span class="k">break</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="k">default</span><span class="o">:</span>
+		<span class="err"> </span> <span class="n">val</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+	<span class="err"> </span> <span class="p">}</span>
+	<span class="err"> </span> <span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span> <span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>先改写为使用跳表的形式：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">switch_eg_impl</span> <span class="p">(</span><span class="kt">long</span> <span class="n">x</span><span class="p">,</span> <span class="kt">long</span> <span class="n">n</span><span class="p">,</span> <span class="kt">long</span> <span class="o">*</span><span class="n">dest</span><span class="p">)</span>
+<span class="p">{</span>
+	<span class="k">static</span> <span class="kt">void</span> <span class="o">*</span><span class="n">jt</span><span class="p">[</span><span class="mi">7</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span> <span class="o">&amp;&amp;</span><span class="n">loa_A</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_def</span><span class="p">,</span>
+		<span class="o">&amp;&amp;</span><span class="n">loc_B</span><span class="p">,</span><span class="err"> </span><span class="o">&amp;&amp;</span><span class="n">loc_C</span><span class="p">,</span><span class="err"> </span><span class="o">&amp;&amp;</span><span class="n">loc_D</span><span class="p">,</span><span class="err"> </span><span class="o">&amp;&amp;</span><span class="n">loc_def</span><span class="p">,</span> <span class="o">&amp;&amp;</span><span class="n">loc_D</span><span class="p">};</span>
+		
+	<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">index</span> <span class="o">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">100</span><span class="p">;</span> <span class="c1">//建立映射，跳表index=0对应n中最小的值</span>
+	<span class="kt">long</span> <span class="n">val</span> <span class="p">;</span>
+	
+	<span class="k">if</span> <span class="p">(</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="mi">6</span> <span class="p">)</span> <span class="c1">//如果越界的话，就直接进入默认</span>
+	<span class="k">goto</span> <span class="n">loc_def</span> <span class="p">;</span> <span class="c1">//default</span>
+
+	<span class="k">goto</span> <span class="o">*</span><span class="n">jt</span><span class="p">[</span><span class="n">index</span><span class="p">];</span><span class="err">    </span> <span class="c1">// multiway</span>
+
+<span class="nl">loc_A:</span><span class="err"> </span> <span class="c1">// case 100</span>
+	<span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">13</span> <span class="p">;</span>
+	<span class="k">goto</span> <span class="n">done</span> <span class="p">;</span>
+<span class="nl">loc_B:</span><span class="err">  </span> <span class="c1">// case 102</span>
+	<span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">10</span> <span class="p">;</span><span class="err"> </span> <span class="c1">// fall through</span>
+<span class="nl">loc_C:</span> <span class="c1">// case 103</span>
+	<span class="n">val</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">11</span><span class="p">;</span>
+	<span class="k">goto</span> <span class="n">done</span> <span class="p">;</span>
+<span class="nl">loc_D:</span> <span class="c1">// case 104, 106</span>
+	<span class="n">val</span> <span class="o">*=</span> <span class="n">x</span> <span class="o">*</span> <span class="n">x</span> <span class="p">;</span>
+	<span class="k">goto</span> <span class="n">done</span> <span class="p">;</span>
+<span class="nl">loc_def:</span><span class="err"> </span> <span class="c1">//default</span>
+	<span class="n">val</span> <span class="o">=</span> <span class="mi">0</span> <span class="p">;</span>
+<span class="nl">done:</span>
+	<span class="o">*</span><span class="n">dest</span> <span class="o">=</span> <span class="n">val</span> <span class="p">;</span>
+<span class="p">}</span>
+<span class="err"> </span> 
+</code></pre></div></div>
+
+<p><strong><em>&amp;&amp;: Pointer to a code location in GCC</em></strong></p>
+
+<p>改写汇编：</p>
+
+<p><em>Jump Table:</em>
+<img src="https://s2.loli.net/2023/11/17/tKN3vDSloQPgbUL.png" alt="Pasted image 20231107093036" /></p>
+
+<p>switch操作：
+<img src="https://s2.loli.net/2023/11/17/XFZ1ihxbqrBjteY.png" alt="Pasted image 20231107093221" />
+<img src="https://s2.loli.net/2023/11/17/7sodEYqKvNlZrug.png" alt="Pasted image 20231107093227" />
+<img src="https://s2.loli.net/2023/11/17/wxJvcd2G84ZE3Yj.png" alt="Pasted image 20231107093232" /></p>
+
+<p><em>Hint:</em></p>
+<ul>
+  <li>.align8：
+    <blockquote>
+      <p>表示要求存放跳表指针的地址8对齐(是8的倍数)
+关于对齐的详细描述: [[对齐]]</p>
+    </blockquote>
+  </li>
+  <li>.quad .L3：</li>
+  <li>jmp  *.L4( , %rsi, 8)：</li>
+  <li>ja .L8：
+  之所以使用ja而不是jg，是为了让n-100为负数的情况下能够进入default。
+  这是如果使用jg，那么一旦%rsi为负数，不会进入default，
+  那么跳表jmp  *.L4( , %rsi, 8) 就会访问到不是Label的内存，引发bug
+  在unsigned中，原本有符号负数的无符号表示的最高位是1，
+  一定above于跳表最大值的正数，故能正确跳转到default ^fa195c
+    <h2 id="6-ics习题2-汇编下面详细地分析exe4--汇编控制语句相关习题">6. [[ics习题#2. 汇编#下面详细地分析EXE4 | 汇编控制语句相关习题]]</h2>
+  </li>
+</ul>
+
+<p>#汇编</p>

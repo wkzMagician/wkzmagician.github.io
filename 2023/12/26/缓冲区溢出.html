@@ -1,0 +1,14 @@
+<p><img src="https://s2.loli.net/2023/11/16/vm5zXKJb61jfoAE.png" alt="Pasted image 20231114142954" /></p>
+
+<p>这个函数没有bounds check,意味着只要没有遇到EOF,就可以一直读入输入到buf内</p>
+
+<p><img src="https://s2.loli.net/2023/11/16/Ax9oLIsgmHGrwl3.png" alt="Pasted image 20231114142726" />
+撑爆缓冲区,将会覆盖return address</p>
+
+<p>可以替换return address为指定地址,执行病毒代码</p>
+
+<p><img src="https://s2.loli.net/2023/11/16/64WjNwuGHQkJSxK.png" alt="Pasted image 20231114150121" />
+<img src="https://s2.loli.net/2023/11/16/mtedq4Qr6TLYUAi.png" alt="Pasted image 20231114150134" />
+<img src="https://s2.loli.net/2023/11/16/VrjJgUXtEbON2ay.png" alt="Pasted image 20231114150205" /></p>
+
+<p>#汇编 #bug</p>
