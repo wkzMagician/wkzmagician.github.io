@@ -1,0 +1,11 @@
+{
+  "name": "my-website",
+  "private": true,
+  "scripts": {
+    "dev": "eleventy --serve",
+    "build": "eleventy && node scripts/sync-root.mjs"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "3.1.6"
+  }
+}

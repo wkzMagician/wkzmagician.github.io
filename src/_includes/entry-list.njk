@@ -1,0 +1,26 @@
+{% if entries and entries.length %}
+  {% for item in entries %}
+  <article class="entry">
+    <div class="entry-copy">
+      <h3>{{ item.title | escape }}</h3>
+      {% if item.description %}<p class="entry-description">{{ item.description | escape }}</p>{% endif %}
+      {% if item.links and item.links.length %}
+      <div class="entry-links">
+        {% for link in item.links %}
+        {% if link.label and link.url %}<a href="{{ link.url | escape }}" target="_blank" rel="noopener noreferrer">{{ link.label | escape }}</a>{% endif %}
+        {% endfor %}
+      </div>
+      {% endif %}
+    </div>
+    <div class="entry-visual{% if not item.image %} is-placeholder{% endif %}">
+      {% if item.image %}
+      <img src="{{ item.image | escape }}" alt="{{ item.title | escape }} 的展示图片" loading="lazy">
+      {% else %}
+      <span class="entry-visual-label">{{ item.title | escape }}</span>
+      {% endif %}
+    </div>
+  </article>
+  {% endfor %}
+{% else %}
+  <p class="empty-state">内容待添加</p>
+{% endif %}

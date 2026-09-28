@@ -23,7 +23,7 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
 h1, h2, h3, p { margin-top: 0; }
 h1 { margin-bottom: 24px; font-weight: 400; line-height: 1.13; }
 h1 span { display: block; }
-#name-cn { font-family: var(--serif); font-size: clamp(54px, 6.5vw, 90px); letter-spacing: .04em; }
+#name-dp { font-family: var(--serif); font-size: clamp(42px, 5.2vw, 72px); letter-spacing: -.035em; overflow-wrap: anywhere; }
 #name-en { margin-top: 12px; font-family: var(--serif); font-size: clamp(35px, 4vw, 55px); letter-spacing: -.035em; }
 .tagline { margin-bottom: 31px; font-size: clamp(17px, 1.7vw, 21px); color: var(--muted); }
 .link-section { display: flex; align-items: baseline; gap: clamp(40px, 8vw, 120px); padding: 28px 0 65px; border-top: 1px solid var(--line); }

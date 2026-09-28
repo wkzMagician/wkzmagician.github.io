@@ -1,10 +1,22 @@
 # 个人主页编辑指南
 
-网站由 `index.html`、`assets/portfolio.css`、`site-content.js` 和 `site.js` 组成。日常更新文字、图片与链接，只需编辑仓库根目录的 **`site-content.js`**，不需要安装依赖或重新构建。
+这个网站使用 [Eleventy](https://www.11ty.dev/) 生成静态 HTML。**日常只编辑仓库根目录的 `site-content.js`**；`index.html` 是生成文件，不要手动修改。页面布局模板在 `src/index.njk`，样式在 `assets/portfolio.css`。
 
-## 修改文字和链接
+## 第一次使用
 
-在 `site-content.js` 中修改 `nameChinese`、`nameEnglish` 和 `tagline`。`links` 是首页下方 Links 栏的链接列表。例如：
+在项目目录运行：
+
+```powershell
+cd D:\FantasyProjects\my-website
+npm install
+npm run dev
+```
+
+终端会显示本地地址，默认是 `http://localhost:8080/`。保持命令运行，修改 `site-content.js` 后 Eleventy 会自动重新生成预览页面。要停止服务，按 `Ctrl+C`。请打开这个地址预览；旧的 `outputs/index.html` 或线上网站不会显示尚未发布的本地更改。
+
+## 修改内容
+
+在 `site-content.js` 中修改 `nameWebsite`（浏览器标签标题）、`nameDisplay`（首页大字）、`nameEnglish`、`tagline` 和 `links`。例如：
 
 ```js
 links: [
@@ -13,35 +25,28 @@ links: [
 ],
 ```
 
-这里要填完整的 `https://` 地址。项目和游戏条目的链接也用相同格式。
+`projects`、`games` 和 `researchs` 都是条目列表，格式相同。复制已有的完整 `{ ... }` 条目，修改标题、简介、图片和链接即可。没有条目时，页面会显示“内容待添加”。
 
 ## 添加照片或项目图片
 
-把图片放进 `assets/images/`，再填相对路径：
+把图片放进 `assets/images/`，再填写相对路径：
 
 ```js
 portrait: "assets/images/portrait.jpg",
 ```
 
-项目图片则在对应条目的 `image` 字段填写路径。也可以填公开图片的**直接链接**，例如 `https://example.com/photo.jpg`。图片链接应直接返回 JPG、PNG、WebP 等图片内容；GitHub 仓库文件的普通浏览页面链接不能作为图片地址。图片尚未准备好时保留 `""`，页面会显示默认图形。
+项目图片填在对应条目的 `image` 字段。也可以使用公开图片的**直接链接**，如 `https://example.com/photo.jpg`。图片还没准备好时保留空字符串 `""`，页面会显示默认图形。
 
-## 添加项目或游戏
+## 发布到 GitHub Pages
 
-复制 `projects` 中已有的完整 `{ ... }` 条目，修改 `title`、`description`、`image` 和 `links`。`games` 使用完全相同的格式：
+检查本地预览后，在项目目录运行：
 
-```js
-games: [
-  {
-    title: "游戏名称",
-    description: "一句话介绍",
-    image: "assets/images/game.jpg",
-    links: [{ label: "GitHub", url: "https://github.com/你的账号/仓库名" }],
-  },
-],
+```powershell
+npm run build
+git status
+git add -A
+git commit -m "Update website"
+git push origin main
 ```
 
-每个条目都会显示成相同样式的卡片。注意保留逗号、引号和括号。
-
-## 发布
-
-本站使用 GitHub Pages，发布源为 `main` 分支根目录。直接在 GitHub 网页编辑 `site-content.js` 并提交到 `main`，或在本地提交后 `git push origin main`，就会自动重新发布，无需 PR。新增图片也要一起上传到 `main` 分支。通常稍等片刻并刷新页面即可看到更新。
+`npm run build` 会生成 `dist/index.html`，并把它复制到仓库根目录的 `index.html`。GitHub Pages 继续从 `main` 分支根目录发布；直接推送即可，无需 PR。`dist/` 和 `node_modules/` 不会提交到 Git。

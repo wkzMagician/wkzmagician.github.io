@@ -1,14 +1,15 @@
 /*
- * 只需编辑这个文件即可更新主页内容。
- * 图片既可以写仓库内路径，如 "assets/images/portrait.jpg"，
- * 也可以写公开图片的直接 URL，如 "https://example.com/portrait.jpg"。
- * 暂时没有图片时保留空字符串 ""，页面会显示简洁的默认图形。
+ * 只编辑这个文件即可更新网站内容。
+ * npm run dev：修改后自动更新本地预览。
+ * npm run build：生成用于 GitHub Pages 的 index.html。
+ * 图片可以填 assets/images/ 中的路径，或公开图片的直接 URL；没有图片时填 ""。
  */
-window.SITE_CONTENT = {
-  nameChinese: "吴坤臻",
+module.exports = {
+  nameWebsite: "鱼鱼的摸猫小站", // 浏览器标签标题
+  nameDisplay: "wkzmagician", // 首页大字
   nameEnglish: "Kunzhen Wu",
   tagline: "爱摸鱼的开发者",
-  portrait: "",
+  portrait: "", // 例如 "assets/images/portrait.jpg"
 
   links: [
     { label: "GitHub", url: "https://github.com/wkzMagician" },
@@ -24,10 +25,14 @@ window.SITE_CONTENT = {
         { label: "GitHub", url: "https://github.com/wkzMagician/re0-roadmap" },
       ],
     },
-    // 复制上面的 { ... } 即可添加下一个项目；每个项目都会生成同样样式的条目。
+    // 复制上面的 { ... } 即可添加下一个项目。
   ],
 
   games: [
-    // 这里与 projects 使用相同格式。添加游戏项目后会自动显示为同样的条目。
+    // 这里与 projects 使用相同格式。
+  ],
+
+  researchs: [
+    // 这里与 projects 使用相同格式。
   ],
 };

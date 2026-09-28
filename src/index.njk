@@ -5,82 +5,56 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#fbfcfb">
-  <meta name="description" content="鱼鱼的摸猫小站：项目、游戏与研究。">
-  <title>鱼鱼的摸猫小站</title>
+  <meta name="description" content="{{ site.nameWebsite | escape }}：项目、游戏与研究。">
+  <title>{{ site.nameWebsite | escape }}</title>
   <link rel="stylesheet" href="assets/portfolio.css">
 </head>
 <body>
   <main class="page">
     <section class="hero" aria-labelledby="site-name">
-      <div class="portrait" role="img" aria-label="头像待添加">
-
+      <div class="portrait" role="img" aria-label="{% if site.portrait %}{{ site.nameEnglish | escape }} 的照片{% else %}头像待添加{% endif %}">
+        {% if site.portrait %}
+        <img src="{{ site.portrait | escape }}" alt="{{ site.nameEnglish | escape }} 的照片">
+        {% else %}
         <svg class="portrait-fallback" viewBox="0 0 400 400" fill="none" aria-hidden="true">
           <circle cx="200" cy="200" r="166" stroke="currentColor" stroke-width="1" opacity=".33"/>
           <path d="M198 199c9-7 21-3 23 8 3 15-9 27-24 28-23 1-40-19-39-41 2-33 31-56 63-53 48 5 77 47 71 94-9 68-69 109-136 97" stroke="currentColor" stroke-width="1.25"/>
         </svg>
-
+        {% endif %}
       </div>
       <div class="intro">
-        <h1 id="site-name"><span id="name-dp">wkzmagician</span><span id="name-en">Kunzhen Wu</span></h1>
-        <p class="tagline">爱摸鱼的开发者</p>
+        <h1 id="site-name"><span id="name-dp">{{ site.nameDisplay | escape }}</span><span id="name-en">{{ site.nameEnglish | escape }}</span></h1>
+        <p class="tagline">{{ site.tagline | escape }}</p>
       </div>
     </section>
 
     <section class="link-section" id="links" aria-labelledby="links-title">
       <h2 id="links-title">Links</h2>
       <nav class="links" aria-label="个人链接">
-
-        <a href="https://github.com/wkzMagician" target="_blank" rel="noopener noreferrer">GitHub</a>
-
+        {% for link in site.links %}
+        {% if link.label and link.url %}<a href="{{ link.url | escape }}" target="_blank" rel="noopener noreferrer">{{ link.label | escape }}</a>{% endif %}
+        {% endfor %}
       </nav>
     </section>
 
     <section class="collection" id="projects" aria-labelledby="projects-title">
       <h2 id="projects-title">Projects</h2>
       <div class="entry-list">
-
-
-  <article class="entry">
-    <div class="entry-copy">
-      <h3>re0-roadmap</h3>
-      <p class="entry-description">把研究资料整理为可编辑的阅读路线图：用节点归纳主题、用箭头表达前置关系，并记录阅读进度。</p>
-
-      <div class="entry-links">
-
-        <a href="https://github.com/wkzMagician/re0-roadmap" target="_blank" rel="noopener noreferrer">GitHub</a>
-
-      </div>
-
-    </div>
-    <div class="entry-visual is-placeholder">
-
-      <span class="entry-visual-label">re0-roadmap</span>
-
-    </div>
-  </article>
-
-
-
+        {% set entries = site.projects %}{% include "entry-list.njk" %}
       </div>
     </section>
 
     <section class="collection" id="game" aria-labelledby="game-title">
       <h2 id="game-title">Game</h2>
       <div class="entry-list">
-
-  <p class="empty-state">内容待添加</p>
-
-
+        {% set entries = site.games %}{% include "entry-list.njk" %}
       </div>
     </section>
 
     <section class="collection" id="research" aria-labelledby="research-title">
       <h2 id="research-title">Research</h2>
       <div class="entry-list">
-
-  <p class="empty-state">内容待添加</p>
-
-
+        {% set entries = site.researchs %}{% include "entry-list.njk" %}
       </div>
     </section>
   </main>
